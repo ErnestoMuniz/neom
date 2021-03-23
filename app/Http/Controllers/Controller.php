@@ -17,7 +17,7 @@ class Controller extends BaseController
         $cmd = $_GET['pon'];
         $args = DB::select("select * from olt where id='$id'");
         $args = $args[0];
-        $output = shell_exec("python isam_count.py $args->ip $args->user $args->pass 1/1/$cmd");
+        $output = shell_exec("python python/isam_count.py $args->ip $args->user $args->pass 1/1/$cmd");
         $arr = explode("\n", $output);
         array_shift($arr);
         unset($arr[count($arr) -1]);
