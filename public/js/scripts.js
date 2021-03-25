@@ -1,15 +1,21 @@
+// Função que requisita e trata os dados das onus de uma pon
 function getPON(id, pon){
+    // cria icone de carregando
     document.getElementById('pon').innerHTML = "<div class='text-center'><i class='gg-loadbar inline-block mx-auto align-middle mr-1'></i><span>Carregando</span></div>";
+    // faz a requisição
     axios.get(`/pon?id=${id}&pon=${pon}`)
         .then(function (response){
-            //console.log(response.data);
+            // trata o XML recebido
             parser = new DOMParser();
             xml = parser.parseFromString(response.data, "text/xml");
             xml = xml.getElementsByTagName("instance");
+            // remove o ícone de carregando
             pon = document.getElementById('pon');
+            // cria a tabela de ONUs
             pon.innerHTML = "<table id='onus' class='table-auto mx-auto rounded-l'><thead><tr class='bg-gray-300 uppercase text-sm'><th onclick='sortNum(0)' class='py-1 px-2 cursor-pointer'>Num</th><th class='py-1 px-2 cursor-pointer' onclick='sortStr(1)'>Status</th><th class='py-1 px-2 cursor-pointer' onclick='sortStr(2)'>Descrição</th><th class='py-1 px-2 cursor-pointer' onclick='sortNum(3)'>Sinal</th><th onclick='sortStr(4)' class='cursor-pointer'>Serial</th></tr></thead><tbody></tbody></table>";
             pon = pon.children[0].children[1];
             let flip = false;
+            // Loop para preencher a tabela
             for (let ont in xml){
                 let pos = xml[ont].children[1].innerHTML.replace("1/1/", "").split('/')[2];
                 let status = xml[ont].children[4].innerHTML;
@@ -34,6 +40,8 @@ function getPON(id, pon){
             console.log(error);
         });
 }
+
+// organizar as tabelas de números
 function sortNum(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("onus");
@@ -86,6 +94,7 @@ function sortNum(n) {
         }
     }
 }
+// organizar as tabelas de texto
 function sortStr(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("onus");
