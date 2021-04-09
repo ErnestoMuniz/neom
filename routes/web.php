@@ -19,6 +19,10 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [Controller::class, 'initial'])->middleware(['auth'])->name('dashboard');
+Route::get('/users', [Controller::class, 'users'])->middleware(['auth'])->name('users');
+Route::post('/newUser', [Controller::class, 'newUser'])->middleware(['auth'])->name('newUser');
+Route::post('/editUser', [Controller::class, 'editUser'])->middleware(['auth'])->name('editUser');
+Route::get('/removeUser', [Controller::class, 'removeUser'])->middleware(['auth'])->name('removeUser');
 
 Route::get('/pon', [Controller::class, 'pon'])
     ->name('pon');

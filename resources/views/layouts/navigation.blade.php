@@ -41,9 +41,12 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log out') }}
+                                <i class="gg-log-out inline-block m-0 align-middle"></i><span class="ml-4">{{ __('Log out') }}</span>
                             </x-dropdown-link>
                         </form>
+                        <x-dropdown-link :href="route('users')">
+                            <i class="gg-user-list inline-block m-0 align-middle"></i><span class="ml-2">{{ __('Gerenciar Usuários') }}</span>
+                        </x-dropdown-link>
                     </x-slot>
                 </x-dropdown>
             </div>

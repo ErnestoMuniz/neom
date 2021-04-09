@@ -149,3 +149,17 @@ function sortStr(n) {
         }
     }
 }
+
+// Edita os campos de usuário
+function editUser(id, nome, email, grupo) {
+    document.getElementById('id').value = id;
+    document.getElementById('name').value = nome;
+    document.getElementById('email').value = email;
+    if (grupo == 1){
+        document.getElementById('group').value = 'admin';
+    } else if (grupo == 2){
+        document.getElementById('group').value = 'n2';
+    } else {
+        document.getElementById('group').value = 'n1';
+    }
+}
