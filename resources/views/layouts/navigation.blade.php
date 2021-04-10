@@ -49,6 +49,11 @@
                                 <i class="gg-user-list inline-block m-0 align-middle"></i><span class="ml-2">{{ __('Gerenciar Usuários') }}</span>
                             </x-dropdown-link>
                         @endif
+                        @if(Auth::user()->hasRole('n2'))
+                            <x-dropdown-link :href="route('olts')">
+                                <i class="gg-database inline-block align-middle" style="--ggs: 0.8;"></i><span class="ml-2">{{ __('Gerenciar OLTs') }}</span>
+                            </x-dropdown-link>
+                        @endif
                     </x-slot>
                 </x-dropdown>
             </div>

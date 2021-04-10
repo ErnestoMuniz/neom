@@ -163,3 +163,13 @@ function editUser(id, nome, email, grupo) {
         document.getElementById('group').value = 'n1';
     }
 }
+
+// Edita os campos de olt
+function editOlt(id, nome, ip, user, slot, pon) {
+    document.getElementById('id').value = id;
+    document.getElementById('nome').value = nome;
+    document.getElementById('ip').value = ip;
+    document.getElementById('user').value = user;
+    document.getElementById('slot').value = slot;
+    document.getElementById('pon').value = pon;
+}

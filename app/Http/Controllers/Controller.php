@@ -59,64 +59,11 @@ class Controller extends BaseController
         }
     }
 
-    // Cria novo usuário
-    public function newUser(Request $request){
-        if (Auth::user()->hasRole('admin')){
-            app()[PermissionRegistrar::class]->forgetCachedPermissions();
-            $user = User::factory()->create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ]);
-            if ($request->group == 'admin'){
-                $user->assignRole('admin', 'n2', 'n1');
-            } elseif ($request->group == 'n2') {
-                $user->assignRole('n2', 'n1');
-            } else {
-                $user->assignRole('n1');
-            }
-            return redirect()->route('users');
-        } else {
-            return redirect()->route('dashboard');
-        }
-    }
-
-    // Edita um usuário
-    public function editUser(Request $request){
-        if (Auth::user()->hasRole('admin')){
-            if ($request->password != ''){
-                $password = Hash::make($request->password);
-                DB::update("update users set name='$request->name', email='$request->email', password='$password' where id=$request->id");
-            } else {
-                DB::update("update users set name='$request->name', email='$request->email' where id=$request->id");
-            }
-            DB::delete("delete from model_has_roles where model_id=$request->id");
-            if ($request->group == 'admin'){
-                $user = User::find($request->id);
-                $user->syncRoles(['n1', 'n2', 'admin']);
-            } elseif ($request->group == 'n2'){
-                $user = User::find($request->id);
-                $user->syncRoles(['n1', 'n2']);
-            } else {
-                $user = User::find($request->id);
-                $user->syncRoles(['n1']);
-            }
-            return redirect()->route('users');
-        } else {
-            return redirect()->route('dashboard');
-        }
-
-    }
-
-    // Remove um usuário
-    public function removeUser(Request $request){
-        if (Auth::user()->hasRole('admin')){
-            $user = User::find($request->id);
-            $user->syncRoles([]);
-            $id = $_GET['id'];
-            DB::delete("delete from users where id=$id");
-
-            return redirect()->route('users');
+    // Retorna a lsita de olts
+    public function olts(){
+        if(Auth::user()->hasRole('n2')){
+            $olts = DB::select('select * from olts');
+            return view("olts", ['olts'=>$olts]);
         } else {
             return redirect()->route('dashboard');
         }
