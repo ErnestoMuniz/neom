@@ -44,9 +44,11 @@
                                 <i class="gg-log-out inline-block m-0 align-middle"></i><span class="ml-4">{{ __('Log out') }}</span>
                             </x-dropdown-link>
                         </form>
-                        <x-dropdown-link :href="route('users')">
-                            <i class="gg-user-list inline-block m-0 align-middle"></i><span class="ml-2">{{ __('Gerenciar Usuários') }}</span>
-                        </x-dropdown-link>
+                        @if(Auth::user()->hasRole('admin'))
+                            <x-dropdown-link :href="route('users')">
+                                <i class="gg-user-list inline-block m-0 align-middle"></i><span class="ml-2">{{ __('Gerenciar Usuários') }}</span>
+                            </x-dropdown-link>
+                        @endif
                     </x-slot>
                 </x-dropdown>
             </div>
