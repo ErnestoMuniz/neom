@@ -10,7 +10,6 @@
                                 <th class="p-2">Nome</th>
                                 <th class="p-2">IP</th>
                                 <th class="p-2">Fabricante</th>
-                                <th class="p-2">Modelo</th>
                                 <th class="p-2">Firmware</th>
                                 <th class="p-2">CPU</th>
                                 <th class="p-2">Memória</th>
@@ -22,9 +21,8 @@
                                     <td class="p-2"><a href="/navigate?olt={{ $olt->id }}">{{ $olt->nome }}</a></td>
                                     <td class="p-2">{{ $olt->ip }}</td>
                                     <td class="p-2">{{ ucfirst($olt->vendor) }}</td>
-                                    <td class="p-2">{{ $olt->model }}</td>
-                                    <td class="p-2">{{ $olt->firmware }}</td>
-                                    <td class="p-2 text-center">{{ $olt->last_cpu }}%</td>
+                                    <td class="p-2">{{ $olt->firmware }} <a href="/firmware?id={{ $olt->id }}"><i class="gg-sync inline-block align-middle text-green-600" style="--ggs: 0.8;"></i></a></td>
+                                    <td class="p-2 text-center">{{ $olt->last_cpu }}% <a href="/cpu?id={{ $olt->id }}"><i class="gg-sync inline-block align-middle text-green-600" style="--ggs: 0.8;"></i></a></td>
                                     <td class="p-2 text-center">{{ $olt->last_mem }}% <a href="/mem?id={{ $olt->id }}"><i class="gg-sync inline-block align-middle text-green-600" style="--ggs: 0.8;"></i></a></td>
                                 </tr>
                             @endforeach

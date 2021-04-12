@@ -1,5 +1,5 @@
 // Função que requisita e trata os dados das onus de uma pon
-function getPON(id, pon){
+function getPON(id, pon, srch){
     // cria icone de carregando
     document.getElementById('pon').innerHTML = "<div class='text-center'><i class='gg-loadbar inline-block mx-auto align-middle mr-1'></i><span>Carregando</span></div>";
     // faz a requisição
@@ -12,9 +12,7 @@ function getPON(id, pon){
             // remove o ícone de carregando
             pon = document.getElementById('pon');
             // cria a tabela de ONUs
-            pon.innerHTML = "<table id='onus' class='table-auto mx-auto shadow-md'><thead><tr class='bg-gray-300 uppercase text-sm'><th onclick='sortNum(0)' class='py-1 px-2 cursor-pointer rounded-tl-lg'>Num</th><th class='py-1 px-2 cursor-pointer' onclick='sortStr(1)'>Status</th><th class='py-1 px-2 cursor-pointer' onclick='sortStr(2)'>Descrição</th><th class='py-1 px-2 cursor-pointer' onclick='sortNum(3)'>Sinal</th><th onclick='sortStr(4)' class='py-1 px-2 cursor-pointer rounded-tr-lg'>Serial</th></tr></thead><tbody></tbody></table>";
-            pon.innerHTML += "<style>.gg-check:after {border-color: #84CC16;}</style>";
-            pon = pon.children[0].children[1];
+            pon.innerHTML = "";
             let flip = false;
             // Loop para preencher a tabela
             for (let ont in xml){
@@ -34,9 +32,17 @@ function getPON(id, pon){
                 }
                 let serial = xml[ont].children[2].innerHTML;
                 if (flip){
-                    pon.innerHTML += `<tr class="bg-gray-100"><td class='py-1 px-2'>${pos}</td><td class='py-1 px-2'>${status}</td><td class='py-1 px-2'>${desc}<td class='py-1 px-2'>${sinal}</td><td>${serial}</td></tr>`;
+                    if (xml[ont].children[1].innerHTML == srch){
+                        pon.innerHTML += `<tr class="bg-gray-100 border-2 border-blue-500"><td class='py-1 px-2'>${pos}</td><td class='py-1 px-2'>${status}</td><td class='py-1 px-2'>${desc}<td class='py-1 px-2'>${sinal}</td><td>${serial}</td></tr>`;
+                    } else {
+                        pon.innerHTML += `<tr class="bg-gray-100 border-b"><td class='py-1 px-2'>${pos}</td><td class='py-1 px-2'>${status}</td><td class='py-1 px-2'>${desc}<td class='py-1 px-2'>${sinal}</td><td>${serial}</td></tr>`;
+                    }
                 } else {
-                    pon.innerHTML += `<tr class="bg-white"><td class='py-1 px-2'>${pos}</td><td class='py-1 px-2'>${status}</td><td class='py-1 px-2'>${desc}<td class='py-1 px-2'>${sinal}</td><td>${serial}</td></tr>`;
+                    if (xml[ont].children[1].innerHTML == srch){
+                        pon.innerHTML += `<tr class="bg-white border-3 border-blue-500"><td class='py-1 px-2'>${pos}</td><td class='py-1 px-2'>${status}</td><td class='py-1 px-2'>${desc}<td class='py-1 px-2'>${sinal}</td><td>${serial}</td></tr>`;
+                    } else {
+                        pon.innerHTML += `<tr class="bg-white border-b"><td class='py-1 px-2'>${pos}</td><td class='py-1 px-2'>${status}</td><td class='py-1 px-2'>${desc}<td class='py-1 px-2'>${sinal}</td><td>${serial}</td></tr>`;
+                    }
                 }
                 flip = !flip;
             }
@@ -45,6 +51,14 @@ function getPON(id, pon){
         .catch(function (error){
             console.log(error);
         });
+}
+
+function getONU(id){
+    let param = document.getElementById('search').value;
+    axios.get(`onu?id=${id}&onu=${param}`).then(function (response){
+        let pon = response.data.split('/');
+        getPON(id, `${pon[2]}/${pon[3]}`, response.data);
+    })
 }
 
 // organizar as tabelas de números

@@ -37,6 +37,9 @@ Route::get('/removeUser', [UserController::class, 'removeUser'])->middleware(['a
 
 // Utilitários
 Route::get('/pon', [Controller::class, 'pon'])->name('pon');
+Route::get('/onu', [Controller::class, 'onu'])->name('onu');
 Route::get('/mem', [Controller::class, 'mem'])->name('mem');
+Route::get('/cpu', [Controller::class, 'cpu'])->name('cpu');
+Route::get('/firmware', [Controller::class, 'firmware'])->name('firmware');
 
 require __DIR__.'/auth.php';
