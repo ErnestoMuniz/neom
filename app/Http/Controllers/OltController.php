@@ -28,10 +28,11 @@ class OltController extends Controller
                 'pass' => $request->pass,
                 'slot' => $request->slots,
                 'pon' => $request->pons,
+                'vendor' => $request->vendor,
             ]);
-            return redirect()->route('olts');
+            return back();
         } else {
-            return redirect()->route('dashboard');
+            return back();
         }
     }
 
@@ -39,13 +40,13 @@ class OltController extends Controller
     public function editOlt(Request $request){
         if (Auth::user()->hasRole('admin')){
             if ($request->pass != ''){
-                DB::update("update olts set nome='$request->nome', ip='$request->ip', user='$request->user', pass='$request->pass', slot='$request->slots', pon='$request->pons' where id=$request->id");
+                DB::update("update olts set nome='$request->nome', ip='$request->ip', user='$request->user', pass='$request->pass', slot=$request->slots, pon=$request->pons, vendor='$request->vendor' where id=$request->id");
             } else {
-                DB::update("update olts set nome='$request->nome', ip='$request->ip', user='$request->user', slot=$request->slots, pon=$request->pons where id=$request->id");
+                DB::update("update olts set nome='$request->nome', ip='$request->ip', user='$request->user', slot=$request->slots, pon=$request->pons, vendor='$request->vendor' where id=$request->id");
             }
-            return redirect()->route('olts');
+            return back();
         } else {
-            return redirect()->route('dashboard');
+            return back();
         }
     }
 
@@ -55,9 +56,9 @@ class OltController extends Controller
             $id = $_GET['id'];
             DB::delete("delete from olts where id=$id");
 
-            return redirect()->route('olts');
+            return back();
         } else {
-            return redirect()->route('dashboard');
+            return back();
         }
     }
 }

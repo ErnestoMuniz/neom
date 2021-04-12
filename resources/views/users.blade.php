@@ -5,30 +5,15 @@
                 <div class="bg-white overflow-hidden shadow-md sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200 grid grid-cols-4 gap-2">
                         <div class="col-span-2">
-                            <table class="table-auto w-full shadow-md">
+                            <table class="table-auto striped w-full shadow-md overflow-hidden rounded-lg">
                                 <thead>
                                     <tr class="bg-gray-300">
-                                        <th class='py-1 px-2 cursor-pointer rounded-tl-lg'>Usuário</th>
+                                        <th class='py-1 px-2 cursor-pointer'>Usuário</th>
                                         <th class='py-1 px-2 cursor-pointer'>Email</th>
                                         <th class='py-1 px-2 cursor-pointer'>Grupo</th>
-                                        <th class='py-1 px-2 cursor-pointer rounded-tr-lg'>Ações</th>
+                                        <th class='py-1 px-2 cursor-pointer'>Ações</th>
                                     </tr>
                                 </thead>
-                                <!-- Estilizar a tabela -->
-                                <style>
-                                    tr:nth-child(even){
-                                        background-color: #f3f4f6;
-                                    }
-                                    tr:last-child td:first-child{
-                                        border-bottom-left-radius: 0.5rem;
-                                    }
-                                    tr:last-child td:last-child{
-                                        border-bottom-right-radius: 0.5rem;
-                                    }
-                                    tr:last-child {
-                                        border-bottom: 0;
-                                    }
-                                </style>
                                 <tbody>
                                     @foreach($users as $user)
                                         {{-- Gerar a tabela --}}

@@ -12,13 +12,19 @@ function getPON(id, pon){
             // remove o ícone de carregando
             pon = document.getElementById('pon');
             // cria a tabela de ONUs
-            pon.innerHTML = "<table id='onus' class='table-auto mx-auto rounded-l'><thead><tr class='bg-gray-300 uppercase text-sm'><th onclick='sortNum(0)' class='py-1 px-2 cursor-pointer'>Num</th><th class='py-1 px-2 cursor-pointer' onclick='sortStr(1)'>Status</th><th class='py-1 px-2 cursor-pointer' onclick='sortStr(2)'>Descrição</th><th class='py-1 px-2 cursor-pointer' onclick='sortNum(3)'>Sinal</th><th onclick='sortStr(4)' class='cursor-pointer'>Serial</th></tr></thead><tbody></tbody></table>";
+            pon.innerHTML = "<table id='onus' class='table-auto mx-auto shadow-md'><thead><tr class='bg-gray-300 uppercase text-sm'><th onclick='sortNum(0)' class='py-1 px-2 cursor-pointer rounded-tl-lg'>Num</th><th class='py-1 px-2 cursor-pointer' onclick='sortStr(1)'>Status</th><th class='py-1 px-2 cursor-pointer' onclick='sortStr(2)'>Descrição</th><th class='py-1 px-2 cursor-pointer' onclick='sortNum(3)'>Sinal</th><th onclick='sortStr(4)' class='py-1 px-2 cursor-pointer rounded-tr-lg'>Serial</th></tr></thead><tbody></tbody></table>";
+            pon.innerHTML += "<style>.gg-check:after {border-color: #84CC16;}</style>";
             pon = pon.children[0].children[1];
             let flip = false;
             // Loop para preencher a tabela
             for (let ont in xml){
                 let pos = xml[ont].children[1].innerHTML.replace("1/1/", "").split('/')[2];
-                let status = xml[ont].children[4].innerHTML;
+                let status;
+                if (xml[ont].children[4].innerHTML == "up"){
+                    status = "<i class='gg-check text-green-600 border-transparent'></i>";
+                } else {
+                    status = "<i class='gg-close text-red-600'></i>";
+                }
                 let desc = xml[ont].children[7].innerHTML;
                 let sinal;
                 if (xml[ont].children[5].innerHTML == "invalid"){
@@ -94,6 +100,7 @@ function sortNum(n) {
         }
     }
 }
+
 // organizar as tabelas de texto
 function sortStr(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
@@ -165,11 +172,12 @@ function editUser(id, nome, email, grupo) {
 }
 
 // Edita os campos de olt
-function editOlt(id, nome, ip, user, slot, pon) {
+function editOlt(id, nome, ip, user, slot, pon, vendor) {
     document.getElementById('id').value = id;
     document.getElementById('nome').value = nome;
     document.getElementById('ip').value = ip;
     document.getElementById('user').value = user;
     document.getElementById('slot').value = slot;
     document.getElementById('pon').value = pon;
+    document.getElementById('vendor').value = vendor;
 }

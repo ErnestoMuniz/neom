@@ -21,6 +21,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [Controller::class, 'initial'])->middleware(['auth'])->name('dashboard');
+Route::get('/navigate', [Controller::class, 'navigate'])->middleware(['auth'])->name('navigate');
 
 // Rotas de OLTs
 Route::get('/olts', [Controller::class, 'olts'])->middleware(['auth'])->name('olts');
@@ -34,7 +35,8 @@ Route::post('/newUser', [UserController::class, 'newUser'])->middleware(['auth']
 Route::post('/editUser', [UserController::class, 'editUser'])->middleware(['auth'])->name('editUser');
 Route::get('/removeUser', [UserController::class, 'removeUser'])->middleware(['auth'])->name('removeUser');
 
-Route::get('/pon', [Controller::class, 'pon'])
-    ->name('pon');
+// Utilitários
+Route::get('/pon', [Controller::class, 'pon'])->name('pon');
+Route::get('/mem', [Controller::class, 'mem'])->name('mem');
 
 require __DIR__.'/auth.php';

@@ -32,9 +32,9 @@ class UserController extends Controller
             } else {
                 $user->assignRole('n1');
             }
-            return redirect()->route('users');
+            return back();
         } else {
-            return redirect()->route('dashboard');
+            return back();
         }
     }
 
@@ -58,9 +58,9 @@ class UserController extends Controller
                 $user = User::find($request->id);
                 $user->syncRoles(['n1']);
             }
-            return redirect()->route('users');
+            return back();
         } else {
-            return redirect()->route('dashboard');
+            return back();
         }
     }
 
@@ -72,9 +72,9 @@ class UserController extends Controller
             $id = $_GET['id'];
             DB::delete("delete from users where id=$id");
 
-            return redirect()->route('users');
+            return back();
         } else {
-            return redirect()->route('dashboard');
+            return back();
         }
     }
 }

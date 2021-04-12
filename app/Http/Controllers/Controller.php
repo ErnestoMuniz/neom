@@ -11,6 +11,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use SimpleXMLElement;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +29,7 @@ class Controller extends BaseController
         $args = DB::select("select * from olts where id='$id'");
         $args = $args[0];
         // executa script python
-        $output = shell_exec("python python/isam_count.py $args->ip $args->user $args->pass 1/1/$cmd");
+        $output = shell_exec("python python/nokia/isam_count.py $args->ip $args->user $args->pass 1/1/$cmd");
         // remove linhas inuteis do resultado
         $arr = explode("\n", $output);
         array_shift($arr);
@@ -38,10 +39,38 @@ class Controller extends BaseController
         echo implode("\n", $arr);
     }
 
-    // Retorna dashboard com infomções das OLTs
+    // Retorna uso de memória
+    public function mem(){
+        // cria variaveis
+        $id = $_GET['id'];
+        // pega informações sobre a olt
+        $args = DB::select("select * from olts where id='$id'");
+        $args = $args[0];
+        // executa script python
+        $output = shell_exec("python python/nokia/isam_mem.py $args->ip $args->user $args->pass");
+        // remove linhas inuteis do resultado
+        $arr = explode("\n", $output);
+        array_shift($arr);
+        unset($arr[count($arr) -1]);
+        unset($arr[count($arr) -1]);
+        // atualiza a linha na tabela do banco de dados
+        $xml = new SimpleXMLElement(implode("\n", $arr));
+        $mem = $xml->hierarchy->hierarchy->hierarchy->instance[0]->info[2];
+        DB::update("update olts set last_mem=$mem where id=$id");
+        return redirect()->route('dashboard');
+    }
+
+    // Retorna dashboard com informações das OLTs
     public function initial(){
         $olts = DB::select('select * from olts');
         return view('dashboard', ['olts'=>$olts]);
+    }
+
+    // Retorna navigate com informações da OLT
+    public function navigate(){
+        $olt = $_GET['olt'];
+        $olt = DB::select("select * from olts where id=$olt");
+        return view('navigate', ['olt'=>$olt[0]]);
     }
 
     // Retorna a lista de usuários e grupos
@@ -55,7 +84,7 @@ class Controller extends BaseController
             }
             return view("users", ['users'=>$users]);
         } else {
-            return redirect()->route('dashboard');
+            return back();
         }
     }
 
@@ -65,7 +94,7 @@ class Controller extends BaseController
             $olts = DB::select('select * from olts');
             return view("olts", ['olts'=>$olts]);
         } else {
-            return redirect()->route('dashboard');
+            return back();
         }
     }
 }

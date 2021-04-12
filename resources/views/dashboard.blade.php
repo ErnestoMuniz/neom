@@ -1,31 +1,35 @@
 <x-app-layout>
-
     <div class="py-12 min-h-full">
         <div class="mx-3 sm:px-6 lg:px-8">
         <div class="mx-3 sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-md sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200 grid grid-cols-6 gap-2">
-                    <div class="col-span-1 border-r-2">
-                        <ul id="olts" class="collapsibleList cursor-pointer">
+                <div class="p-6 bg-white border-b border-gray-200 items-center">
+                    <table class="table-auto striped hadow-md mx-auto rounded-lg overflow-hidden shadow-md">
+                        <thead class="w-full">
+                            <tr class="bg-gray-400">
+                                <th class="p-2">Nome</th>
+                                <th class="p-2">IP</th>
+                                <th class="p-2">Fabricante</th>
+                                <th class="p-2">Modelo</th>
+                                <th class="p-2">Firmware</th>
+                                <th class="p-2">CPU</th>
+                                <th class="p-2">Memória</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             @foreach($olts as $olt)
-                                <li class="mb-2"><i class="gg-server inline-block align-middle"></i><span class="p-2">{{ $olt->nome }}</span>
-                                    <ul class="collapsibleList ml-4">
-                                        @for($i = 1; $i <= $olt->slot; $i++)
-                                            <li><i class="gg-database inline-block align-middle" style="--ggs: 0.8;"></i><span class="p-2">Slot{{ $i }}</span>
-                                            <ul class="ml-4 collapsibleList">
-                                                @for($j = 1; $j <= $olt->pon; $j++)
-                                                    <li onclick="getPON({{ $olt->id }}, '{{ $i }}/{{ $j }}')"><i class="gg-usb-c inline-block align-middle" style="--ggs: 0.8;"></i><span class="p-2">PON{{ $j }}</span></li>
-                                                @endfor
-                                            </ul>
-                                            </li>
-                                        @endfor
-                                    </ul>
-                                </li>
+                                <tr class="border-b">
+                                    <td class="p-2"><a href="/navigate?olt={{ $olt->id }}">{{ $olt->nome }}</a></td>
+                                    <td class="p-2">{{ $olt->ip }}</td>
+                                    <td class="p-2">{{ ucfirst($olt->vendor) }}</td>
+                                    <td class="p-2">{{ $olt->model }}</td>
+                                    <td class="p-2">{{ $olt->firmware }}</td>
+                                    <td class="p-2 text-center">{{ $olt->last_cpu }}%</td>
+                                    <td class="p-2 text-center">{{ $olt->last_mem }}% <a href="/mem?id={{ $olt->id }}"><i class="gg-sync inline-block align-middle text-green-600" style="--ggs: 0.8;"></i></a></td>
+                                </tr>
                             @endforeach
-                        </ul>
-                    </div>
-                    <div class="col-span-3" id="pon"></div>
-                    <div class="col-span-2 border-l-2"></div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

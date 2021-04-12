@@ -22,6 +22,11 @@ class CreateOltsTable extends Migration
             $table->string('pass');
             $table->integer('slot');
             $table->integer('pon');
+            $table->string('vendor');
+            $table->string('model')->nullable();
+            $table->string('firmware')->nullable();
+            $table->integer('last_cpu')->nullable();
+            $table->integer('last_mem')->nullable();
         });
     }
 

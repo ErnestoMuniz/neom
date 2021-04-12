@@ -5,32 +5,18 @@
                 <div class="bg-white overflow-hidden shadow-md sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200 grid grid-cols-4 gap-2">
                         <div class="col-span-2">
-                            <table class="table-auto w-full shadow-md">
+                            <table class="table-auto striped w-full shadow-md overflow-hidden rounded-lg">
                                 <thead>
                                     <tr class="bg-gray-300">
-                                        <th class='py-1 px-2 cursor-pointer rounded-tl-lg'>Nome</th>
+                                        <th class='py-1 px-2 cursor-pointer'>Nome</th>
                                         <th class='py-1 px-2 cursor-pointer'>IP</th>
                                         <th class='py-1 px-2 cursor-pointer'>User</th>
                                         <th class='py-1 px-2 cursor-pointer'>Slots</th>
                                         <th class='py-1 px-2 cursor-pointer'>PONs</th>
-                                        <th class='py-1 px-2 cursor-pointer rounded-tr-lg'>Ações</th>
+                                        <th class='py-1 px-2 cursor-pointer'>Fabricante</th>
+                                        <th class='py-1 px-2 cursor-pointer'>Ações</th>
                                     </tr>
                                 </thead>
-                                <!-- Estilizar a tabela -->
-                                <style>
-                                    tr:nth-child(even){
-                                        background-color: #f3f4f6;
-                                    }
-                                    tr:last-child td:first-child{
-                                        border-bottom-left-radius: 0.5rem;
-                                    }
-                                    tr:last-child td:last-child{
-                                        border-bottom-right-radius: 0.5rem;
-                                    }
-                                    tr:last-child {
-                                        border-bottom: 0;
-                                    }
-                                </style>
                                 <tbody>
                                     @foreach($olts as $olt)
                                         {{-- Gerar a tabela --}}
@@ -40,8 +26,9 @@
                                             <td>{{ $olt->user }}</td>
                                             <td>{{ $olt->slot }}</td>
                                             <td>{{ $olt->pon }}</td>
+                                            <td>{{ ucfirst($olt->vendor) }}</td>
                                             <td class="text-center">
-                                                <i onclick="editOlt({{ $olt->id }}, '{{ $olt->nome }}', '{{ $olt->ip }}', '{{ $olt->user }}', {{ $olt->slot }}, '{{ $olt->pon }}')" class="gg-edit-markup inline-block align-middle text-blue-500 cursor-pointer" style="--ggs: 0.8;"></i>
+                                                <i onclick="editOlt({{ $olt->id }}, '{{ $olt->nome }}', '{{ $olt->ip }}', '{{ $olt->user }}', {{ $olt->slot }}, '{{ $olt->pon }}', '{{ $olt->vendor }}')" class="gg-edit-markup inline-block align-middle text-blue-500 cursor-pointer" style="--ggs: 0.8;"></i>
                                                 <a href="/removeOlt?id={{ $olt->id }}"><i class="gg-remove inline-block align-middle text-red-600 cursor-pointer" style="--ggs: 0.8;"></i></a>
                                             </td>
                                         </tr>
@@ -78,6 +65,15 @@
                                     <label>PONs:</label>
                                     <input class="rounded-lg border-gray-200" type="number" name="pons" id="pon" required>
                                 </div>
+                                <div class="block mb-2">
+                                    <label>Fabricante:</label>
+                                    <select class="rounded-lg border-gray-200" id="vendor" name="vendor">
+                                        <option value="nokia">Nokia</option>
+                                        <option value="fiberhome">FiberHome</option>
+                                        <option value="huawei">Huawei</option>
+                                        <option value="datacom">Datacom</option>
+                                    </select>
+                                </div>
                                 <input class="rounded-lg cursor-pointer bg-blue-400 px-2 py-1 text-white" type="submit" value="Editar">
                             </form>
                         </div>
@@ -109,6 +105,15 @@
                                 <div class="block mb-2">
                                     <label>PONs:</label>
                                     <input class="rounded-lg border-gray-200" type="number" name="pons" required>
+                                </div>
+                                <div class="block mb-2">
+                                    <label>Fabricante:</label>
+                                    <select class="rounded-lg border-gray-200" name="vendor">
+                                        <option value="nokia">Nokia</option>
+                                        <option value="fiberhome">FiberHome</option>
+                                        <option value="huawei">Huawei</option>
+                                        <option value="datacom">Datacom</option>
+                                    </select>
                                 </div>
                                 <input class="rounded-lg cursor-pointer bg-blue-400 px-2 py-1 text-white" type="submit" value="Cadastrar">
                             </form>
