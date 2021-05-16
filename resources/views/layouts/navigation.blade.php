@@ -44,16 +44,11 @@
                                 <i class="gg-log-out inline-block m-0 align-middle"></i><span class="ml-4">{{ __('Log out') }}</span>
                             </x-dropdown-link>
                         </form>
-                        @if(Auth::user()->hasRole('admin'))
-                            <x-dropdown-link :href="route('users')">
-                                <i class="gg-user-list inline-block m-0 align-middle"></i><span class="ml-2">{{ __('Gerenciar Usuários') }}</span>
+                        @can('browse_admin')
+                            <x-dropdown-link href="admin">
+                                <i class="gg-user-list inline-block m-0 align-middle"></i><span class="ml-2">{{ __('Painel Admin') }}</span>
                             </x-dropdown-link>
-                        @endif
-                        @if(Auth::user()->hasRole('n2'))
-                            <x-dropdown-link :href="route('olts')">
-                                <i class="gg-database inline-block align-middle" style="--ggs: 0.8;"></i><span class="ml-2">{{ __('Gerenciar OLTs') }}</span>
-                            </x-dropdown-link>
-                        @endif
+                        @endcan
                     </x-slot>
                 </x-dropdown>
             </div>
@@ -82,14 +77,14 @@
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="flex items-center px-4">
                 <div class="flex-shrink-0">
-                    <svg class="h-10 w-10 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg class="h-10 w-10 fill-current text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                 </div>
 
                 <div class="ml-3">
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                    <div class="font-medium text-base text-white">{{ Auth::user()->name }}</div>
+                    <div class="font-medium text-sm text-white">{{ Auth::user()->email }}</div>
                 </div>
             </div>
 
@@ -101,9 +96,14 @@
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log out') }}
+                        <i class="gg-log-out inline-block m-0 align-middle"></i><span class="ml-4">{{ __('Logout') }}</span>
                     </x-responsive-nav-link>
                 </form>
+                @can('browse_admin')
+                    <x-responsive-nav-link href="admin">
+                        <i class="gg-user-list inline-block m-0 align-middle"></i><span class="ml-2">{{ __('Painel Admin') }}</span>
+                    </x-responsive-nav-link>
+                @endcan
             </div>
         </div>
     </div>
