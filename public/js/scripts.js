@@ -6,45 +6,35 @@ function getPON(id, pon, srch){
     axios.get(`/pon?id=${id}&pon=${pon}`)
         .then(function (response){
             // trata o XML recebido
-            parser = new DOMParser();
-            xml = parser.parseFromString(response.data, "text/xml");
+            let parser = new DOMParser();
+            let xml = parser.parseFromString(response.data, "text/xml");
             xml = xml.getElementsByTagName("instance");
             // remove o ícone de carregando
             pon = document.getElementById('pon');
             // cria a tabela de ONUs
             pon.innerHTML = "";
-            let flip = false;
             // Loop para preencher a tabela
             for (let ont in xml){
                 let pos = xml[ont].children[1].innerHTML.replace("1/1/", "").split('/')[2];
                 let status;
-                if (xml[ont].children[4].innerHTML == "up"){
+                if (xml[ont].children[4].innerHTML === "up"){
                     status = "<i class='gg-check text-green-600 border-transparent'></i>";
                 } else {
                     status = "<i class='gg-close text-red-600'></i>";
                 }
                 let desc = xml[ont].children[7].innerHTML;
                 let sinal;
-                if (xml[ont].children[5].innerHTML == "invalid"){
+                if (xml[ont].children[5].innerHTML === "invalid"){
                     sinal = "-40.0";
                 } else {
                     sinal = xml[ont].children[5].innerHTML;
                 }
                 let serial = xml[ont].children[2].innerHTML;
-                if (flip){
-                    if (xml[ont].children[1].innerHTML == srch){
-                        pon.innerHTML += `<tr class="bg-gray-100 border-2 border-blue-500"><td class='py-1 px-2'>${pos}</td><td class='py-1 px-2'>${status}</td><td class='py-1 px-2'>${desc}<td class='py-1 px-2'>${sinal}</td><td>${serial}</td></tr>`;
-                    } else {
-                        pon.innerHTML += `<tr class="bg-gray-100 border-b"><td class='py-1 px-2'>${pos}</td><td class='py-1 px-2'>${status}</td><td class='py-1 px-2'>${desc}<td class='py-1 px-2'>${sinal}</td><td>${serial}</td></tr>`;
-                    }
+                if (xml[ont].children[1].innerHTML === srch){
+                    pon.innerHTML += `<tr class="border-2 table-active font-bold"><td>${pos}</td><td>${status}</td><td>${desc}<td>${sinal}</td><td>${serial}</td></tr>`;
                 } else {
-                    if (xml[ont].children[1].innerHTML == srch){
-                        pon.innerHTML += `<tr class="bg-white border-3 border-blue-500"><td class='py-1 px-2'>${pos}</td><td class='py-1 px-2'>${status}</td><td class='py-1 px-2'>${desc}<td class='py-1 px-2'>${sinal}</td><td>${serial}</td></tr>`;
-                    } else {
-                        pon.innerHTML += `<tr class="bg-white border-b"><td class='py-1 px-2'>${pos}</td><td class='py-1 px-2'>${status}</td><td class='py-1 px-2'>${desc}<td class='py-1 px-2'>${sinal}</td><td>${serial}</td></tr>`;
-                    }
+                    pon.innerHTML += `<tr class="border-b"><td>${pos}</td><td>${status}</td><td>${desc}<td>${sinal}</td><td>${serial}</td></tr>`;
                 }
-                flip = !flip;
             }
             document.getElementById('onus').className = 'table-sort';
         })
@@ -63,7 +53,7 @@ function getONU(id){
 
 // organizar as tabelas de números
 function sortNum(n) {
-    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("onus");
     switching = true;
     // Set the sorting direction to ascending:
@@ -85,12 +75,12 @@ function sortNum(n) {
             y = rows[i + 1].getElementsByTagName("TD")[n];
             /* Check if the two rows should switch place,
             based on the direction, asc or desc: */
-            if (dir == "asc") {
+            if (dir === "asc") {
                 if (Number(x.innerHTML) > Number(y.innerHTML)) {
                     shouldSwitch = true;
                     break;
                 }
-            } else if (dir == "desc") {
+            } else if (dir === "desc") {
                 if (Number(x.innerHTML) < Number(y.innerHTML)) {
                     shouldSwitch = true;
                     break;
@@ -107,7 +97,7 @@ function sortNum(n) {
         } else {
             /* If no switching has been done AND the direction is "asc",
             set the direction to "desc" and run the while loop again. */
-            if (switchcount == 0 && dir == "asc") {
+            if (switchcount === 0 && dir === "asc") {
                 dir = "desc";
                 switching = true;
             }
@@ -117,7 +107,7 @@ function sortNum(n) {
 
 // organizar as tabelas de texto
 function sortStr(n) {
-    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("onus");
     switching = true;
     // Set the sorting direction to ascending:
@@ -139,13 +129,13 @@ function sortStr(n) {
             y = rows[i + 1].getElementsByTagName("TD")[n];
             /* Check if the two rows should switch place,
             based on the direction, asc or desc: */
-            if (dir == "asc") {
+            if (dir === "asc") {
                 if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
                     // If so, mark as a switch and break the loop:
                     shouldSwitch = true;
                     break;
                 }
-            } else if (dir == "desc") {
+            } else if (dir === "desc") {
                 if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
                     // If so, mark as a switch and break the loop:
                     shouldSwitch = true;
@@ -163,7 +153,7 @@ function sortStr(n) {
         } else {
             /* If no switching has been done AND the direction is "asc",
             set the direction to "desc" and run the while loop again. */
-            if (switchcount == 0 && dir == "asc") {
+            if (switchcount === 0 && dir === "asc") {
                 dir = "desc";
                 switching = true;
             }
@@ -176,7 +166,7 @@ function editUser(id, nome, email, grupo) {
     document.getElementById('id').value = id;
     document.getElementById('name').value = nome;
     document.getElementById('email').value = email;
-    if (grupo == 1){
+    if (grupo === 1){
         document.getElementById('group').value = 'admin';
     } else if (grupo == 2){
         document.getElementById('group').value = 'n2';

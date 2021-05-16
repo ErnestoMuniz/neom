@@ -383,7 +383,7 @@ class DataRowsTableSeeder extends Seeder
                 'order'        => 2,
             ])->save();
         }
-        
+
         $dataRow = $this->dataRow($oltDataType, 'ip');
         if (!$dataRow->exists) {
             $dataRow->fill([
@@ -417,7 +417,7 @@ class DataRowsTableSeeder extends Seeder
         $dataRow = $this->dataRow($oltDataType, 'pass');
         if (!$dataRow->exists) {
             $dataRow->fill([
-                'type'         => 'password',
+                'type'         => 'text',
                 'display_name' => 'Senha',
                 'required'     => 1,
                 'browse'       => 1,
@@ -443,7 +443,7 @@ class DataRowsTableSeeder extends Seeder
                 'order'        => 6,
             ])->save();
         }
-        
+
         $dataRow = $this->dataRow($oltDataType, 'pon');
         if (!$dataRow->exists) {
             $dataRow->fill([
