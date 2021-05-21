@@ -21,12 +21,8 @@ Route::get('/', function () {
 Route::get('/dashboard', [Controller::class, 'initial'])->middleware(['auth'])->name('dashboard');
 Route::get('/navigate', [Controller::class, 'navigate'])->middleware(['auth'])->name('navigate');
 
-// Utilitários
-Route::get('/pon', [Controller::class, 'pon'])->name('pon');
-Route::get('/onu', [Controller::class, 'onu'])->name('onu');
-Route::get('/mem', [Controller::class, 'mem'])->name('mem');
-Route::get('/cpu', [Controller::class, 'cpu'])->name('cpu');
-Route::get('/firmware', [Controller::class, 'firmware'])->name('firmware');
+// Função para retornar informações das OLTs
+Route::get('/get/{vendor}/{function}', array('uses' => 'App\Http\Controllers\Controller@teste'));
 
 require __DIR__.'/auth.php';
 

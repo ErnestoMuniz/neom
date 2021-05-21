@@ -1,56 +1,3 @@
-// Função que requisita e trata os dados das onus de uma pon
-function getPON(id, pon, srch){
-    // cria icone de carregando
-    document.getElementById('pon').innerHTML = "<div class='text-center'><i class='gg-loadbar inline-block mx-auto align-middle mr-1'></i><span>Carregando</span></div>";
-    // faz a requisição
-    axios.get(`/pon?id=${id}&pon=${pon}`)
-        .then(function (response){
-            // trata o XML recebido
-            let parser = new DOMParser();
-            let xml = parser.parseFromString(response.data, "text/xml");
-            xml = xml.getElementsByTagName("instance");
-            // remove o ícone de carregando
-            pon = document.getElementById('pon');
-            // cria a tabela de ONUs
-            pon.innerHTML = "";
-            // Loop para preencher a tabela
-            for (let ont in xml){
-                let pos = xml[ont].children[1].innerHTML.replace("1/1/", "").split('/')[2];
-                let status;
-                if (xml[ont].children[4].innerHTML === "up"){
-                    status = "<i class='gg-check text-green-600 border-transparent'></i>";
-                } else {
-                    status = "<i class='gg-close text-red-600'></i>";
-                }
-                let desc = xml[ont].children[7].innerHTML;
-                let sinal;
-                if (xml[ont].children[5].innerHTML === "invalid"){
-                    sinal = "-40.0";
-                } else {
-                    sinal = xml[ont].children[5].innerHTML;
-                }
-                let serial = xml[ont].children[2].innerHTML;
-                if (xml[ont].children[1].innerHTML === srch){
-                    pon.innerHTML += `<tr class="border-2 table-active font-bold"><td>${pos}</td><td>${status}</td><td>${desc}<td>${sinal}</td><td>${serial}</td></tr>`;
-                } else {
-                    pon.innerHTML += `<tr class="border-b"><td>${pos}</td><td>${status}</td><td>${desc}<td>${sinal}</td><td>${serial}</td></tr>`;
-                }
-            }
-            document.getElementById('onus').className = 'table-sort';
-        })
-        .catch(function (error){
-            console.log(error);
-        });
-}
-
-function getONU(id){
-    let param = document.getElementById('search').value;
-    axios.get(`onu?id=${id}&onu=${param}`).then(function (response){
-        let pon = response.data.split('/');
-        getPON(id, `${pon[2]}/${pon[3]}`, response.data);
-    })
-}
-
 // organizar as tabelas de números
 function sortNum(n) {
     let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
@@ -159,29 +106,4 @@ function sortStr(n) {
             }
         }
     }
-}
-
-// Edita os campos de usuário
-function editUser(id, nome, email, grupo) {
-    document.getElementById('id').value = id;
-    document.getElementById('name').value = nome;
-    document.getElementById('email').value = email;
-    if (grupo === 1){
-        document.getElementById('group').value = 'admin';
-    } else if (grupo == 2){
-        document.getElementById('group').value = 'n2';
-    } else {
-        document.getElementById('group').value = 'n1';
-    }
-}
-
-// Edita os campos de olt
-function editOlt(id, nome, ip, user, slot, pon, vendor) {
-    document.getElementById('id').value = id;
-    document.getElementById('nome').value = nome;
-    document.getElementById('ip').value = ip;
-    document.getElementById('user').value = user;
-    document.getElementById('slot').value = slot;
-    document.getElementById('pon').value = pon;
-    document.getElementById('vendor').value = vendor;
 }

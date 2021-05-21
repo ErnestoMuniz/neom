@@ -1,5 +1,4 @@
 <x-app-layout>
-
     <div class="py-12 h-full">
         <div class="mx-3 sm:px-6 lg:px-8">
         <div class="mx-3 sm:px-6 lg:px-8">
@@ -47,4 +46,5 @@
             </div>
         </div>
     </div>
+        <script src="{{ asset('js/'.$olt->vendor.'.js') }}" defer></script>
 </x-app-layout>
