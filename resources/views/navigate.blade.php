@@ -10,7 +10,7 @@
                                 <li><i class="gg-database inline-block align-middle" style="--ggs: 0.8;"></i><span class="p-2">Slot{{ $i }}</span>
                                 <ul class="ml-4 collapsibleList p-0">
                                     @for($j = 1; $j <= $olt->pon; $j++)
-                                        <li onclick="getPON({{ $olt->id }}, '{{ $i }}/{{ $j }}', '0')"><i class="gg-usb-c inline-block align-middle" style="--ggs: 0.8;"></i><span class="p-2">PON{{ $j }}</span></li>
+                                        <li onclick="getPON({{ $olt->id }}, '{{ $i }}/{{ $j }}', '1500')"><i class="gg-usb-c inline-block align-middle" style="--ggs: 0.8;"></i><span class="p-2">PON{{ $j }}</span></li>
                                     @endfor
                                 </ul>
                                 </li>
@@ -24,7 +24,7 @@
                             <input class="rounded-lg" placeholder="Serial..." type="text" id="search">
                             <button class="rounded-lg bg-blue-500 text-white p-2" onclick="getONU({{ $olt->id }})">Pesquisar</button>
                         </div>
-                        <div class="mt-2 rounded-lg" style="height: 35rem; overflow-y: scroll;">
+                        <div class="mt-2 rounded-lg" style="height: 25rem; overflow-y: scroll;">
                             <table id='onus' class='table table-striped w-full mx-auto overflow-hidden m-0'>
                                 <thead>
                                 <tr class='bg-gray-700 bg-gradient-to-b text-white uppercase text-sm'>
@@ -35,9 +35,19 @@
                                     <th onclick='sortStr(4)' class='py-1 px-2 cursor-pointer'>Serial</th>
                                 </tr>
                                 </thead>
-                                <tbody id="pon">
-
-                                </tbody>
+                                <tbody id="pon"></tbody>
+                            </table>
+                        </div>
+                        <h5>ONUs Desautorizadas <button type="submit" onclick="getPending({{ $olt->id }})" class="btn btn-primary p-1 rounded-circle"><i class="gg-sync" style="--ggs: 0.8"></i></button></h5>
+                        <div class="mt-2 rounded-lg" style="overflow-y: scroll; height: 10rem;">
+                            <table class="table table-striped w-full mx-auto overflow-hidden m-0">
+                                <thead>
+                                    <tr class="bg-gray-700 bg-gradient-to-b text-white uppercase text-sm">
+                                        <th class="px-2 py-1">Setor</th>
+                                        <th class="px-2 py-1">Serial</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="request"></tbody>
                             </table>
                         </div>
                     </div>

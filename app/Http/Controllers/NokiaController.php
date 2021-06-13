@@ -97,4 +97,17 @@ class NokiaController extends Controller
         $firmware = $xml->hierarchy->hierarchy->hierarchy->hierarchy->info[0];
         DB::update("update olts set firmware='$firmware' where id=$id");
     }
+    public static function pending($id){
+        // pega informações sobre a olt
+        $args = DB::table('olts')->where('id', $id)->first();
+        // executa script python
+        $output = shell_exec("python python/nokia/isam_pending.py $args->ip $args->user $args->pass");
+        // remove linhas inuteis do resultado
+        $arr = explode("\n", $output);
+        array_shift($arr);
+        unset($arr[count($arr) -1]);
+        unset($arr[count($arr) -1]);
+        // retorna o resultado em XML
+        echo implode("\n", $arr);
+    }
 }

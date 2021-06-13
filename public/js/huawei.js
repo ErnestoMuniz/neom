@@ -3,40 +3,37 @@ function getPON(id, pon, srch){
     // cria icone de carregando
     document.getElementById('pon').innerHTML = "<div class='text-center'><i class='gg-loadbar inline-block mx-auto align-middle mr-1'></i><span>Carregando</span></div>";
     // faz a requisição
-    axios.get(`/get/nokia/pon?id=${id}&pon=${pon}`)
+    axios.get(`/get/huawei/pon?id=${id}&pon=${pon}`)
         .then(function (response){
-            // trata o XML recebido
-            let parser = new DOMParser();
-            let xml = parser.parseFromString(response.data, "text/xml");
-            xml = xml.getElementsByTagName("instance");
+            let json = response.data;
             // remove o ícone de carregando
             pon = document.getElementById('pon');
             // cria a tabela de ONUs
             pon.innerHTML = "";
             // Loop para preencher a tabela
-            for (let ont in xml){
-                let pos = xml[ont].children[1].innerHTML.replace("1/1/", "").split('/')[2];
+            for (let ont in json){
+                let onu = json[ont].split(' ');
+                onu = onu.filter(function (el) {
+                    return el != "";
+                });
+                console.log(onu);
+                let pos = onu[0];
                 let status;
-                if (xml[ont].children[4].innerHTML === "up"){
+                if (onu[4].split('/')[0] != "-40.00"){
                     status = "<i class='gg-check text-green-600 border-transparent'></i>";
                 } else {
                     status = "<i class='gg-close text-red-600'></i>";
                 }
-                let desc = xml[ont].children[7].innerHTML;
-                let sinal;
-                if (xml[ont].children[5].innerHTML === "invalid"){
-                    sinal = "-40.0";
-                } else {
-                    sinal = xml[ont].children[5].innerHTML;
-                }
-                let serial = xml[ont].children[2].innerHTML;
-                if (xml[ont].children[1].innerHTML === srch){
+                let desc = onu[5];
+                let sinal = onu[4].split('/')[0];
+                let serial = "HWTC" + onu[1][8] + onu[1][9] + onu[1][10] + onu[1][11] + onu[1][12] + onu[1][13] + onu[1][14] + onu[1][15];
+                if (onu[0] === srch){
                     pon.innerHTML += `<tr class="border-2 table-active font-bold"><td>${pos}</td><td>${status}</td><td>${desc}<td>${sinal}</td><td>${serial}</td></tr>`;
                 } else {
                     pon.innerHTML += `<tr class="border-b"><td>${pos}</td><td>${status}</td><td>${desc}<td>${sinal}</td><td>${serial}</td></tr>`;
                 }
             }
-            document.getElementById('onus').className = 'table-sort';
+            document.getElementById('onus').className = 'table table-striped w-full mx-auto overflow-hidden m-0 table-sort';
         })
         .catch(function (error){
             console.log(error);
@@ -55,15 +52,18 @@ function getONU(id){
 function getPending(id){
     let param = document.getElementById('search').value;
     document.getElementById('request').innerHTML = "<div class='text-center'><i class='gg-loadbar inline-block mx-auto align-middle mr-1'></i><span>Carregando</span></div>";
-    axios.get(`/get/nokia/pending?id=${id}`).then(function (response){
-        let parser = new DOMParser();
-        let xml = parser.parseFromString(response.data, "text/xml");
-        xml = xml.getElementsByTagName("instance");
+    axios.get(`/get/huawei/pending?id=${id}`).then(function (response){
+        let json = response.data;
         let pon = document.getElementById('request');
         pon.innerHTML = "";
-        for (let ont in xml){
-            let pos = xml[ont].children[1].innerHTML;
-            let serial = xml[ont].children[2].innerHTML;
+        for (let ont in json){
+            let onu = json[ont].split(' ');
+            onu = onu.filter(function (el) {
+                return el != "";
+            });
+            console.log(onu);
+            let pos = onu[6].replace('\r\n', '');
+            let serial = onu[11].split(')')[0].replace('(', '');
             pon.innerHTML += `<tr class="border-b"><td>${pos}</td><td>${serial}</td></tr>`;
         }
     })

@@ -37,6 +37,9 @@ class Controller extends BaseController
                         NokiaController::firmware($_GET['id']);
                         return redirect()->route('dashboard');
                         break;
+                    case 'pending':
+                        NokiaController::pending($_GET['id']);
+                        break;
                 }
             case 'datacom':
                 switch ($function) {
@@ -57,6 +60,30 @@ class Controller extends BaseController
                         break;
                     case 'onu':
                         DatacomController::onu($_GET['id'], $_GET['onu']);
+                        break;
+                    case 'pending':
+                        DatacomController::pending($_GET['id']);
+                        break;
+                }
+            case 'huawei':
+                switch ($function) {
+                    case 'firmware':
+                        HuaweiController::firmware($_GET['id']);
+                        return redirect()->route('dashboard');
+                        break;
+                    case 'cpu':
+                        HuaweiController::cpu($_GET['id']);
+                        return redirect()->route('dashboard');
+                        break;
+                    case 'mem':
+                        HuaweiController::mem($_GET['id']);
+                        return redirect()->route('dashboard');
+                        break;
+                    case 'pon':
+                        HuaweiController::pon($_GET['id'], $_GET['pon']);
+                        break;
+                    case 'pending':
+                        HuaweiController::pending($_GET['id']);
                         break;
                 }
         }
