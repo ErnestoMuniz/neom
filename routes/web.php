@@ -15,18 +15,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect('login');
 });
 
+Route::get('/home', function () {
+    return redirect('dashboard');
+});
 Route::get('/dashboard', [Controller::class, 'initial'])->middleware(['auth'])->name('dashboard');
 Route::get('/navigate', [Controller::class, 'navigate'])->middleware(['auth'])->name('navigate');
 
-// Função para retornar informações das OLTs
 Route::get('/get/{vendor}/{function}', array('uses' => 'App\Http\Controllers\Controller@teste'));
-
-require __DIR__.'/auth.php';
-
-
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
-});

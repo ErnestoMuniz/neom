@@ -18,74 +18,14 @@ class Controller extends BaseController
     public function teste($url, $function) {
         switch ($url) {
             case 'nokia':
-                switch ($function) {
-                    case 'pon':
-                        NokiaController::pon($_GET['id'], $_GET['pon']);
-                        break;
-                    case 'onu':
-                        NokiaController::onu($_GET['id'], $_GET['onu']);
-                        break;
-                    case 'cpu':
-                        NokiaController::cpu($_GET['id']);
-                        return redirect()->route('dashboard');
-                        break;
-                    case 'mem':
-                        NokiaController::mem($_GET['id']);
-                        return redirect()->route('dashboard');
-                        break;
-                    case 'firmware':
-                        NokiaController::firmware($_GET['id']);
-                        return redirect()->route('dashboard');
-                        break;
-                    case 'pending':
-                        NokiaController::pending($_GET['id']);
-                        break;
-                }
+                NokiaController::decide($function, $_GET);
+                break;
             case 'datacom':
-                switch ($function) {
-                    case 'cpu':
-                        DatacomController::cpu($_GET['id']);
-                        return redirect()->route('dashboard');
-                        break;
-                    case 'mem':
-                        DatacomController::mem($_GET['id']);
-                        return redirect()->route('dashboard');
-                        break;
-                    case 'firmware':
-                        DatacomController::firmware($_GET['id']);
-                        return redirect()->route('dashboard');
-                        break;
-                    case 'pon':
-                        DatacomController::pon($_GET['id'], $_GET['pon']);
-                        break;
-                    case 'onu':
-                        DatacomController::onu($_GET['id'], $_GET['onu']);
-                        break;
-                    case 'pending':
-                        DatacomController::pending($_GET['id']);
-                        break;
-                }
+                DatacomController::decide($function, $_GET);
+                break;
             case 'huawei':
-                switch ($function) {
-                    case 'firmware':
-                        HuaweiController::firmware($_GET['id']);
-                        return redirect()->route('dashboard');
-                        break;
-                    case 'cpu':
-                        HuaweiController::cpu($_GET['id']);
-                        return redirect()->route('dashboard');
-                        break;
-                    case 'mem':
-                        HuaweiController::mem($_GET['id']);
-                        return redirect()->route('dashboard');
-                        break;
-                    case 'pon':
-                        HuaweiController::pon($_GET['id'], $_GET['pon']);
-                        break;
-                    case 'pending':
-                        HuaweiController::pending($_GET['id']);
-                        break;
-                }
+                HuaweiController::decide($function, $_GET);
+                break;
         }
     }
 

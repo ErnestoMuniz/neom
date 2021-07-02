@@ -1,28 +1,48 @@
-<x-app-layout>
-    <div class="mt-12 mx-2 mx-md-5 items-center overflow-x-scroll md:overflow-x-auto">
-        <table class="table bg-white table-striped mx-auto rounded-lg overflow-hidden shadow-md">
-            <thead class="w-full">
-                <tr class="bg-gray-700 text-white">
-                    <th class="p-2">Nome</th>
-                    <th class="p-2">IP</th>
-                    <th class="p-2">Fabricante</th>
-                    <th class="p-2">Firmware</th>
-                    <th class="p-2">CPU</th>
-                    <th class="p-2">Memória</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($olts as $olt)
-                    <tr class="border-b">
-                        <td class="p-2"><a href="/navigate?olt={{ $olt->id }}">{{ $olt->nome }}</a></td>
-                        <td class="p-2">{{ $olt->ip }}</td>
-                        <td class="p-2">{{ ucfirst($olt->vendor) }}</td>
-                        <td class="p-2">{{ $olt->firmware }} <a href="/get/{{ $olt->vendor }}/firmware?id={{ $olt->id }}"><i class="gg-sync inline-block align-middle text-green-600" style="--ggs: 0.8;"></i></a></td>
-                        <td class="p-2 text-center">{{ $olt->last_cpu }}% <a href="/get/{{ $olt->vendor }}/cpu?id={{ $olt->id }}"><i class="gg-sync inline-block align-middle text-green-600" style="--ggs: 0.8;"></i></a></td>
-                        <td class="p-2 text-center">{{ $olt->last_mem }}% <a href="/get/{{ $olt->vendor }}/mem?id={{ $olt->id }}"><i class="gg-sync inline-block align-middle text-green-600" style="--ggs: 0.8;"></i></a></td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</x-app-layout>
+@extends(backpack_view('blank'))
+
+@php
+    Widget::add()->to('before_content')
+        ->type('div')
+        ->class('row col-md-12 ml-1')
+        ->content([
+            [
+                'type'        => 'progress',
+                'class'       => 'card text-white bg-info mb-2 text-center',
+                'value'       => '<i class="la la-server"></i> ' . \App\Models\Olt::count(),
+                'description' => 'OLTs.'
+            ],
+            [
+                'type'        => 'progress',
+                'class'       => 'card text-white bg-info mb-2 text-center',
+                'value'       => '<i class="la la-user"></i> ' . \App\Models\User::count(),
+                'description' => 'Users'
+            ]
+    ]);
+@endphp
+
+@section('content')
+    <table class="bg-white table table-striped table-hover nowrap rounded shadow-sm border-xs mt-2 dataTable dtr-inline collapsed has-hidden-columns overflow-hidden">
+        <thead class="w-full">
+        <tr class="bg-gray-700 text-white">
+            <th class="p-2">Name</th>
+            <th class="p-2">IP</th>
+            <th class="p-2">Vendor</th>
+            <th class="p-2">Firmware</th>
+            <th class="p-2">CPU</th>
+            <th class="p-2">Memory</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($olts as $olt)
+            <tr class="border-b">
+                <td class="p-2"><a href="/navigate?olt={{ $olt->id }}">{{ $olt->nome }}</a></td>
+                <td class="p-2">{{ $olt->ip }}</td>
+                <td class="p-2">{{ ucfirst($olt->vendor) }}</td>
+                <td class="p-2">{{ $olt->firmware }} <a href="/get/{{ $olt->vendor }}/firmware?id={{ $olt->id }}"><i class="las la-sync"></i></a></td>
+                <td class="p-2 text-center">{{ $olt->last_cpu }}% <a href="/get/{{ $olt->vendor }}/cpu?id={{ $olt->id }}"><i class="las la-sync"></i></a></td>
+                <td class="p-2 text-center">{{ $olt->last_mem }}% <a href="/get/{{ $olt->vendor }}/mem?id={{ $olt->id }}"><i class="las la-sync"></i></a></td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+@endsection

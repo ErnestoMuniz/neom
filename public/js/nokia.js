@@ -18,9 +18,9 @@ function getPON(id, pon, srch){
                 let pos = xml[ont].children[1].innerHTML.replace("1/1/", "").split('/')[2];
                 let status;
                 if (xml[ont].children[4].innerHTML === "up"){
-                    status = "<i class='gg-check text-green-600 border-transparent'></i>";
+                    status = "<span class='badge badge-success'>Active</span>";
                 } else {
-                    status = "<i class='gg-close text-red-600'></i>";
+                    status = "<span class='badge badge-danger'>Inactive</span>";
                 }
                 let desc = xml[ont].children[7].innerHTML;
                 let sinal;
@@ -28,6 +28,13 @@ function getPON(id, pon, srch){
                     sinal = "-40.0";
                 } else {
                     sinal = xml[ont].children[5].innerHTML;
+                }
+                if (sinal > -25) {
+                    sinal = `<span class='badge badge-success'>${sinal}</span>`;
+                } else if ((sinal >= -28) && (sinal <= -25)) {
+                    sinal = `<span class='badge badge-warning'>${sinal}</span>`;
+                } else {
+                    sinal = `<span class='badge badge-danger'>${sinal}</span>`;
                 }
                 let serial = xml[ont].children[2].innerHTML;
                 if (xml[ont].children[1].innerHTML === srch){

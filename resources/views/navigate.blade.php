@@ -1,60 +1,72 @@
-<x-app-layout>
-    <div class="py-12 h-full">
-        <div class="mx-3 sm:px-6 lg:px-8">
-        <div class="mx-3 sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-md sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200 md:grid md:grid-cols-7 md:gap-2">
-                    <div class="col-span-1 rounded-lg shadow-md p-3">
-                        <ul id="olts" class="collapsibleList cursor-pointer p-0">
-                            @for($i = 1; $i <= $olt->slot; $i++)
-                                <li><i class="gg-database inline-block align-middle" style="--ggs: 0.8;"></i><span class="p-2">Slot{{ $i }}</span>
-                                <ul class="ml-4 collapsibleList p-0">
-                                    @for($j = 1; $j <= $olt->pon; $j++)
-                                        <li onclick="getPON({{ $olt->id }}, '{{ $i }}/{{ $j }}', '1500')"><i class="gg-usb-c inline-block align-middle" style="--ggs: 0.8;"></i><span class="p-2">PON{{ $j }}</span></li>
-                                    @endfor
-                                </ul>
-                                </li>
-                            @endfor
-                        </ul>
+@extends(backpack_view('blank'))
+
+@php
+    $breadcrumbs = [
+      'Dashboard' => backpack_url('dashboard'),
+      'Navigate' => false,
+      $olt->nome => false
+    ];
+@endphp
+
+@section('content')
+    <div class="app-body rounded bg-gray-100">
+        <div class="sidebar sidebar-pills shadow-sm bg-white">
+            <nav class="sidebar-nav ps" style="max-height: 47em; overflow-y: auto !important;">
+                <ul class="nav">
+                    <li class="nav-title">Slots</li>
+                    @for($i = 1; $i <= $olt->slot; $i++)
+                        <li class="nav-item nav-dropdown">
+                            <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon las la-hdd"></i> Slot {{ $i }}</a>
+                            <ul class="nav-dropdown-items">
+                                @for($j = 1; $j <= $olt->pon; $j++)
+                                    <li class="nav-item nav-link" onclick="getPON({{ $olt->id }}, '{{ $i }}/{{ $j }}', '1500')"><i class="nav-icon las la-microchip"></i> PON{{ $j }}</li>
+                                @endfor
+                            </ul>
+                        </li>
+                    @endfor
+                </ul>
+            </nav>
+        </div>
+        <main class="main p-2">
+            <div class="row justify-content-md-end mb-2">
+                <div class="input-group col-md-4">
+                    <input class="form-control" type="text" placeholder="ONT Serial..." id="search">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" onclick="getONU({{ $olt->id }})"><i class="las la-search"></i></button>
                     </div>
-                    <div class="col-span-4 overflow-x-scroll md:overflow-x-auto">
-                        <style>.gg-check:after {border-color: #84CC16;}</style>
-                        <div class="rounded-lg p-2 shadow">
-                            <label>Pesquisar ONU:</label>
-                            <input class="rounded-lg" placeholder="Serial..." type="text" id="search">
-                            <button class="rounded-lg bg-blue-500 text-white p-2" onclick="getONU({{ $olt->id }})">Pesquisar</button>
-                        </div>
-                        <div class="mt-2 rounded-lg" style="height: 25rem; overflow-y: scroll;">
-                            <table id='onus' class='table table-striped w-full mx-auto overflow-hidden m-0'>
-                                <thead>
-                                <tr class='bg-gray-700 bg-gradient-to-b text-white uppercase text-sm'>
-                                    <th onclick='sortNum(0)' class='py-1 px-2 cursor-pointer'>Num</th>
-                                    <th class='py-1 px-2 cursor-pointer' onclick='sortStr(1)'>Status</th>
-                                    <th class='py-1 px-2 cursor-pointer' onclick='sortStr(2)'>Descrição</th>
-                                    <th class='py-1 px-2 cursor-pointer' onclick='sortNum(3)'>Sinal</th>
-                                    <th onclick='sortStr(4)' class='py-1 px-2 cursor-pointer'>Serial</th>
-                                </tr>
-                                </thead>
-                                <tbody id="pon"></tbody>
-                            </table>
-                        </div>
-                        <h5>ONUs Desautorizadas <button type="submit" onclick="getPending({{ $olt->id }})" class="btn btn-primary p-1 rounded-circle"><i class="gg-sync" style="--ggs: 0.8"></i></button></h5>
-                        <div class="mt-2 rounded-lg" style="overflow-y: scroll; height: 10rem;">
-                            <table class="table table-striped w-full mx-auto overflow-hidden m-0">
-                                <thead>
-                                    <tr class="bg-gray-700 bg-gradient-to-b text-white uppercase text-sm">
-                                        <th class="px-2 py-1">Setor</th>
-                                        <th class="px-2 py-1">Serial</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="request"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-span-2 border-l-2"></div>
                 </div>
             </div>
-        </div>
+            <div style="height: 30em; overflow: auto;">
+                <table class="bg-white table table-striped table-hover nowrap rounded shadow-sm border-xs dataTable dtr-inline collapsed has-hidden-columns overflow-hidden">
+                    <thead>
+                        <tr>
+                            <th>Num</th>
+                            <th>Status</th>
+                            <th>Description</th>
+                            <th>Signal</th>
+                            <th>Serial Number</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pon"></tbody>
+                </table>
+            </div>
+            <div class="text-right">
+                <span><b>Unauthorized ONUs</b></span>
+            </div>
+            <div style="height: 15em; overflow: auto;">
+                <table class="bg-white table table-striped table-hover nowrap rounded shadow-sm border-xs dataTable dtr-inline collapsed has-hidden-columns overflow-hidden">
+                    <thead>
+                        <tr>
+                            <th>PON</th>
+                            <th>Serial Number</th>
+                            <th class="text-right" style="font-size: 1.2em"><button class="btn btn-ghost-primary btn-pill" onclick="getPending({{ $olt->id }})"><i class="las la-sync"></i></button></th>
+                        </tr>
+                    </thead>
+                    <tbody id="request"></tbody>
+                </table>
+            </div>
+        </main>
     </div>
-        <script src="{{ asset('js/'.$olt->vendor.'.js') }}" defer></script>
-</x-app-layout>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{{ asset('js/'.$olt->vendor.'.js') }}" defer></script>
+@endsection

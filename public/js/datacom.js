@@ -19,9 +19,9 @@ function getPON(id, pon, srch){
                 let pos = json[ont]['id'];
                 let status;
                 if (json[ont]['onu-status:onu-status']['oper-state'] === "Up"){
-                    status = "<i class='gg-check text-green-600 border-transparent'></i>";
+                    status = "<span class='badge badge-success'>Active</span>";
                 } else {
-                    status = "<i class='gg-close text-red-600'></i>";
+                    status = "<span class='badge badge-danger'>Inactive</span>";
                 }
                 let desc = json[ont]['profile-references']['line-profile'];
                 let sinal;

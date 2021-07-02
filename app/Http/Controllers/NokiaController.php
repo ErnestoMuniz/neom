@@ -8,6 +8,30 @@ use SimpleXMLElement;
 
 class NokiaController extends Controller
 {
+
+    public static function decide($arg, $get){
+        switch ($arg) {
+            case 'pon':
+                NokiaController::pon($get['id'], $get['pon']);
+                break;
+            case 'onu':
+                NokiaController::onu($get['id'], $get['onu']);
+                break;
+            case 'cpu':
+                NokiaController::cpu($get['id']);
+                break;
+            case 'mem':
+                NokiaController::mem($get['id']);
+                break;
+            case 'firmware':
+                NokiaController::firmware($get['id']);
+                break;
+            case 'pending':
+                NokiaController::pending($get['id']);
+                break;
+        }
+    }
+
     // Retorna ONUs de uma PON
     public static function pon($id, $cmd){
         // pega informações sobre a olt
@@ -58,6 +82,7 @@ class NokiaController extends Controller
         $xml = new SimpleXMLElement(implode("\n", $arr));
         $mem = $xml->hierarchy->hierarchy->hierarchy->instance[0]->info[2];
         DB::update("update olts set last_mem=$mem where id=$id");
+        echo  redirect('/dashboard');
     }
 
     // Retorna uso de CPU
@@ -77,6 +102,7 @@ class NokiaController extends Controller
         $xml = new SimpleXMLElement($arr);
         $cpu = $xml->hierarchy->hierarchy->hierarchy->instance->info[1];
         DB::update("update olts set last_cpu=$cpu where id=$id");
+        echo  redirect('/dashboard');
     }
 
     // Retorna versão do firmware
@@ -96,6 +122,7 @@ class NokiaController extends Controller
         $xml = new SimpleXMLElement($arr);
         $firmware = $xml->hierarchy->hierarchy->hierarchy->hierarchy->info[0];
         DB::update("update olts set firmware='$firmware' where id=$id");
+        echo  redirect('/dashboard');
     }
     public static function pending($id){
         // pega informações sobre a olt

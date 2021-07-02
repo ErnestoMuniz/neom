@@ -19,15 +19,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Cria OLT de exemplo
-        Olt::factory()->create([
-            'nome' => 'OLT-Exemplo',
-            'ip' => '0.0.0.0',
-            'user' => 'usuario',
-            'pass' => 'senha',
-            'slot' => '4',
-            'pon' => '16',
-            'vendor' => 'test',
+        $admin_user = User::create([
+            'name' => 'Admin',
+            'email' => 'admin@admin.com',
+            'password' => Hash::make('password')
         ]);
+        $admin_role = Role::create(['name' => 'Administrator']);
+        Permission::create(['name' => 'manage_users']);
+        Permission::create(['name' => 'manage_olts']);
+        Permission::create(['name' => 'view_admin_panel']);
+        $admin_role->givePermissionTo(Permission::all());
+        $admin_user->assignRole($admin_role);
     }
 }

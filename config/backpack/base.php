@@ -1,0 +1,304 @@
+<?php
+
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Look & feel customizations
+    |--------------------------------------------------------------------------
+    |
+    | Make it yours.
+    |
+    */
+
+    // Date & Datetime Format Syntax: https://carbon.nesbot.com/docs/#api-localization
+    'default_date_format'     => 'D MMM YYYY',
+    'default_datetime_format' => 'D MMM YYYY, HH:mm',
+
+    // Direction, according to language
+    // (left-to-right vs right-to-left)
+    'html_direction' => 'ltr',
+
+    // ----
+    // HEAD
+    // ----
+
+    // Project name. Shown in the window title.
+    'project_name' => 'Neom',
+
+    // When clicking on the admin panel's top-left logo/name,
+    // where should the user be redirected?
+    // The string below will be passed through the url() helper.
+    // - default: '' (project root)
+    // - alternative: 'admin' (the admin's dashboard)
+    'home_link' => '',
+
+    // Content of the HTML meta robots tag to prevent indexing and link following
+    'meta_robots_content' => 'noindex, nofollow',
+
+    // ------
+    // STYLES
+    // ------
+
+    // CSS files that are loaded in all pages, using Laravel's asset() helper
+    'styles' => [
+        'packages/backpack/base/css/bundle.css',
+
+        // Here's what's inside the bundle:
+        // 'packages/@digitallyhappy/backstrap/css/style.min.css',
+        // 'packages/animate.css/animate.min.css',
+        // 'packages/noty/noty.css',
+
+        // Load the fonts separately (so that you can replace them at will):
+        'packages/source-sans-pro/source-sans-pro.css',
+        'packages/line-awesome/css/line-awesome.min.css',
+
+        // Example (the fonts above, loaded from CDN instead)
+        // 'https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css',
+        // 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic',
+
+        // Example (load font-awesome instead of line-awesome):
+        // 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css',
+    ],
+
+    // CSS files that are loaded in all pages, using Laravel's mix() helper
+    'mix_styles' => [ // file_path => manifest_directory_path
+        // 'css/app.css' => '',
+    ],
+
+    // ------
+    // HEADER
+    // ------
+
+    // Menu logo. You can replace this with an <img> tag if you have a logo.
+    'project_logo'   => '<svg version="1.1" id="svg9" width="512" height="512" viewBox="0 0 512 512" sodipodi:docname="neom_branco.svg" inkscape:version="1.1 (c68e22c387, 2021-05-23)" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" class="inline-block h-10 fill-current text-white" style="height: 25px; width: 25px; margin-right: 0.25em;">
+                            <defs id="defs13"></defs>
+                            <sodipodi:namedview id="namedview11" pagecolor="#505050" bordercolor="#eeeeee" borderopacity="1" inkscape:pageshadow="0" inkscape:pageopacity="0" inkscape:pagecheckerboard="0" showgrid="false" inkscape:zoom="1.5800781" inkscape:cx="224.03956" inkscape:cy="253.46848" inkscape:window-width="1920" inkscape:window-height="1017" inkscape:window-x="-8" inkscape:window-y="-8" inkscape:window-maximized="1" inkscape:current-layer="g135"></sodipodi:namedview>
+                            <g inkscape:groupmode="layer" inkscape:label="Image" id="g15">
+                                <g id="g135" transform="translate(1.1836199,-0.54048208)">
+                                    <path fill="#fff" d="m 212,511.03449 c -1.925,-0.42416 -3.05,-0.83484 -2.5,-0.91262 0.55,-0.0778 -1.25,-1.19897 -4,-2.49155 -8.79782,-4.13523 -19.30841,-16.76109 -26.53141,-31.87091 -6.43065,-13.45229 -8.2392,-21.89555 -8.30225,-38.75941 -0.0628,-16.78273 1.828,-25.80901 8.31048,-39.6733 4.56908,-9.77206 7.76296,-14.52346 16.01624,-23.8267 7.38191,-8.32102 10.64204,-14.35 11.81934,-21.85755 1.85931,-11.85666 -1.73228,-22.22167 -11.31006,-32.63991 -2.97164,-3.23239 -7.56283,-9.16781 -10.20266,-13.18981 -2.63982,-4.022 -5.24968,-7.64989 -5.79968,-8.06197 -1.18974,-0.8914 -3.6831,1.9519 -8.67954,9.8977 -2.02374,3.21835 -6.41554,8.91539 -9.75955,12.6601 -7.22983,8.09616 -9.47048,12.20193 -11.0554,20.2579 -2.14954,10.9259 1.21305,21.35924 10.45308,32.43354 9.82484,11.77521 9.95664,26.56639 0.33414,37.49813 -5.7993,6.58836 -12.30124,9.47957 -21.34639,9.4921 -9.33654,0.0129 -15.4871,-3.01342 -23.02021,-11.32699 C 100.84575,391.46866 92.845175,370.32772 92.901092,346.5 92.95929,321.69999 100.32504,302.92618 117.68568,283.32908 126.76137,273.08422 129.5,266.74919 129.5,256 c 0,-6.5 -0.47059,-9.44118 -2,-12.5 -1.92096,-3.84192 -2.27664,-4.04962 -9,-5.25549 -9.37859,-1.68211 -16.60008,-5.38806 -23.031332,-11.81932 C 86.066051,217.02257 80.082581,207.05762 75.398465,193 c -2.70531,-8.11898 -2.833754,-9.3517 -2.865368,-27.5 -0.02821,-16.19539 0.310584,-20.60573 2.295184,-29.87811 C 87.452252,76.640593 128.18909,30.246831 184.51249,10.70638 c 10.30746,-3.5759986 28.37675,-7.6946189 33.87675,-7.7216928 2.03361,-0.010011 2.65834,-0.3022504 1.8042,-0.8439751 -1.66829,-1.0580784 16.60103,-2.13019921 36.401,-2.13616449 19.41532,-0.00584939 36.91601,1.05554349 35.213,2.13562089 C 290.9684,2.6723052 291.7539,2.9804734 294,3.0003548 307.64614,3.1211442 347.44017,16.367639 354.72977,23.215859 357.69936,26.005639 357.84047,32.159526 355,35 351.99461,38.005393 346.98483,37.521096 338.88517,33.442173 317.37094,22.607779 293.08752,18.065401 256.5,18.031469 c -40.02494,-0.03712 -61.85583,4.360522 -87.59829,17.645908 -34.05929,17.577604 -60.51844,48.790836 -72.791004,85.869813 -5.077809,15.34154 -7.245394,28.55637 -7.273294,44.34214 -0.02538,14.35781 1.322325,20.792 6.621147,31.61067 7.546781,15.40836 18.130471,24.51233 28.470751,24.49023 4.91376,-0.0105 13.58992,-3.4865 16.01317,-6.41549 C 145.06673,209.38107 158.11061,204 168,204 c 9.88939,0 22.93327,5.38107 28.05752,11.57474 2.41178,2.91512 11.09914,6.40572 15.94248,6.40572 4.84334,0 13.5307,-3.4906 15.94248,-6.40572 2.75575,-3.33086 10.39296,-7.88886 16.29742,-9.72654 11.99369,-3.73285 25.93267,-1.32313 35.2601,6.09566 15.54505,12.36412 25.2988,13.18346 36.94531,3.10348 6.02995,-5.21889 10.18538,-7.60131 16.48619,-9.45199 11.65117,-3.4222 25.47626,-0.88321 34.5685,6.34851 13.09059,10.41191 20.05532,12.2376 29.75103,7.79875 8.36149,-3.82801 18.38474,-17.11854 22.69728,-30.09588 7.2527,-21.82496 2.90214,-55.57222 -11.05181,-85.72879 C 406.20342,98.097805 404,92.33985 404,91.122484 c 0,-6.034046 9.66589,-9.456591 14.12207,-5.00041 5.18426,5.184257 15.03185,30.841006 19.05809,49.653626 1.93481,9.04039 2.29619,13.70765 2.30149,29.7243 0.006,18.89175 -0.0124,19.05412 -3.27956,28.5 -6.24079,18.04323 -18.7618,34.70196 -30.3405,40.36689 -3.02792,1.48142 -8.62297,3.25844 -12.43345,3.94892 -6.61896,1.1994 -7.01739,1.43234 -8.92814,5.21981 -1.53221,3.03712 -2,5.95251 -2,12.46438 0,10.74919 2.73863,17.08422 11.81432,27.32908 17.2784,19.50427 24.7626,38.62841 24.7626,63.27509 0,24.18795 -8.07265,45.29338 -23.93382,62.5734 -7.15535,7.79542 -13.4852,10.82527 -22.58944,10.81266 -8.85989,-0.0123 -15.3589,-2.84111 -21.23672,-9.24374 -9.71693,-10.58455 -9.62561,-25.94103 0.22447,-37.74649 9.21104,-11.03955 12.44798,-21.0292 10.42642,-32.17739 -1.48303,-8.17842 -3.69978,-12.3049 -11.02016,-20.51405 -3.33929,-3.74471 -7.82109,-9.50856 -9.95956,-12.80856 -5.51114,-8.50455 -7.34579,-10.61254 -8.48811,-9.75271 -0.55,0.41399 -3.12857,3.99639 -5.73016,7.96088 -2.60158,3.9645 -7.38044,10.13266 -10.61967,13.70702 -9.51105,10.49507 -12.83717,20.27306 -10.96257,32.22726 1.18017,7.52587 4.44671,13.55274 11.84672,21.85755 11.26135,12.63829 18.29738,25.7021 22.18914,41.19865 3.06552,12.20652 3.01737,33.14025 -0.10304,44.80135 -2.38336,8.9067 -8.3398,22.03422 -13.27608,29.25941 -5.48263,8.02488 -14.04971,16.38228 -19.34434,18.87091 -2.75,1.29258 -4.55,2.40629 -4,2.47491 0.55,0.0686 -0.8,0.48478 -3,0.9248 -4.45137,0.89031 -12.72481,0.14274 -11.96824,-1.08142 0.26713,-0.43223 -0.87491,-1.08471 -2.53788,-1.44995 -5.09539,-1.11914 -12.50129,-7.7925 -15.53956,-14.0025 -2.16704,-4.42927 -2.74844,-7.03758 -2.74844,-12.33022 0,-8.14724 2.20286,-13.6348 8.29586,-20.66594 7.16415,-8.2672 9.49826,-14.41073 9.49826,-25 0,-11.42893 -2.37934,-16.84375 -12.21277,-27.79342 -3.84942,-4.28638 -8.69812,-10.69888 -10.77489,-14.25 C 259.16519,390.44313 257.07935,388 256,388 c -1.07935,0 -3.16519,2.44313 -5.51234,6.45658 -2.07677,3.55112 -6.92547,9.96362 -10.77489,14.25 C 229.87934,419.65625 227.5,425.07107 227.5,436.5 c 0,10.58927 2.33411,16.7328 9.49826,25 6.093,7.03114 8.29586,12.5187 8.29586,20.66594 0,5.29264 -0.5814,7.90095 -2.74844,12.33022 -3.03827,6.21 -10.44417,12.88336 -15.53956,14.0025 -1.66297,0.36524 -2.76809,1.07747 -2.45583,1.58271 0.31226,0.50525 -0.30256,0.91863 -1.36627,0.91863 -1.06371,0 -3.22777,0.18128 -4.80902,0.40285 -1.58125,0.22157 -4.45,0.0558 -6.375,-0.36836 z m 12.29275,-20.05013 c 1.40936,-1.1086 3.08438,-3.59704 3.72227,-5.52987 1.49164,-4.5197 0.32375,-7.96981 -4.81345,-14.21967 C 215.09016,461.3666 211.25793,452.0503 210.3532,440 c -1.04993,-13.98422 3.51864,-26.92595 13.62501,-38.59659 12.26199,-14.15991 16.62811,-21.60656 20.56868,-35.08106 3.20766,-10.96832 3.62004,-26.8941 0.9796,-37.8313 C 242.86591,317.4704 236.05257,304.6693 227.701,295 c -14.88626,-17.23506 -17.24254,-25.1659 -15.43384,-51.94781 0.23112,-3.42237 0.19221,-3.45602 -5.27437,-4.56226 -3.02896,-0.61295 -7.89183,-1.97195 -10.80636,-3.02001 -6.38635,-2.29649 -6.55679,-2.13153 -8.26571,8.00008 -3.72087,22.05983 3.40697,45.2341 19.54028,63.53 12.11827,13.74267 16.539,24.16703 16.539,39 0,14.50429 -4.00585,24.33901 -15.17002,37.24375 -12.39402,14.32635 -17.34848,23.7452 -20.39245,38.7678 -1.99664,9.85383 -1.53995,24.90004 1.04681,34.48845 3.42483,12.69491 14.14672,30.20414 21.27616,34.74474 3.75747,2.39306 10.31947,2.2668 13.53225,-0.26038 z m 76.94675,0.26038 c 7.13956,-4.54704 17.77054,-21.94295 21.23319,-34.74474 2.60938,-9.64714 3.08343,-24.64939 1.08978,-34.48845 -3.04397,-15.0226 -7.99843,-24.44145 -20.39245,-38.7678 C 292.00585,370.33901 288,360.50429 288,346 c 0,-14.83297 4.42073,-25.25733 16.539,-39 12.52245,-14.20102 19.16011,-29.66884 20.17067,-47.00394 0.53942,-9.2532 -0.83713,-21.96623 -2.70588,-24.98993 -0.76478,-1.23744 -1.64202,-1.17172 -6.19022,0.46379 -2.91453,1.04806 -7.7774,2.40706 -10.80636,3.02001 -5.46658,1.10624 -5.50549,1.13989 -5.27437,4.56226 1.81082,26.81332 -0.56151,34.77712 -15.47469,51.94781 -8.44181,9.71971 -15.25449,22.51616 -17.83499,33.5 -2.22028,9.45053 -2.18357,25.96108 0.0778,35 3.36989,13.4697 9.09714,23.55679 21.52082,37.90341 12.52824,14.46737 16.49983,30.41724 11.97722,48.10046 -2.21168,8.64758 -5.2678,14.59037 -11.17529,21.73095 -5.15755,6.23411 -6.3336,9.69019 -4.83874,14.21967 0.63789,1.93283 2.31291,4.42127 3.72227,5.52987 3.21278,2.52718 9.77478,2.65344 13.53225,0.26038 z m -155.13881,-89.5397 c 2.654,-1.65744 4.89931,-6.2217 4.89931,-9.95929 0,-2.34441 -1.03873,-4.8111 -3.25,-7.71788 -11.75226,-15.44863 -13.84091,-20.32644 -14.52726,-33.92683 -0.84428,-16.72971 3.06029,-27.26902 15.23315,-41.11766 4.0441,-4.60084 8.79301,-10.74131 10.55313,-13.64548 C 165.97603,283.84238 170,269.39253 170,255.86987 c 0,-11.12862 -4.00078,-27.66968 -7.75377,-32.05761 -1.83812,-2.14911 -5.11328,-1.03581 -10.23637,3.47956 -2.00198,1.7645 -4.93154,4.13498 -6.51013,5.26773 l -2.87016,2.05955 1.85505,6.44045 c 2.60696,9.05096 2.50549,21.48759 -0.24834,30.44045 -2.53866,8.25329 -6.56264,14.90628 -13.65744,22.58032 -25.09957,27.14879 -28.24235,65.68368 -7.79331,95.55688 8.82875,12.89759 16.0235,16.62156 23.31516,12.06784 z m 229.58421,1.23363 c 3.80864,-1.43592 8.69722,-6.24208 13.52957,-13.30147 13.79561,-20.15346 17.1869,-45.53266 9.08705,-68.00417 -3.5315,-9.79748 -7.30574,-16.18443 -14.33694,-24.26168 C 370.14543,281.4963 365.54133,271.13225 365.58588,256 c 0.0156,-5.2982 0.7331,-10.926 1.90479,-14.94045 l 1.87976,-6.44045 -2.84282,-2.05955 c -1.56355,-1.13275 -4.85259,-3.77157 -7.30898,-5.86403 -5.4642,-4.65465 -8.97024,-4.71612 -11.15121,-0.19552 -5.25064,10.88328 -7.32122,29.67681 -4.75726,43.17919 2.8896,15.2173 8.30051,25.72793 20.23395,39.30419 12.17286,13.84864 16.07743,24.38795 15.23315,41.11766 -0.68635,13.60039 -2.775,18.4782 -14.52726,33.92683 -5.82603,7.65847 -3.45582,16.29167 5.25,19.12245 2.93097,0.95303 3.1121,0.94684 6.1849,-0.21165 z M 261.65913,297.24144 c 2.28753,-3.70779 6.96185,-9.89144 10.38739,-13.74144 7.50804,-8.43837 10.81137,-15.17229 11.60338,-23.65383 1.36839,-14.65368 -7.12525,-31.9595 -18.1499,-36.98051 -5.19085,-2.36409 -13.80915,-2.36409 -19,0 -11.02465,5.02101 -19.51829,22.32683 -18.1499,36.98051 0.79201,8.48154 4.09534,15.21546 11.60338,23.65383 3.42554,3.85 8.09986,10.03365 10.38739,13.74144 2.28752,3.70779 4.83413,6.74144 5.65913,6.74144 0.825,0 3.37161,-3.03365 5.65913,-6.74144 z M 379.45455,61.545455 c -5.05665,-5.056644 -1.42875,-13.582931 5.75,-13.513652 6.04948,0.05838 9.65147,5.214183 7.65129,10.95189 -1.93267,5.544069 -9.0571,6.905958 -13.40129,2.561762 z" id="path137"></path>
+                                </g>
+                            </g>
+                        </svg>Neom',
+
+    // Show / hide breadcrumbs on admin panel pages.
+    'breadcrumbs' => true,
+
+    // Horizontal navbar classes. Helps make the admin panel look similar to your project's design.
+    'header_class' => 'app-header bg-dark navbar navbar-dark',
+    // For background colors use: bg-dark, bg-primary, bg-secondary, bg-danger, bg-warning, bg-success, bg-info, bg-blue, bg-light-blue, bg-indigo, bg-purple, bg-pink, bg-red, bg-orange, bg-yellow, bg-green, bg-teal, bg-cyan, bg-white
+    // For links to be visible on different background colors use: "navbar-dark", "navbar-light", "navbar-color"
+
+    // ----
+    // BODY
+    // ----
+
+    // Body element classes.
+    'body_class' => 'app aside-menu-fixed sidebar-lg-show',
+    // Try sidebar-hidden, sidebar-fixed, sidebar-compact, sidebar-lg-show
+
+    // Sidebar element classes.
+    'sidebar_class' => 'sidebar bg-dark',
+    // Remove "sidebar-transparent" for standard sidebar look
+    // Try "sidebar-light" or "sidebar-dark" for dark/light links
+    // You can also add a background class like bg-dark, bg-primary, bg-secondary, bg-danger, bg-warning, bg-success, bg-info, bg-blue, bg-light-blue, bg-indigo, bg-purple, bg-pink, bg-red, bg-orange, bg-yellow, bg-green, bg-teal, bg-cyan
+
+    // ------
+    // FOOTER
+    // ------
+
+    // Footer element classes.
+    'footer_class' => 'app-footer d-none',
+    // hide it with d-none
+    // change background color with bg-dark, bg-primary, bg-secondary, bg-danger, bg-warning, bg-success, bg-info, bg-blue, bg-light-blue, bg-indigo, bg-purple, bg-pink, bg-red, bg-orange, bg-yellow, bg-green, bg-teal, bg-cyan, bg-white
+
+    // Developer or company name. Shown in footer.
+    'developer_name' => 'Ernesto Muniz',
+
+    // Developer website. Link in footer. Type false if you want to hide it.
+    'developer_link' => 'https://github.com/ErnestoMuniz',
+
+    // Show powered by Laravel Backpack in the footer? true/false
+    'show_powered_by' => false,
+
+    // -------
+    // SCRIPTS
+    // -------
+
+    // JS files that are loaded in all pages, using Laravel's asset() helper
+    'scripts' => [
+        // Backstrap includes jQuery, Bootstrap, CoreUI, PNotify, Popper
+        'packages/backpack/base/js/bundle.js',
+
+        // examples (everything inside the bundle, loaded from CDN)
+        // 'https://code.jquery.com/jquery-3.4.1.min.js',
+        // 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js',
+        // 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js',
+        // 'https://unpkg.com/@coreui/coreui/dist/js/coreui.min.js',
+        // 'https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+        // 'https://unpkg.com/sweetalert/dist/sweetalert.min.js',
+        // 'https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js'
+
+        // examples (VueJS or React)
+        // 'https://unpkg.com/vue@2.4.4/dist/vue.min.js',
+        // 'https://unpkg.com/react@16/umd/react.production.min.js',
+        // 'https://unpkg.com/react-dom@16/umd/react-dom.production.min.js',
+    ],
+
+    // JS files that are loaded in all pages, using Laravel's mix() helper
+    'mix_scripts' => [// file_path => manifest_directory_path
+        // 'js/app.js' => '',
+    ],
+
+    // -------------
+    // CACHE-BUSTING
+    // -------------
+
+    // All JS and CSS assets defined above have this string appended as query string (?v=string).
+    // If you want to manually trigger cachebusting for all styles and scripts,
+    // append or prepend something to the string below, so that it's different.
+    'cachebusting_string' => \PackageVersions\Versions::getVersion('backpack/crud'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Registration Open
+    |--------------------------------------------------------------------------
+    |
+    | Choose whether new users/admins are allowed to register.
+    | This will show the Register button on the login page and allow access to the
+    | Register functions in AuthController.
+    |
+    | By default the registration is open only on localhost.
+    */
+
+    'registration_open' => env('BACKPACK_REGISTRATION_OPEN', env('APP_ENV') === 'local'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Routing
+    |--------------------------------------------------------------------------
+    */
+
+    // The prefix used in all base routes (the 'admin' in admin/dashboard)
+    // You can make sure all your URLs use this prefix by using the backpack_url() helper instead of url()
+    'route_prefix' => '',
+
+    // The web middleware (group) used in all base & CRUD routes
+    // If you've modified your "web" middleware group (ex: removed sessions), you can use a different
+    // route group, that has all the the middleware listed below in the comments.
+    'web_middleware' => 'web',
+    // Or you can comment the above, and uncomment the complete list below.
+    // 'web_middleware' => [
+    //     \App\Http\Middleware\EncryptCookies::class,
+    //     \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+    //     \Illuminate\Session\Middleware\StartSession::class,
+    //     \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+    //     \App\Http\Middleware\VerifyCsrfToken::class,
+    // ],
+
+    // Set this to false if you would like to use your own AuthController and PasswordController
+    // (you then need to setup your auth routes manually in your routes.php file)
+    // Warning: if you disable this, the password recovery routes (below) will be disabled too!
+    'setup_auth_routes' => true,
+
+    // Set this to false if you would like to skip adding the password recovery routes
+    // (you then need to manually define the routes in your web.php)
+    'setup_password_recovery_routes' => true,
+
+    // Set this to false if you would like to skip adding the dashboard routes
+    // (you then need to overwrite the login route on your AuthController)
+    'setup_dashboard_routes' => true,
+
+    // Set this to false if you would like to skip adding "my account" routes
+    // (you then need to manually define the routes in your web.php)
+    'setup_my_account_routes' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Authentication
+    |--------------------------------------------------------------------------
+    */
+
+    // Fully qualified namespace of the User model
+    'user_model_fqn' => config('auth.providers.users.model'),
+    // 'user_model_fqn' => App\User::class, // works on Laravel <= 7
+    // 'user_model_fqn' => App\Models\User::class, // works on Laravel >= 8
+
+    // The classes for the middleware to check if the visitor is an admin
+    // Can be a single class or an array of classes
+    'middleware_class' => [
+        App\Http\Middleware\CheckIfAdmin::class,
+        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        // \Backpack\CRUD\app\Http\Middleware\UseBackpackAuthGuardInsteadOfDefaultAuthGuard::class,
+    ],
+
+    // Alias for that middleware
+    'middleware_key' => 'admin',
+    // Note: It's recommended to use the backpack_middleware() helper everywhere, which pulls this key for you.
+
+    // Username column for authentication
+    // The Backpack default is the same as the Laravel default (email)
+    // If you need to switch to username, you also need to create that column in your db
+    'authentication_column'      => 'email',
+    'authentication_column_name' => 'Email',
+
+    // The guard that protects the Backpack admin panel.
+    // If null, the config.auth.defaults.guard value will be used.
+    'guard' => 'web',
+
+    // The password reset configuration for Backpack.
+    // If null, the config.auth.defaults.passwords value will be used.
+    'passwords' => 'backpack',
+
+    // What kind of avatar will you like to show to the user?
+    // Default: gravatar (automatically use the gravatar for their email)
+    // Other options:
+    // - placehold (generic image with their first letter)
+    // - example_method_name (specify the method on the User model that returns the URL)
+    'avatar_type' => 'gravatar',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Theme (User Interface)
+    |--------------------------------------------------------------------------
+    */
+    // Change the view namespace in order to load a different theme than the one Backpack provides.
+    // You can create child themes yourself, by creating a view folder anywhere in your resources/views
+    // and choosing that view_namespace instead of the default one. Backpack will load a file from there
+    // if it exists, otherwise it will load it from the default namespace ("backpack::").
+
+    'view_namespace' => 'backpack::',
+
+    // EXAMPLE: if you create a new folder in resources/views/vendor/myname/mypackage,
+    // your namespace would be the one below. IMPORTANT: in this case the namespace ends with a dot.
+    // 'view_namespace' => 'vendor.myname.mypackage.',
+
+    /*
+    |--------------------------------------------------------------------------
+    | File System
+    |--------------------------------------------------------------------------
+    */
+
+    // Backpack\Base sets up its own filesystem disk, just like you would by
+    // adding an entry to your config/filesystems.php. It points to the root
+    // of your project and it's used throughout all Backpack packages.
+    //
+    // You can rename this disk here. Default: root
+    'root_disk_name' => 'root',
+
+    /*
+    |--------------------------------------------------------------------------
+    | License Code
+    |--------------------------------------------------------------------------
+    |
+    | If you, your employer or your client make money by using Backpack, you need
+    | to purchase a license. A license code will be provided after purchase,
+    | which you can put here or in your ENV file in staging & production.
+    |
+    | More info and payment form on:
+    | https://www.backpackforlaravel.com
+    |
+    */
+
+    'license_code' => env('BACKPACK_LICENSE', false),
+];

@@ -20,9 +20,9 @@ function getPON(id, pon, srch){
                 let pos = onu[0];
                 let status;
                 if (onu[4].split('/')[0] != "-40.00"){
-                    status = "<i class='gg-check text-green-600 border-transparent'></i>";
+                    status = "<span class='badge badge-success'>Active</span>";
                 } else {
-                    status = "<i class='gg-close text-red-600'></i>";
+                    status = "<span class='badge badge-danger'>Inactive</span>";
                 }
                 let desc = onu[5];
                 let sinal = onu[4].split('/')[0];
