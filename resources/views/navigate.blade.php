@@ -9,6 +9,8 @@
 @endphp
 
 @section('content')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
     <div class="app-body rounded bg-gray-100">
         <div class="sidebar sidebar-pills shadow-sm bg-white">
             <nav class="sidebar-nav ps" style="max-height: 47em; overflow-y: auto !important;">
@@ -28,15 +30,19 @@
             </nav>
         </div>
         <main class="main p-2">
-            <div class="row justify-content-md-end mb-2">
-                <div class="input-group col-md-4">
+            <div class="row mb-2">
+                <span class="my-auto col-md-4 pl-4"><b> — ONU List</b></span>
+                <div class="input-group col-md-4 offset-md-4">
                     <input class="form-control" type="text" placeholder="ONT Serial..." id="search">
                     <div class="input-group-append">
-                        <button class="btn btn-primary" onclick="getONU({{ $olt->id }})"><i class="las la-search"></i></button>
+                        <button class="btn btn-primary" onclick="getONU({{ $olt->id }})" id="btn-search"><i class="las la-search"></i></button>
                     </div>
                 </div>
             </div>
             <div style="height: 30em; overflow: auto;">
+                <style>
+                    @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+                </style>
                 <table class="bg-white table table-striped table-hover nowrap rounded shadow-sm border-xs dataTable dtr-inline collapsed has-hidden-columns overflow-hidden">
                     <thead>
                         <tr>
@@ -45,13 +51,14 @@
                             <th>Description</th>
                             <th>Signal</th>
                             <th>Serial Number</th>
+                            <th>Scripts</th>
                         </tr>
                     </thead>
                     <tbody id="pon"></tbody>
                 </table>
             </div>
-            <div class="text-right">
-                <span><b>Unauthorized ONUs</b></span>
+            <div class="pt-2">
+                <span class="pl-2"><b> — Unauthorized ONUs</b></span>
             </div>
             <div style="height: 15em; overflow: auto;">
                 <table class="bg-white table table-striped table-hover nowrap rounded shadow-sm border-xs dataTable dtr-inline collapsed has-hidden-columns overflow-hidden">
@@ -59,7 +66,7 @@
                         <tr>
                             <th>PON</th>
                             <th>Serial Number</th>
-                            <th class="text-right" style="font-size: 1.2em"><button class="btn btn-ghost-primary btn-pill" onclick="getPending({{ $olt->id }})"><i class="las la-sync"></i></button></th>
+                            <th class="text-right" style="font-size: 1.2em"><button class="btn btn-ghost-primary btn-pill" onclick="getPending({{ $olt->id }})"><i class="las la-sync" id="refresh-pending"></i></button></th>
                         </tr>
                     </thead>
                     <tbody id="request"></tbody>
@@ -67,6 +74,7 @@
             </div>
         </main>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="{{ asset('js/'.$olt->vendor.'.js') }}" defer></script>
 @endsection

@@ -29,6 +29,12 @@ class NokiaController extends Controller
             case 'pending':
                 NokiaController::pending($get['id']);
                 break;
+            case 'remove':
+                NokiaController::remove($get['id'], $get['pos']);
+                break;
+            case 'add':
+                NokiaController::add($get['id'], $get['pos'], $get['serial'], $get['vlan'], $get['description'], $get['type']);
+                break;
         }
     }
 
@@ -136,5 +142,18 @@ class NokiaController extends Controller
         unset($arr[count($arr) -1]);
         // retorna o resultado em XML
         echo implode("\n", $arr);
+    }
+    public static function remove($id, $pos){
+        // pega informações sobre a olt
+        $args = DB::table('olts')->where('id', $id)->first();
+        // executa script python
+        $output = shell_exec("python python/nokia/isam_remove.py $args->ip $args->user $args->pass $pos");
+    }
+    public static function add($id, $pos, $serial, $vlan, $description, $type){
+        // pega informações sobre a olt
+        $args = DB::table('olts')->where('id', $id)->first();
+        //echo "python python/nokia/isam_add.py $args->ip $args->user $args->pass $pos $serial $vlan $description $type";
+        // executa script python
+        $output = shell_exec("python python/nokia/isam_add.py $args->ip $args->user $args->pass $pos $serial $vlan $description $type");
     }
 }

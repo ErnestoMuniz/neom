@@ -8,13 +8,13 @@
             [
                 'type'        => 'progress',
                 'class'       => 'card text-white bg-info mb-2 text-center',
-                'value'       => '<i class="la la-server"></i> ' . \App\Models\Olt::count(),
+                'value'       => \App\Models\Olt::count() . ' <i class="la la-server"></i>',
                 'description' => 'OLTs.'
             ],
             [
                 'type'        => 'progress',
                 'class'       => 'card text-white bg-info mb-2 text-center',
-                'value'       => '<i class="la la-user"></i> ' . \App\Models\User::count(),
+                'value'       => \App\Models\User::count() . ' <i class="la la-user"></i>',
                 'description' => 'Users'
             ]
     ]);
