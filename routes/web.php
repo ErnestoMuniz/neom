@@ -21,7 +21,7 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return redirect('dashboard');
 });
-Route::get('/dashboard', [Controller::class, 'initial'])->middleware(['auth'])->name('dashboard');
-Route::get('/navigate', [Controller::class, 'navigate'])->middleware(['auth'])->name('navigate');
+Route::get('/dashboard', [Controller::class, 'initial'])->middleware(['admin'])->name('dashboard');
+Route::get('/navigate', [Controller::class, 'navigate'])->middleware(['admin'])->name('navigate');
 
 Route::get('/get/{vendor}/{function}', array('uses' => 'App\Http\Controllers\Controller@teste'))->middleware(['auth']);
