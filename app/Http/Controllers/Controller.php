@@ -31,7 +31,7 @@ class Controller extends BaseController
 
     // Retorna dashboard com informações das OLTs
     public function initial(){
-        $olts = DB::select('select * from olts');
+        $olts = DB::select("select * from olts order by 'nome'");
         return view('dashboard', ['olts'=>$olts]);
     }
 
