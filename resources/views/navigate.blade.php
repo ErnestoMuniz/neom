@@ -43,7 +43,7 @@
                 <style>
                     @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
                 </style>
-                <table class="bg-white table table-striped table-hover nowrap rounded shadow-sm border-xs dataTable dtr-inline collapsed has-hidden-columns overflow-hidden">
+                <table class="bg-white table table-hover nowrap rounded shadow-sm border-xs dataTable dtr-inline collapsed has-hidden-columns overflow-hidden">
                     <thead>
                         <tr>
                             <th>Num</th>

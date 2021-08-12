@@ -39,9 +39,9 @@ function getPON(id, pon, srch){
                 }
                 let serial = xml[ont].children[2].innerHTML;
                 if (xml[ont].children[1].innerHTML === srch){
-                    pon.innerHTML += `<tr class="border-2 table-active font-bold"><td>${pos}</td><td>${status}</td><td>${desc}<td>${sinal}</td><td>${serial}</td><td class="text-center"><button type="submit" class="btn btn-transparent p-0" onclick="modalRemove('${pos_full}')"><i class="las la-times-circle text-danger"></i></button></td></tr>`;
+                    pon.innerHTML += `<tr class="table-active font-bold"><td>${pos}</td><td>${status}</td><td>${desc}<td>${sinal}</td><td>${serial}</td><td class="text-center"><button type="submit" class="btn btn-transparent p-0" onclick="modalRemove('${pos_full}')"><i class="las la-times-circle text-danger"></i></button></td></tr>`;
                 } else {
-                    pon.innerHTML += `<tr class="border-b"><td>${pos}</td><td>${status}</td><td>${desc}<td>${sinal}</td><td>${serial}</td><td class="text-center"><button type="submit" class="btn btn-transparent p-0" onclick="modalRemove('${pos_full}')"><i class="las la-times-circle text-danger"></i></button></td></tr>`;
+                    pon.innerHTML += `<tr class=""><td>${pos}</td><td>${status}</td><td>${desc}<td>${sinal}</td><td>${serial}</td><td class="text-center"><button type="submit" class="btn btn-transparent p-0" onclick="modalRemove('${pos_full}')"><i class="las la-times-circle text-danger"></i></button></td></tr>`;
                 }
             }
             document.getElementById('onus').className = 'table-sort';
