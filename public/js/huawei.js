@@ -43,7 +43,7 @@ function getPON(id, pon, srch){
                 }
                 let serial = "HWTC-" + onu[1][8] + onu[1][9] + onu[1][10] + onu[1][11] + onu[1][12] + onu[1][13] + onu[1][14] + onu[1][15];
                 if (onu[0] == srch){
-                    pon.innerHTML += `<tr class="border-2 table-active font-bold"><td>${pos}</td><td>${status}</td><td>${desc}<td>${sinal}</td><td>${serial}</td><td class="text-center"><i class="las la-times-circle text-danger"></i></td></tr>`;
+                    pon.innerHTML += `<tr class="border-2 table-active font-bold"><td>${pos}</td><td>${status}</td><td>${desc}<td>${sinal}</td><td>${serial}</td><td class="text-center"><button type="submit" class="btn btn-transparent p-0" onclick="modalRemove('${slotPon}', '${pos}')"><i class="las la-times-circle text-danger"></i></button></td></tr>`;
                 } else {
                     pon.innerHTML += `<tr class="border-b"><td>${pos}</td><td>${status}</td><td>${desc}<td>${sinal}</td><td>${serial}</td><td class="text-center"><button type="submit" class="btn btn-transparent p-0" onclick="modalRemove('${slotPon}', '${pos}')"><i class="las la-times-circle text-danger"></i></button></td></tr>`;
                 }
