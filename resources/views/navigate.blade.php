@@ -20,9 +20,16 @@
                         <li class="nav-item nav-dropdown">
                             <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon las la-hdd"></i> Slot {{ $i }}</a>
                             <ul class="nav-dropdown-items">
-                                @for($j = 1; $j <= $olt->pon; $j++)
-                                    <li class="nav-item nav-link" onclick="getPON({{ $olt->id }}, '{{ $i }}/{{ $j }}', '1500')"><i class="nav-icon las la-microchip"></i> PON{{ $j }}</li>
-                                @endfor
+                                @if ($olt->vendor != 'huawei')
+                                    @for($j = 1; $j <= $olt->pon; $j++)
+                                        <li class="nav-item nav-link" onclick="getPON({{ $olt->id }}, '{{ $i }}/{{ $j }}', '1500')"><i class="nav-icon las la-microchip"></i> PON{{ $j }}</li>
+                                    @endfor
+                                @else
+                                    @for($j = 0; $j <= $olt->pon; $j++)
+                                        <li class="nav-item nav-link" onclick="getPON({{ $olt->id }}, '{{ $i }}/{{ $j }}', '1500')"><i class="nav-icon las la-microchip"></i> PON{{ $j }}</li>
+                                    @endfor
+                                @endif
+
                             </ul>
                         </li>
                     @endfor
