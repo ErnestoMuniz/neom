@@ -1,5 +1,6 @@
 // Função que requisita e trata os dados das onus de uma pon
 function getPON(id, pon, srch){
+    document.getElementById('pon-index').innerHTML = `<b> — ONU List — ${pon}</b>`;
     // cria icone de carregando
     document.getElementById('pon').innerHTML = "<div class='text-center'><i class=\"las la-spinner\" style='animation:spin 4s linear infinite;'></i><span> Carregando</span></div>";
     // faz a requisição

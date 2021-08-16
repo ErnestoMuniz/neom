@@ -25,6 +25,9 @@ class HuaweiController extends Controller
             case 'pending':
                 HuaweiController::pending($get['id']);
                 break;
+            case 'onu':
+                HuaweiController::onu($get['id'], $get['onu']);
+                break;
         }
     }
 
@@ -58,6 +61,12 @@ class HuaweiController extends Controller
     public static function pending($id){
         $olt = DB::table('olts')->where('id', $id)->first();
         $output = shell_exec("python python/huawei/huawei_pending.py $olt->ip $olt->user $olt->pass");
+        echo str_replace("'", '"', $output);
+    }
+
+    public static function onu($id, $cmd){
+        $olt = DB::table('olts')->where('id', $id)->first();
+        $output = shell_exec("python python/huawei/huawei_search.py $olt->ip $olt->user $olt->pass $cmd");
         echo str_replace("'", '"', $output);
     }
 }
