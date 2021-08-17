@@ -43,9 +43,36 @@ function getPON(id, pon, srch){
                 }
                 let serial = "HWTC-" + onu[1][8] + onu[1][9] + onu[1][10] + onu[1][11] + onu[1][12] + onu[1][13] + onu[1][14] + onu[1][15];
                 if (onu[0] == srch){
-                    pon.innerHTML += `<tr class="border-2 table-active font-bold"><td>${pos}</td><td>${status}</td><td>${desc}<td>${sinal}</td><td>${serial}</td><td class="text-center"><button type="submit" class="btn btn-transparent p-0" onclick="modalRemove('${slotPon}', '${pos}')"><i class="las la-times-circle text-danger"></i></button></td></tr>`;
+                    pon.innerHTML += `<tr class="border-2 table-active font-bold">
+                                        <td>${pos}</td><td>${status}</td>
+                                        <td>${desc}</td>
+                                        <td>${sinal}</td>
+                                        <td>${serial}</td>
+                                        <td>
+                                            <button type="submit" class="btn btn-transparent p-0" onclick="modalReboot('${slotPon}', '${pos}')">
+                                                <i class="las la-power-off text-danger"></i>
+                                            </button>
+                                            <button type="submit" class="btn btn-transparent p-0" onclick="modalRemove('${slotPon}', '${pos}')">
+                                                <i class="las la-times-circle text-danger"></i>
+                                            </button>
+                                        </td>
+                                    </tr>`;
                 } else {
-                    pon.innerHTML += `<tr class="border-b"><td>${pos}</td><td>${status}</td><td>${desc}<td>${sinal}</td><td>${serial}</td><td class="text-center"><button type="submit" class="btn btn-transparent p-0" onclick="modalRemove('${slotPon}', '${pos}')"><i class="las la-times-circle text-danger"></i></button></td></tr>`;
+                    pon.innerHTML += `<tr class="border-b">
+                                        <td>${pos}</td>
+                                        <td>${status}</td>
+                                        <td>${desc}</td>
+                                        <td>${sinal}</td>
+                                        <td>${serial}</td>
+                                        <td>
+                                            <button type="submit" class="btn btn-transparent p-0" onclick="modalReboot('${slotPon}', '${pos}')">
+                                                <i class="las la-power-off text-danger"></i>
+                                            </button>
+                                            <button type="submit" class="btn btn-transparent p-0" onclick="modalRemove('${slotPon}', '${pos}')">
+                                                <i class="las la-times-circle text-danger"></i>
+                                            </button>
+                                        </td>
+                                    </tr>`;
                 }
             }
             document.getElementById('onus').className = 'table table-striped w-full mx-auto overflow-hidden m-0 table-sort';
@@ -109,6 +136,37 @@ function modalRemove(pon, pos) {
         axios.get(`/get/huawei/remove?id=${result.value.olt_id}&pon=${result.value.onu_pon}&pos=${result.value.onu_pos}`).then((response) => {
             Swal.fire({
                 title: 'ONU Removed',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            getPON(result.value.olt_id, pon, 1500);
+        });
+    });
+}
+
+function modalReboot(pon, pos) {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const olt = urlParams.get('olt');
+    Swal.fire({
+        title: 'Reboot  ONU',
+        html: `<label class="mr-1">ONU PON:</label><input type="text" value="${pon}" disabled>
+            <br><label class="mr-1">ONU Position:</label><input type="text" value="${pos}" disabled>`,
+        showCancelButton: true,
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Reboot',
+        preConfirm: () => {
+            return {
+                onu_pon: pon,
+                onu_pos: pos,
+                olt_id: olt
+            }
+        }
+    }).then((result) => {
+        axios.get(`/get/huawei/reboot?id=${result.value.olt_id}&pon=${result.value.onu_pon}&pos=${result.value.onu_pos}`).then((response) => {
+            Swal.fire({
+                title: 'ONU Rebooted',
                 icon: 'success',
                 showConfirmButton: false,
                 timer: 2000
