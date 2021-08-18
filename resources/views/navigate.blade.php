@@ -40,6 +40,7 @@
             <div class="row mb-2">
                 <span class="my-auto col-md-4 pl-4" id="pon-index"><b> — ONU List</b></span>
                 <div class="input-group col-md-4 offset-md-4">
+                    <button class="btn btn-primary mr-2" onclick="getPON()" id="btn-refresh"><i class="las la-redo-alt"></i></button>
                     <input class="form-control" type="text" placeholder="ONT Serial..." id="search">
                     <div class="input-group-append">
                         <button class="btn btn-primary" onclick="getONU({{ $olt->id }})" id="btn-search"><i class="las la-search"></i></button>
