@@ -41,9 +41,36 @@ function getPON(id, pon, srch){
                 }
                 let serial = xml[ont].children[2].innerHTML;
                 if (xml[ont].children[1].innerHTML === srch){
-                    pon.innerHTML += `<tr class="table-active font-bold"><td>${pos}</td><td>${status}</td><td>${desc}<td>${sinal}</td><td>${serial}</td><td class="text-center"><button type="submit" class="btn btn-transparent p-0" onclick="modalRemove('${pos_full}')"><i class="las la-times-circle text-danger"></i></button></td></tr>`;
+                    pon.innerHTML += `<tr class="table-active font-bold">
+                                        <td>${pos}</td><td>${status}</td>
+                                        <td>${desc}</td>
+                                        <td>${sinal}</td>
+                                        <td>${serial}</td>
+                                        <td>
+                                            <button type="submit" class="btn btn-transparent p-0" onclick="modalReboot('${pos_full}')">
+                                                <i class="las la-power-off text-danger"></i>
+                                            </button>
+                                            <button type="submit" class="btn btn-transparent p-0" onclick="modalRemove('${pos_full}')">
+                                                <i class="las la-times-circle text-danger"></i>
+                                            </button>
+                                        </td>
+                                    </tr>`;
                 } else {
-                    pon.innerHTML += `<tr class=""><td>${pos}</td><td>${status}</td><td>${desc}<td>${sinal}</td><td>${serial}</td><td class="text-center"><button type="submit" class="btn btn-transparent p-0" onclick="modalRemove('${pos_full}')"><i class="las la-times-circle text-danger"></i></button></td></tr>`;
+                    pon.innerHTML += `<tr class="">
+                                        <td>${pos}</td>
+                                        <td>${status}</td>
+                                        <td>${desc}</td>
+                                        <td>${sinal}</td>
+                                        <td>${serial}</td>
+                                        <td>
+                                            <button type="submit" class="btn btn-transparent p-0" onclick="modalReboot('${pos_full}')">
+                                                <i class="las la-power-off text-danger"></i>
+                                            </button>
+                                            <button type="submit" class="btn btn-transparent p-0" onclick="modalRemove('${pos_full}')">
+                                                <i class="las la-times-circle text-danger"></i>
+                                            </button>
+                                        </td>
+                                    </tr>`;
                 }
             }
             document.getElementById('onus').className = 'table-sort';
@@ -141,6 +168,36 @@ function modalAdd(pos, serial) {
         axios.get(`/get/nokia/add?id=${result.value.olt_id}&pos=${result.value.onu_pos}&serial=${result.value.onu_serial}&vlan=${result.value.onu_vlan}&description=${result.value.onu_description}&type=${result.value.onu_type}`).then((response) => {
             Swal.fire({
                 title: 'ONU Added',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            let pon = result.value.onu_pos.split('/')
+            getPON(result.value.olt_id, `${pon[2]}/${pon[3]}`, 1500);
+        });
+    });
+}
+
+function modalReboot(pos) {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const olt = urlParams.get('olt');
+    Swal.fire({
+        title: 'Reboot  ONU',
+        html: `<label class="mr-1">ONU Position:</label><input type="text" value="${pos}" disabled>`,
+        showCancelButton: true,
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Reboot',
+        preConfirm: () => {
+            return {
+                onu_pos: pos,
+                olt_id: olt
+            }
+        }
+    }).then((result) => {
+        axios.get(`/get/nokia/reboot?id=${result.value.olt_id}&pos=${result.value.onu_pos}`).then((response) => {
+            Swal.fire({
+                title: 'ONU Rebooted',
                 icon: 'success',
                 showConfirmButton: false,
                 timer: 2000

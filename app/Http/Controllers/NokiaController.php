@@ -35,6 +35,9 @@ class NokiaController extends Controller
             case 'add':
                 NokiaController::add($get['id'], $get['pos'], $get['serial'], $get['vlan'], $get['description'], $get['type']);
                 break;
+            case 'reboot':
+                NokiaController::reboot($get['id'], $get['pos']);
+                break;
         }
     }
 
@@ -149,11 +152,19 @@ class NokiaController extends Controller
         // executa script python
         $output = shell_exec("python python/nokia/isam_remove.py $args->ip $args->user $args->pass $pos");
     }
+
     public static function add($id, $pos, $serial, $vlan, $description, $type){
         // pega informações sobre a olt
         $args = DB::table('olts')->where('id', $id)->first();
         //echo "python python/nokia/isam_add.py $args->ip $args->user $args->pass $pos $serial $vlan $description $type";
         // executa script python
         $output = shell_exec("python python/nokia/isam_add.py $args->ip $args->user $args->pass $pos $serial $vlan $description $type");
+    }
+
+    public static function reboot($id, $pos){
+        // pega informações sobre a olt
+        $args = DB::table('olts')->where('id', $id)->first();
+        // executa script python
+        $output = shell_exec("python python/nokia/isam_reboot.py $args->ip $args->user $args->pass $pos");
     }
 }
