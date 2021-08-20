@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
         $admin_role = Role::create(['name' => 'Administrator']);
         Permission::create(['name' => 'manage_users']);
         Permission::create(['name' => 'manage_olts']);
+        Permission::create(['name' => 'manage_interactions']);
         Permission::create(['name' => 'view_admin_panel']);
         $admin_role->givePermissionTo(Permission::all());
         $admin_user->assignRole($admin_role);

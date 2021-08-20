@@ -24,4 +24,4 @@ Route::get('/home', function () {
 Route::get('/dashboard', [Controller::class, 'initial'])->middleware(['admin'])->name('dashboard');
 Route::get('/navigate', [Controller::class, 'navigate'])->middleware(['admin'])->name('navigate');
 
-Route::get('/get/{vendor}/{function}', array('uses' => 'App\Http\Controllers\Controller@teste'))->middleware(['auth']);
+Route::get('/get/{vendor}/{function}', array('uses' => 'App\Http\Controllers\Controller@teste'))->middleware(['admin']);

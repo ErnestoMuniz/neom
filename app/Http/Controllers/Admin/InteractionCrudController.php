@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\OltRequest;
+use App\Http\Requests\InteractionRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class OltCrudController
+ * Class InteractionCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class OltCrudController extends CrudController
+class InteractionCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class OltCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Olt::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/olt');
-        CRUD::setEntityNameStrings('OLT', 'OLTs');
+        CRUD::setModel(\App\Models\Interaction::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/interaction');
+        CRUD::setEntityNameStrings('interaction', 'interactions');
     }
 
     /**
@@ -40,7 +40,9 @@ class OltCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::setFromDb(); // columns
-        CRUD::column('enabled')->type('check');
+        CRUD::column('user_id')->type('relationship');
+        CRUD::column('olt_id')->type('relationship')->attribute('nome');
+
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
@@ -56,42 +58,9 @@ class OltCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(OltRequest::class);
+        CRUD::setValidation(InteractionRequest::class);
 
-        //CRUD::setFromDb(); // fields
-
-        $this->crud->addFields([
-            [
-                'name' => 'nome'
-            ],
-            [
-                'name' => 'ip'
-            ],
-            [
-                'name' => 'user'
-            ],
-            [
-                'name' => 'pass',
-                'label' => 'Password'
-            ],
-            [
-                'name' => 'slot',
-                'label' => 'Number of Slots'
-            ],
-            [
-                'name' => 'pon',
-                'label' => 'Number of PONs'
-            ],
-            [
-                'name' => 'vendor',
-                'type' => 'select2_from_array',
-                'options' => ['huawei' => 'Huawei', 'nokia' => 'Nokia', 'datacom' => 'Datacom']
-            ],
-            [
-                'name' => 'enabled',
-                'type' => 'checkbox'
-            ]
-        ]);
+        CRUD::setFromDb(); // fields
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

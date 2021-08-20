@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
+use App\Models\Olt;
 
 class Controller extends BaseController
 {
@@ -31,7 +32,7 @@ class Controller extends BaseController
 
     // Retorna dashboard com informações das OLTs
     public function initial(){
-        $olts = DB::select("select * from olts order by nome");
+        $olts = Olt::where('enabled', true)->orderBy('nome')->get();
         return view('dashboard', ['olts'=>$olts]);
     }
 

@@ -16,4 +16,8 @@
 @can('manage_olts')
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('olt') }}'><i class="nav-icon las la-server"></i> OLTs</a></li>
 @endcan
-<li class="nav-title text-center" style="position: absolute; bottom: 0.5em;">Made by <a href="https://github.com/ErnestoMuniz">Ernesto Muniz</a> Version Alpha 2.5.0</li>
+@can('manage_interactions')
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('interaction') }}'><i class='nav-icon la la-project-diagram'></i> Interactions</a></li>
+@endcan
+
+<li class="nav-title text-center" style="position: absolute; bottom: 0.5em;">Made by <a href="https://github.com/ErnestoMuniz">Ernesto Muniz</a> Version Alpha 2.6.0</li>
