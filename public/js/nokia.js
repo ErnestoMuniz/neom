@@ -81,7 +81,7 @@ function getPON(id, pon, srch){
 }
 
 function getONU(id){
-    let param = document.getElementById('search').value;
+    let param = document.getElementById('search').value.toUpperCase();
     document.getElementById('btn-search').innerHTML = "<i class=\"las la-spinner\" style='animation:spin 4s linear infinite;'></i>";
     axios.get(`/get/nokia/onu?id=${id}&onu=${param}`).then(function (response){
         let pon = response.data.split('/');
@@ -89,6 +89,13 @@ function getONU(id){
         document.getElementById('btn-search').innerHTML = "<i class=\"las la-search\"></i>";
         pon.innerHTML = "";
     })
+    .catch(function (error){
+        document.getElementById('btn-search').innerHTML = "<i class=\"las la-search\"></i>";
+        new Noty({
+            type: 'error',
+            text: 'ONU NOT FOUND'
+        }).show();
+    });
 }
 
 function getPending(id){
