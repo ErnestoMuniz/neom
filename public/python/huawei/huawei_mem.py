@@ -6,7 +6,7 @@ PORT = sys.argv[1].split(':')[1]
 user = sys.argv[2]
 password = sys.argv[3]
 
-tn = telnetlib.Telnet(HOST)
+tn = telnetlib.Telnet(HOST, PORT)
 
 tn.read_until(b"name:")
 tn.write(user.encode('ascii') + b"\n")
