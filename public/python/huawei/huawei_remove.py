@@ -1,7 +1,8 @@
 import telnetlib
 import sys
 
-HOST = sys.argv[1]
+HOST = sys.argv[1].split(':')[0]
+PORT = sys.argv[1].split(':')[1]
 user = sys.argv[2]
 password = sys.argv[3]
 

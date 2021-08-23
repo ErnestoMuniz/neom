@@ -62,25 +62,53 @@ class OltCrudController extends CrudController
 
         $this->crud->addFields([
             [
-                'name' => 'nome'
+                'name' => 'nome',
+                'attributes' => [
+                        'placeholder' => 'Name of the OLT'
+                    ]
             ],
             [
-                'name' => 'ip'
+                'name' => 'ip',
+                'attributes' => [
+                        'placeholder' => 'IP of the OLT'
+                    ]
             ],
             [
-                'name' => 'user'
+                'name' => 'port',
+                'default' => '23',
+                'attributes' => [
+                        'placeholder' => 'Port of the OLT'
+                    ]
+            ],
+            [
+                'name' => 'user',
+                'default' => 'admin',
+                'attributes' => [
+                        'placeholder' => 'The user for connection'
+                    ]
             ],
             [
                 'name' => 'pass',
-                'label' => 'Password'
+                'label' => 'Password',
+                'attributes' => [
+                        'placeholder' => 'The password for connection'
+                    ]
             ],
             [
                 'name' => 'slot',
-                'label' => 'Number of Slots'
+                'label' => 'Number of Slots',
+                'default' => '4',
+                'attributes' => [
+                        'placeholder' => 'Number of OLT Slots'
+                    ]
             ],
             [
                 'name' => 'pon',
-                'label' => 'Number of PONs'
+                'label' => 'Number of PONs',
+                'default' => '16',
+                'attributes' => [
+                        'placeholder' => 'Number of PONs per Slot'
+                    ]
             ],
             [
                 'name' => 'vendor',
@@ -89,7 +117,8 @@ class OltCrudController extends CrudController
             ],
             [
                 'name' => 'enabled',
-                'type' => 'checkbox'
+                'type' => 'checkbox',
+                'default' => 1
             ]
         ]);
 
