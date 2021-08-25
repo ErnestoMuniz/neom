@@ -76,9 +76,12 @@ function getPON(id, pon, srch){
                                     </tr>`;
                 }
             }
-            document.getElementById('onus').className = 'table table-striped w-full mx-auto overflow-hidden m-0 table-sort';
         })
         .catch(function (error){
+            new Noty({
+                type: 'error',
+                text: '<b>ERROR ON PON VERIFICATION</b>'
+            }).show();
             console.log(error);
         });
 }
@@ -92,6 +95,13 @@ function getONU(id){
         document.getElementById('btn-search').innerHTML = "<i class=\"las la-search\"></i>";
         pon.innerHTML = "";
     })
+    .catch(function (error){
+        document.getElementById('btn-search').innerHTML = "<i class=\"las la-search\"></i>";
+        new Noty({
+            type: 'error',
+            text: '<b>ONU NOT FOUND</b>'
+        }).show();
+    });
 }
 
 function getPending(id){

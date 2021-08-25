@@ -76,6 +76,10 @@ function getPON(id, pon, srch){
             document.getElementById('onus').className = 'table-sort';
         })
         .catch(function (error){
+            new Noty({
+                type: 'error',
+                text: '<b>ERROR ON PON VERIFICATION</b>'
+            }).show();
             console.log(error);
         });
 }
@@ -93,7 +97,7 @@ function getONU(id){
         document.getElementById('btn-search').innerHTML = "<i class=\"las la-search\"></i>";
         new Noty({
             type: 'error',
-            text: 'ONU NOT FOUND'
+            text: '<b>ONU NOT FOUND</b>'
         }).show();
     });
 }
