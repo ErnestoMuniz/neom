@@ -19,7 +19,7 @@ tn.read_until(b"#")
 tn.write(f"display service-port port 0/{sys.argv[4]} ont {sys.argv[5]}\n".encode('ascii'))
 tn.read_until(b"}:")
 tn.write(b"\n")
-sp_index = tn.read_until(b"#").decode('ascii').split('common')[0].split(' ')[105]
+sp_index = tn.read_until(b"#").decode('ascii').split('-----------------------------------------------------------------------------')[2].split(' ')[5]
 tn.write(b"config\n")
 tn.read_until(b"#")
 tn.write(f"undo service-port {sp_index}\n".encode('ascii'))
