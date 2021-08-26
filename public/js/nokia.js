@@ -17,6 +17,9 @@ function getPON(id, pon, srch){
             pon.innerHTML = "";
             // Loop para preencher a tabela
             for (let ont in xml){
+                if (xml[ont] >= 0 && xml[ont] <= 128) {
+                    break;
+                }
                 let pos_full = xml[ont].children[1].innerHTML;
                 let pos = xml[ont].children[1].innerHTML.replace("1/1/", "").split('/')[2];
                 let status;
@@ -73,7 +76,6 @@ function getPON(id, pon, srch){
                                     </tr>`;
                 }
             }
-            document.getElementById('onus').className = 'table-sort';
         })
         .catch(function (error){
             new Noty({
