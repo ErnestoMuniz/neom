@@ -34,6 +34,9 @@ class HuaweiController extends Controller
             case 'reboot':
                 HuaweiController::reboot($get['id'], $get['pon'], $get['pos']);
                 break;
+            case 'wlan':
+                HuaweiController::wlan($get['id'], $get['pon'], $get['pos']);
+                break;
         }
     }
 
@@ -85,6 +88,12 @@ class HuaweiController extends Controller
     public static function reboot($id, $pon, $pos){
         $olt = DB::table('olts')->where('id', $id)->first();
         $output = shell_exec("python python/huawei/huawei_reboot.py $olt->ip:$olt->port $olt->user $olt->pass $pon $pos");
+        echo str_replace("'", '"', $output);
+    }
+
+    public static function wlan($id, $pon, $pos){
+        $olt = DB::table('olts')->where('id', $id)->first();
+        $output = shell_exec("python python/huawei/huawei_wlan.py $olt->ip:$olt->port $olt->user $olt->pass $pon $pos");
         echo str_replace("'", '"', $output);
     }
 }

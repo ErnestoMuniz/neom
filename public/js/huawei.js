@@ -50,11 +50,14 @@ function getPON(id, pon, srch){
                                         <td>${sinal}</td>
                                         <td>${serial}</td>
                                         <td>
-                                            <button type="submit" class="btn btn-transparent p-0" onclick="modalReboot('${slotPon}', '${pos}')">
+                                            <button title="Reboot" type="submit" class="btn btn-transparent p-0" onclick="modalReboot('${slotPon}', '${pos}')">
                                                 <i class="las la-power-off text-danger"></i>
                                             </button>
-                                            <button type="submit" class="btn btn-transparent p-0" onclick="modalRemove('${slotPon}', '${pos}')">
+                                            <button title="Remove" type="submit" class="btn btn-transparent p-0" onclick="modalRemove('${slotPon}', '${pos}')">
                                                 <i class="las la-times-circle text-danger"></i>
+                                            </button>
+                                            <button title="Wireless Information" type="submit" class="btn btn-transparent p-0" onclick="modalWlan('${slotPon}', '${pos}')">
+                                                <i class="las la-wifi text-primary"></i>
                                             </button>
                                         </td>
                                     </tr>`;
@@ -66,11 +69,14 @@ function getPON(id, pon, srch){
                                         <td>${sinal}</td>
                                         <td>${serial}</td>
                                         <td>
-                                            <button type="submit" class="btn btn-transparent p-0" onclick="modalReboot('${slotPon}', '${pos}')">
+                                            <button title="Reboot" type="submit" class="btn btn-transparent p-0" onclick="modalReboot('${slotPon}', '${pos}')">
                                                 <i class="las la-power-off text-danger"></i>
                                             </button>
-                                            <button type="submit" class="btn btn-transparent p-0" onclick="modalRemove('${slotPon}', '${pos}')">
+                                            <button title="Remove" type="submit" class="btn btn-transparent p-0" onclick="modalRemove('${slotPon}', '${pos}')">
                                                 <i class="las la-times-circle text-danger"></i>
+                                            </button>
+                                            <button title="Wireless Information" type="submit" class="btn btn-transparent p-0" onclick="modalWlan('${slotPon}', '${pos}')">
+                                                <i class="las la-wifi text-primary"></i>
                                             </button>
                                         </td>
                                     </tr>`;
@@ -185,4 +191,43 @@ function modalReboot(pon, pos) {
             getPON(result.value.olt_id, pon, 1500);
         });
     });
+}
+
+function modalWlan(pon, pos) {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const olt = urlParams.get('olt');
+
+    axios.get(`/get/huawei/wlan?id=${olt}&pon=${pon}&pos=${pos}`).then(function (response){
+        let json = response.data;
+        let html = ``;
+        for (wlan in json) {
+            let wifi = json[wlan].split('\r\n');
+            let ghz;
+            if (wlan == 0) {
+                ghz = '2.4';
+            } else {
+                ghz = '5.8';
+            }
+            html += `<div class="card p-4">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-4">
+                                <i class="las la-wifi text-primary" style="font-size: 2.5rem"></i><br/>
+                                <span><b>WiFi ${ghz}GHz</b></span>
+                            </div>
+                            <div class="col-8">
+                                <span><b>SSID</b>: ${wifi[2].split(':')[1]}</span><br/>
+                                <span><b>Protocol</b>: ${wifi[3].split(':')[1].split('11')[1]}</span><br/>
+                                <span><b>Status</b>: ${wifi[5].split(':')[1]}</span><br/>
+                                <span><b>Devices</b>: ${wifi[7].split(':')[1]}/${wifi[6].split(':')[1]}</span>
+                            </div>
+                        </div>
+                    </div>`;
+        }
+        Swal.fire({
+            title: 'Wireless Information',
+            html: html,
+            showConfirmButton: false
+        });
+    })
 }
