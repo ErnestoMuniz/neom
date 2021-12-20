@@ -37,7 +37,7 @@ class AuthController extends Controller
             Token::destroy($token->id);
             return response()->json(['status' => '200', 'message' => 'Logout success']);
         } catch (\Throwable $th) {
-            return response()->json(['status' => '500', 'message' => 'Logout error'], 500);
+            return response()->json(['status' => '200', 'message' => 'Not logged in'], 404);
         }
     }
 }

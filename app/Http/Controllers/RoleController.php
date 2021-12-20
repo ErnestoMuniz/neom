@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -43,7 +44,16 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        return Role::find($id);
+        $role = Role::find($id);
+        $permissions = $role->permissions;
+        $temp = [];
+        $count = 0;
+        foreach ($permissions as $permission) {
+            $temp[$count] = $permission->id => $permission->name;
+            $count++;
+        }
+        $role->permissions = $temp;
+        return $role->permissions;
     }
 
     /**

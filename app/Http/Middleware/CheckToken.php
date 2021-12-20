@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Token;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,10 @@ class CheckToken
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        if(Token::where('token', $request->header('Token'))->exists()){
+            return $next($request);
+        } else {
+            return response()->json(['status' => '401', 'message' => 'You are not logged in'], 401);
+        }
     }
 }

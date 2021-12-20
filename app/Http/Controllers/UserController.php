@@ -27,7 +27,7 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -64,7 +64,7 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, User $user)
     {
@@ -72,6 +72,7 @@ class UserController extends Controller
             $user = User::find($user->id);
             $user->name = $request->name;
             $user->email = $request->email;
+            $user->role_id = $request->role_id;
             if ($request->password != '') {
                 $user->password = Hash::make($request->password);
             }
@@ -86,7 +87,7 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(User $user)
     {

@@ -22,13 +22,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('users', UserController::class);
-Route::apiResource('roles', RoleController::class);
-Route::apiResource('permissions', PermissionController::class);
-Route::apiResource('olts', OltController::class);
-Route::apiResource('vendors', VendorController::class);
-Route::apiResource('script_users', ScriptUserController::class);
-Route::apiResource('scripts', ScriptController::class);
-Route::post('execute/{id}', [ScriptController::class, 'executeScript']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout']);
+Route::middleware('CheckToken')->group(function () {
+    Route::apiResource('users', UserController::class);
+    Route::apiResource('roles', RoleController::class);
+    Route::apiResource('permissions', PermissionController::class);
+    Route::apiResource('olts', OltController::class);
+    Route::apiResource('vendors', VendorController::class);
+    Route::apiResource('script_users', ScriptUserController::class);
+    Route::apiResource('scripts', ScriptController::class);
+    Route::post('execute/{id}', [ScriptController::class, 'executeScript']);
+});
