@@ -15,14 +15,10 @@ class Script extends Model
         'port',
         'steps',
         'script_user_id',
-        'vendor_id'
+        'vendor'
     ];
 
     public function scriptUser() {
         return $this->hasMany(ScriptUser::class);
-    }
-
-    public function vendor() {
-        return $this->hasMany(Vendor::class);
     }
 }

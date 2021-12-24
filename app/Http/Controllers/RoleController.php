@@ -15,7 +15,29 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return Role::all();
+        $roles = Role::all();
+        $res = [];
+        $cnt = 0;
+        foreach($roles as $role){
+            $rolePermissions = Permission::join('role_has_permissions', 'permission_id', 'id')->where('role_id', $role->id)->get();
+            $permissionsName = [];
+            $count = 0;
+            foreach ($rolePermissions as $rolePermission){
+                $permissionsName[$count] = [
+                    "id" => $rolePermission->id,
+                    "name" => $rolePermission->name
+                ];
+                $count++;
+            }
+            $json = [
+                "id" => $role->id,
+                "name" => $role->name,
+                "permissions" => $permissionsName
+            ];
+            $res[$cnt] = $json;
+            $cnt++;
+        }
+        return $res;
     }
 
     /**
@@ -27,9 +49,12 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         try {
-            Role::create([
+            $role = Role::create([
                 'name' => $request->name
             ]);
+            if ($request->permissions != []) {
+                $role->permissions()->sync($request->permissions);
+            }
             return response()->json(['status' => '200', 'message' => 'Role created']);
         } catch (\Throwable $th) {
             return response()->json(['status' => '500', 'message' => 'Error on role creation'], 500);
@@ -45,15 +70,22 @@ class RoleController extends Controller
     public function show($id)
     {
         $role = Role::find($id);
-        $permissions = $role->permissions;
-        $temp = [];
+        $rolePermissions = Permission::join('role_has_permissions', 'permission_id', 'id')->where('role_id', $id)->get();
+        $permissionsName = [];
         $count = 0;
-        foreach ($permissions as $permission) {
-            $temp[$count] = $permission->id => $permission->name;
+        foreach ($rolePermissions as $rolePermission){
+            $permissionsName[$count] = [
+                "id" => $rolePermission->id,
+                "name" => $rolePermission->name
+            ];
             $count++;
         }
-        $role->permissions = $temp;
-        return $role->permissions;
+        $json = [
+            "id" => $role->id,
+            "name" => $role->name,
+            "permissions" => $permissionsName
+        ];
+        return $json;
     }
 
     /**
@@ -68,6 +100,9 @@ class RoleController extends Controller
         try {
             $role = Role::find($id);
             $role->name = $request->name;
+            if ($request->permissions != []) {
+                $role->permissions()->sync($request->permissions);
+            }
             $role->save();
             return response()->json(['status' => '200', 'message' => 'role updated']);
         } catch (\Throwable $th) {

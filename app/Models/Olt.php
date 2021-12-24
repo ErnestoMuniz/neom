@@ -12,10 +12,8 @@ class Olt extends Model
     protected $fillable = [
         'name',
         'ip',
-        'vendor_id'
+        'vendor',
+        'slots',
+        'pons'
     ];
-
-    public function vendor() {
-        return $this->belongsTo(Vendor::class);
-    }
 }

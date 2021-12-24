@@ -17,7 +17,9 @@ class CreateOltsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('ip');
-            $table->integer('vendor_id');
+            $table->string('vendor');
+            $table->integer('slots');
+            $table->integer('pons');
             $table->timestamps();
         });
     }

@@ -19,7 +19,7 @@ class CreateScriptsTable extends Migration
             $table->string('protocol');
             $table->integer('port');
             $table->integer('script_user_id');
-            $table->integer('vendor_id');
+            $table->string('vendor');
             $table->json('steps');
             $table->timestamps();
         });

@@ -34,7 +34,7 @@ class ScriptController extends Controller
                 'protocol' => $request->protocol,
                 'port' => $request->port,
                 'script_user_id' => $request->script_user_id,
-                'vendor_id' => $request->vendor_id,
+                'vendor' => $request->vendor,
                 'steps' => $request->steps
             ]);
             return response()->json(['status' => '200', 'message' => 'Script created']);
@@ -69,7 +69,7 @@ class ScriptController extends Controller
             $script->protocol = $request->protocol;
             $script->port = $request->port;
             $script->script_user_id = $request->script_user_id;
-            $script->vendor_id = $request->vendor_id;
+            $script->vendor = $request->vendor;
             $script->steps = $request->steps;
             $script->save();
             return response()->json(['status' => '200', 'message' => 'Script updated']);

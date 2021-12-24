@@ -29,7 +29,9 @@ class OltController extends Controller
             Olt::create([
                 'name' => $request->name,
                 'ip' => $request->ip,
-                'vendor_id' => $request->vendor_id
+                'vendor' => $request->vendor,
+                'slots' => $request->slots,
+                'pons' => $request->pons
             ]);
             return response()->json(['status' => '200', 'message' => 'Olt created']);
         } catch (\Throwable $th) {
@@ -60,7 +62,9 @@ class OltController extends Controller
         try {
             $olt = Olt::find($olt->id);
             $olt->ip = $request->ip;
-            $olt->vendor_id = $request->vendor_id;
+            $olt->vendor = $request->vendor;
+            $olt->slots = $request->slots;
+            $olt->pons = $request->pons;
             $olt->save();
             return response()->json(['status' => '200', 'message' => 'Olt updated']);
         } catch (\Throwable $th) {
