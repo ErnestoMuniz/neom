@@ -19,7 +19,7 @@ class UserController extends Controller
         $users = User::addSelect([
             'role_name' => Role::select('name')
             ->whereColumn('role_id', 'roles.id')
-        ])->get();
+        ])->orderBy('name')->get();
         return $users;
     }
 

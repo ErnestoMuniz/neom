@@ -17,9 +17,17 @@ class CreateOltsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('ip');
+            $table->integer('port')->nullable();
+            $table->string('unm')->nullable();
             $table->string('vendor');
-            $table->integer('slots');
+            $table->string('slots');
             $table->integer('pons');
+            $table->string('model');
+            $table->string('firmware')->nullable();
+            $table->integer('cpu')->nullable();
+            $table->boolean('enabled');
+            $table->string('username');
+            $table->string('password');
             $table->timestamps();
         });
     }

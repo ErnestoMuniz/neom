@@ -1,14 +1,12 @@
 <?php
 
+use App\Http\Controllers\ActionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OltController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\ScriptController;
-use App\Http\Controllers\ScriptUserController;
+use App\Http\Controllers\StatsController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\VendorController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,12 +23,17 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout']);
 Route::middleware('CheckToken')->group(function () {
-    Route::apiResource('users', UserController::class);
-    Route::apiResource('roles', RoleController::class);
-    Route::apiResource('permissions', PermissionController::class);
-    Route::apiResource('olts', OltController::class);
-    Route::apiResource('vendors', VendorController::class);
-    Route::apiResource('script-users', ScriptUserController::class);
-    Route::apiResource('scripts', ScriptController::class);
-    Route::post('execute/{id}', [ScriptController::class, 'executeScript']);
+  Route::apiResource('users', UserController::class)->middleware('can:edit_users');
+  Route::apiResource('roles', RoleController::class)->middleware('can:edit_roles');
+  Route::get('getOlts', [OltController::class, 'publicIndex'])->middleware('can:view_onus');
+  Route::get('getOlts/{olt}', [OltController::class, 'publicShow'])->middleware('can:view_onus');
+  Route::apiResource('permissions', PermissionController::class)->middleware('can:edit_permissions');
+  Route::apiResource('olts', OltController::class)->middleware('can:edit_olts');
+  Route::get('toggleOlt/{id}', [OltController::class, 'toggleOlt'])->middleware('can:edit_olts');
+  Route::post('exec/{olt}/{cmd}', [ActionController::class, 'router']);
+
+  // Statistics Routes
+  Route::get('stats/olts', [StatsController::class, 'olts']);
+  Route::get('stats/users', [StatsController::class, 'users']);
+  Route::get('stats/roles', [StatsController::class, 'roles']);
 });
