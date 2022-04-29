@@ -12,3 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// Rota de fallback
+Route::fallback(function() {
+  return File::get(public_path() . '/build/index.html');
+});

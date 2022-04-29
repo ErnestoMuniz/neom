@@ -30,5 +30,9 @@ tn.write(
 status = tn.read_until(b"#").decode('ascii').split('\r\n')[1].split()[8].replace('.', '')
 tn.write(
     f"show onu opticalpower-info phy-id {sys.argv[4]}\n".encode('ascii'))
-signal = tn.read_until(b"#").decode('ascii').split('\r\n')[5].split()[3]
+signal = '-40.00'
+try:
+  signal = tn.read_until(b"#").decode('ascii').split('\r\n')[5].split()[3]
+except:
+  pass
 print(f"{pos} {type} {sn} {status} {signal}")

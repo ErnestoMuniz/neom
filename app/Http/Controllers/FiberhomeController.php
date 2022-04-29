@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class FiberhomeController extends Controller
 {
-  public function pon($req, $olt)
+  public static function pon($req, $olt)
   {
     if (Token::checkPermission($req, 'view_onus')) {
       $output = shell_exec("python python/fiberhome/fh_count.py '$olt->ip' '$olt->username' '$olt->password' '$req->pon'");
@@ -109,6 +109,23 @@ class FiberhomeController extends Controller
       $olt->cpu = $output;
       $olt->save();
       echo $output;
+    } else {
+      return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
+    }
+  }
+
+  public static function onuStatus($req, $olt)
+  {
+    if (Token::checkPermission($req, 'view_onus')) {
+      $output = shell_exec("python python/fiberhome/fh_onu_status.py '$olt->ip' '$olt->username' '$olt->password' '$req->onu'");
+      $onu = explode(' ', $output);
+      return response()->json([
+        'pos' => $onu[0],
+        'sn' => $onu[2],
+        'status' => $onu[3],
+        'signal' => str_replace("\n", '', $onu[4]),
+        'desc' => $onu[1],
+      ]);
     } else {
       return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
     }

@@ -8,7 +8,7 @@ use SimpleXMLElement;
 
 class NokiaController extends Controller
 {
-  public function pon($req, $olt)
+  public static function pon($req, $olt)
   {
     if (Token::checkPermission($req, 'view_onus')) {
       $output = shell_exec("python python/nokia/isam_count.py '$olt->ip' '$olt->username' '$olt->password' '1/1/$req->pon'");
@@ -142,6 +142,30 @@ class NokiaController extends Controller
       $olt->firmware = $firmware;
       $olt->save();
       echo $firmware;
+    } else {
+      return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
+    }
+  }
+
+  public static function onuStatus($req, $olt)
+  {
+    if (Token::checkPermission($req, 'view_onus')) {
+      $output = shell_exec("python python/nokia/isam_onu_status.py '$olt->ip' '$olt->username' '$olt->password' '$req->onu'");
+      $arr = explode("\n", $output);
+      array_shift($arr);
+      array_shift($arr);
+      unset($arr[count($arr) - 1]);
+      unset($arr[count($arr) - 1]);
+      $xml = new SimpleXMLElement(implode("\n", $arr));
+      $json = json_decode(json_encode($xml), true)['hierarchy']['hierarchy']['hierarchy']['hierarchy']['hierarchy']['instance'];
+      $res = [
+        'pos' => $json['res-id'][1],
+        'sn' => $json['info'][0],
+        'status' => $json['info'][2],
+        'signal' => $json['info'][3],
+        'desc' => $json['info'][5],
+      ];
+      return response()->json($res);
     } else {
       return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
     }

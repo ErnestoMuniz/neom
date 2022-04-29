@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class HuaweiController extends Controller
 {
-  public function pon($req, $olt)
+  public static function pon($req, $olt)
   {
     if (Token::checkPermission($req, 'view_onus')) {
       $output = shell_exec("python python/huawei/huawei_count.py '$olt->ip:$olt->port' '$olt->username' '$olt->password' '$req->pon'");
@@ -23,7 +23,6 @@ class HuaweiController extends Controller
             'sn' => "HWTC-" . substr(explode(' ', $onu)[1], -8)
           ]);
         } catch (\Throwable $th) {
-          
         }
       }
       return response()->json($res, 200);
@@ -75,7 +74,7 @@ class HuaweiController extends Controller
       return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
     }
   }
-  
+
   public static function sp($req, $olt)
   {
     if (Token::checkPermission($req, 'remove_onu')) {
@@ -101,6 +100,17 @@ class HuaweiController extends Controller
     if (Token::checkPermission($req, 'remove_onu')) {
       $output = shell_exec("python python/huawei/huawei_remove_sp.py '$olt->ip:$olt->port' '$olt->username' '$olt->password' '$req->idx'");
       return response($output);
+    } else {
+      return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
+    }
+  }
+
+  public static function onuStatus($req, $olt)
+  {
+    if (Token::checkPermission($req, 'view_onus')) {
+      $output = shell_exec("python python/huawei/huawei_onu_status.py '$olt->ip:$olt->port' '$olt->username' '$olt->password' '$req->onu'");
+      $res = str_replace("'", '"', $output);
+      return response($res);
     } else {
       return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
     }
