@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Token;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use SimpleXMLElement;
 
 class NokiaController extends Controller
@@ -16,7 +17,6 @@ class NokiaController extends Controller
       array_shift($arr);
       unset($arr[count($arr) - 1]);
       unset($arr[count($arr) - 1]);
-      // retorna o resultado em XML
       $xml = new SimpleXMLElement(implode("\n", $arr));
       $xml = $xml->hierarchy->hierarchy->hierarchy->hierarchy->hierarchy->instance;
       $res = [];
@@ -46,7 +46,6 @@ class NokiaController extends Controller
       array_shift($arr);
       unset($arr[count($arr) - 1]);
       unset($arr[count($arr) - 1]);
-      // retorna o resultado em XML
       $xml = new SimpleXMLElement(implode("\n", $arr));
       $idx = $xml->hierarchy->hierarchy->hierarchy->hierarchy->instance->info;
       echo preg_replace('/1\/1\//', '', $idx, 1);
@@ -73,7 +72,6 @@ class NokiaController extends Controller
       array_shift($arr);
       unset($arr[count($arr) - 1]);
       unset($arr[count($arr) - 1]);
-      // retorna o resultado em XML
       $xml = new SimpleXMLElement(implode("\n", $arr));
       $xml = $xml->hierarchy->hierarchy->hierarchy->instance;
       $res = [];

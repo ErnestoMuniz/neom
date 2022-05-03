@@ -12,8 +12,9 @@ class ActionController extends Controller
     return shell_exec(escapeshellcmd($cmd));
   }
 
-  public function router(Request $req, Olt $olt, $cmd)
+  public function router(Request $req, $olt, $cmd)
   {
+    $olt = !strstr($olt, '.') ? Olt::find($olt) : Olt::where('ip', $olt)->first();
     switch ($olt->vendor) {
       case 'Fiberhome':
         return FiberhomeController::$cmd($req, $olt);

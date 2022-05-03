@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActionController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\OltController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -30,10 +31,17 @@ Route::middleware('CheckToken')->group(function () {
   Route::apiResource('permissions', PermissionController::class)->middleware('can:edit_permissions');
   Route::apiResource('olts', OltController::class)->middleware('can:edit_olts');
   Route::get('toggleOlt/{id}', [OltController::class, 'toggleOlt'])->middleware('can:edit_olts');
-  Route::post('exec/{olt}/{cmd}', [ActionController::class, 'router']);
+  Route::post('exec/{olt}/{cmd}', [ActionController::class, 'router'])->middleware('log');
+
+  //Log Routes
+  Route::prefix('log')->group(function () {
+    Route::get('count', [LogController::class, 'actionCount']);
+    Route::get('count/user', [LogController::class, 'actionUserCount']);
+  });
 
   // Statistics Routes
   Route::get('stats/olts', [StatsController::class, 'olts']);
   Route::get('stats/users', [StatsController::class, 'users']);
   Route::get('stats/roles', [StatsController::class, 'roles']);
+  Route::get('stats/actions', [StatsController::class, 'actions']);
 });
