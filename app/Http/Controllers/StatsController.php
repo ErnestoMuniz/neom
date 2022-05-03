@@ -14,10 +14,10 @@ class StatsController extends Controller
   }
 
   public function users() {
-    return Role::all()->count();
+    return User::all()->count();
   }
 
   public function roles() {
-    return User::all()->count();
+    return Role::all()->count();
   }
 }
