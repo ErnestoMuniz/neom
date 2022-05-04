@@ -25,7 +25,7 @@ class LogController extends Controller
     array_pop($linhas);
     $linhasUser = [];
     foreach ($linhas as $linha) {
-      if (strstr($linha, '"user":'.$id)) {
+      if (strstr($linha, '"user":'.$id.',')) {
         array_push($linhasUser, $linha);
       }
     }
