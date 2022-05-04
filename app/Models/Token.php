@@ -18,9 +18,9 @@ class Token extends Model
 
   public static function getToken(string $target)
   {
-    $tokens = Token::all();
+    $tokens = Token::where('user_id', explode('-', $target)[0])->orderBy('id', 'DESC')->get();
     foreach ($tokens as $token) {
-      if (Hash::check($target, $token->token)) {
+      if (Hash::check(explode('-', $target)[1], $token->token)) {
         return $token;
       }
     }
