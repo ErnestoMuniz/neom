@@ -45,3 +45,6 @@ Route::middleware('CheckToken')->group(function () {
   Route::get('stats/roles', [StatsController::class, 'roles']);
   Route::get('stats/actions', [StatsController::class, 'actions']);
 });
+Route::any('nothing', function () {
+  response()->noContent();
+});
