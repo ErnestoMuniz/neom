@@ -19,21 +19,24 @@ class LogAction
    */
   public function handle(Request $request, Closure $next)
   {
-    $olt = !strstr($request->route('olt'), '.') ? Olt::find($request->route('olt')) : Olt::where('ip', $request->route('olt'))->first();
-    $commands = [
-      'pon' => 'List PON ONUs',
-      'pending' => 'List pending ONUs',
-      'onu' => 'Search for ONU',
-      'onuStatus' => 'Get ONU status',
-      'add' => 'Provision ONU',
-      'remove' => 'Remove ONU',
-      'reboot' => 'Reboot ONU',
-      'cpu' => 'Get OLT CPU usage',
-      'firmware' => 'Get OLT firmware version',
-      'sp' => 'Get Service Ports',
-      'rmSp' => 'Remove Service Port'
-    ];
-    Log::channel('actions')->info($commands[$request->route('cmd')], ['user' => Token::getToken($request->header('Token'))->user->id, 'olt' => $olt->id]);
+    try {
+      $olt = !strstr($request->route('olt'), '.') ? Olt::find($request->route('olt')) : Olt::where('ip', $request->route('olt'))->first();
+      $commands = [
+        'pon' => 'List PON ONUs',
+        'pending' => 'List pending ONUs',
+        'onu' => 'Search for ONU',
+        'onuStatus' => 'Get ONU status',
+        'add' => 'Provision ONU',
+        'remove' => 'Remove ONU',
+        'reboot' => 'Reboot ONU',
+        'cpu' => 'Get OLT CPU usage',
+        'firmware' => 'Get OLT firmware version',
+        'sp' => 'Get Service Ports',
+        'rmSp' => 'Remove Service Port'
+      ];
+      Log::channel('actions')->info($commands[$request->route('cmd')], ['user' => Token::getToken($request->header('Token'))->user->id, 'olt' => $olt->id]);
+    } catch (\Throwable $th) {
+    }
     return $next($request);
   }
 }
