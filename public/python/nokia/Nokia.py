@@ -20,7 +20,7 @@ class Nokia():
         tn.write(self.password.encode('ascii') + b"\n")
 
         # PASSO I
-        tn.write(f"configure equipment ont interface 1/1/{slot}/{pon}/{ontid} desc1 {descricao01} desc2 {descricao02} sernum {serial_com}: sw-ver-pland auto sw-dnload-version auto pland-cfgfile1 auto dnload-cfgfile1 auto\n".encode('ascii'))
+        tn.write(f"configure equipment ont interface 1/1/{slot}/{pon}/{ontid} desc1 \"{descricao01}\" desc2 \"{descricao02}\" sernum {serial_com}: sw-ver-pland auto sw-dnload-version auto pland-cfgfile1 auto dnload-cfgfile1 auto\n".encode('ascii'))
         tn.read_until(b"$")
         tn.write(f"configure equipment ont interface 1/1/{slot}/{pon}/{ontid} admin-state up\n".encode('ascii'))
         tn.read_until(b"$")
@@ -56,7 +56,7 @@ class Nokia():
         tn.read_until(b"#")
         tn.write(f"environment inhibit-alarms\n".encode('ascii'))
         print(tn.read_until(b"#").decode('ascii'))
-        tn.write(f"configure equipment ont interface 1/1/{slot}/{pon}/{ontid} sw-ver-pland disabled desc1 {descricao01} desc2 {descricao02} sernum {serial_com} sw-dnload-version disabled pland-cfgfile1 disabled dnload-cfgfile1 disabled\n".encode('ascii'))
+        tn.write(f"configure equipment ont interface 1/1/{slot}/{pon}/{ontid} sw-ver-pland disabled desc1 \"{descricao01}\" desc2 \"{descricao02}\" sernum {serial_com} sw-dnload-version disabled pland-cfgfile1 disabled dnload-cfgfile1 disabled\n".encode('ascii'))
         print(tn.read_until(b"$").decode('ascii'))
         tn.write(f"configure equipment ont interface 1/1/{slot}/{pon}/{ontid} admin-state up\n".encode('ascii'))
         print(tn.read_until(b"$").decode('ascii'))
@@ -197,7 +197,3 @@ class Nokia():
 
         tn.write(f'INIT-SYS::ONT--1-1-{slot}-{pon}-{ontid}:::4;\n'.encode('ascii'))
         tn.read_until(b"$")
-
-
-
-

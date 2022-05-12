@@ -75,6 +75,16 @@ class HuaweiController extends Controller
     }
   }
 
+  public static function reboot($req, $olt)
+  {
+    if (Token::checkPermission($req, 'reboot_onu')) {
+      $output = shell_exec("python python/huawei/huawei_reboot.py '$olt->ip:$olt->port' '$olt->username' '$olt->password' '$req->pos'");
+      echo $output;
+    } else {
+      return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
+    }
+  }
+
   public static function sp($req, $olt)
   {
     if (Token::checkPermission($req, 'remove_onu')) {
