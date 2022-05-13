@@ -18,13 +18,13 @@ class FiberHome():
         tn.read_until(b";")
 
         tn.write(f"ADD-ONU::OLTID={ip_olt},PONID=NA-NA-{slot_pon_onuid}:CTAG::AUTHTYPE=MAC,ONUID={serial_onu},ONUTYPE={modelo_onu},NAME={pppoe_cliente};\n".encode('ascii'))
-        tn.read_until(b";")
+        print(tn.read_until(b";").decode('ascii'))
 
         tn.write(f"SET-WANSERVICE::OLTID={ip_olt},PONID=NA-NA-{slot_pon_onuid},ONUIDTYPE=MAC,ONUID={serial_onu}:CTAG::STATUS=1,MODE=2,CONNTYPE=2,VLAN={vlan},COS=7,QOS=1,NAT=1,IPMODE=3,PPPOEPROXY=2,PPPOEUSER={pppoe_cliente},PPPOEPASSWD={password},PPPOENAME=,PPPOEMODE=1,UPORT=0;\n".encode('ascii'))
-        tn.read_until(b";")
+        print(tn.read_until(b";").decode('ascii'))
 
         tn.write(f"LOGOUT:::CTAG::;\n".encode('ascii'))
-        tn.read_until(b";")
+        print(tn.read_until(b";").decode('ascii'))
 
         tn.close()
 
@@ -38,13 +38,13 @@ class FiberHome():
         tn.read_until(b";")
 
         tn.write(f"ADD-ONU::OLTID={ip_olt},PONID=NA-NA-{slot_pon_onuid}:CTAG::AUTHTYPE=MAC,ONUID={serial_onu},ONUTYPE={modelo_onu},NAME={desc};\n".encode('ascii'))
-        tn.read_until(b";")
+        print(tn.read_until(b";").decode('ascii'))
 
         tn.write(f"CFG-LANPORTVLAN::OLTID={ip_olt},PONID=NA-NA-{slot_pon_onuid},ONUIDTYPE=MAC,ONUID={serial_onu},ONUPORT=NA-NA-NA-1:CTAG::CVLAN={vlan},CCOS=0;\n".encode('ascii'))
-        tn.read_until(b";")
+        print(tn.read_until(b";").decode('ascii'))
 
         tn.write(f"LOGOUT:::CTAG::;\n".encode('ascii'))
-        tn.read_until(b";")
+        print(tn.read_until(b";").decode('ascii'))
 
         tn.close()
 
@@ -57,13 +57,13 @@ class FiberHome():
         tn.read_until(b";")
 
         tn.write(f"ADD-ONU::OLTID={ip_olt},PONID=NA-NA-{slot_pon_onuid}:CTAG::AUTHTYPE=MAC,ONUID={serial_onu},ONUTYPE={modelo_onu},NAME={pppoe_cliente};\n".encode('ascii'))
-        tn.read_until(b";")
+        print(tn.read_until(b";").decode('ascii'))
 
         tn.write(f"CFG-VEIPSERVICE::OLTID={ip_olt},PONID=NA-NA-{slot_pon_onuid},ONUIDTYPE=MAC,ONUID={serial_onu},ONUPORT=NA-NA-NA-1:CTAG::ServiceId=1,CVLANID={vlan},CCOS=0,ServiceModelProfile=ONUZTE,ServiceType=NONE;\n".encode('ascii'))
-        tn.read_until(b";")
+        print(tn.read_until(b";").decode('ascii'))
 
         tn.write(f"LOGOUT:::CTAG::;\n".encode('ascii'))
-        tn.read_until(b";")
+        print(tn.read_until(b";").decode('ascii'))
 
         tn.close()
 

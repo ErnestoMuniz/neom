@@ -22,4 +22,7 @@ tn.write(b"\n")
 result = tn.read_until(b"#").decode('ascii').split('----------------------------------------------------------------------------')
 result.pop(0)
 result.pop(len(result) - 1)
-print(result)
+for onu in result:
+  pos = onu.split('\r\n')[2].split(': ')[1]
+  sn = onu.split('\r\n')[3].split('(')[1].replace(')', '')
+  print(pos+' '+sn)

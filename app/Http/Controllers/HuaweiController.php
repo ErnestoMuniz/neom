@@ -31,6 +31,27 @@ class HuaweiController extends Controller
     }
   }
 
+  public static function pending($req, $olt)
+  {
+    if (Token::checkPermission($req, 'view_onus')) {
+      $output = shell_exec("python python/huawei/huawei_pending.py '$olt->ip:$olt->port' '$olt->username' '$olt->password'");
+      $onus = explode("\n", $output);
+      $res = [];
+      foreach ($onus as $onu) {
+        try {
+          array_push($res, [
+            'pos' => explode(' ', $onu)[0],
+            'sn' => explode(' ', $onu)[1]
+          ]);
+        } catch (\Throwable $th) {
+        }
+      }
+      return response()->json($res, 200);
+    } else {
+      return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
+    }
+  }
+
   public static function firmware($req, $olt)
   {
     if (Token::checkPermission($req, 'edit_olts')) {
