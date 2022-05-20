@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout']);
+Route::post('recover-password', [UserController::class, 'sendPasswordRecoverMail']);
+Route::post('change-password', [UserController::class, 'resetPassword']);
 Route::middleware('CheckToken')->group(function () {
   Route::apiResource('users', UserController::class)->middleware('can:edit_users');
   Route::apiResource('roles', RoleController::class)->middleware('can:edit_roles');

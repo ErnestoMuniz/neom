@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RecoverPassword;
+use App\Models\PasswordsReset;
 use App\Models\Role;
 use App\Models\User;
+use DateTime;
+use DateTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -97,5 +103,40 @@ class UserController extends Controller
     } catch (\Throwable $th) {
       return response()->json(['status' => '500', 'message' => "Error on user deletion\nErr: " . $th], 500);
     }
+  }
+
+  public function sendPasswordRecoverMail(Request $request)
+  {
+    if ($request->email != '') {
+      $user = User::where('email', $request->email)->first();
+      if ($user != null) {
+        $token = Str::random(64);
+        PasswordsReset::create([
+          'user_id' => $user->id,
+          'recover_token' => $token,
+          'valid' => true
+        ]);
+        Mail::to(Str::lower($request->email))->send(new RecoverPassword($token));
+        return response()->json(['status' => 200, 'message' => 'E-Mail sent!'], 200);
+      }
+      return response()->json(['status' => 404, 'message' => 'There is no user with this email'], 404);
+    }
+    return response()->json(['status' => 400, 'message' => 'Empty email field'], 400);
+  }
+
+  public function resetPassword(Request $request)
+  {
+    $reset = PasswordsReset::where('recover_token', $request->token)->first();
+    $dt1 = strtotime($reset->created_at);
+    $dt2 = strtotime(date('Y-m-d h:i:s'));
+    if ($reset != null && $dt2 - $dt1 < 7200 && $reset->valid) {
+      $reset->valid = false;
+      $user = User::find($reset->user_id);
+      $user->password = Hash::make($request->password);
+      $reset->save();
+      $user->save();
+      return response()->json(['status' => 200, 'message' => 'Password reseted'], 200);
+    }
+    return response()->json(['status' => 404, 'message' => 'Invalid token'], 404);
   }
 }
