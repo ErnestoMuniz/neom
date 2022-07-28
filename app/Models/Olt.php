@@ -20,7 +20,9 @@ class Olt extends Model
     'password',
     'unm',
     'model',
-    'port'
+    'port',
+    'snmp',
+    'community'
   ];
 
   public function roles()

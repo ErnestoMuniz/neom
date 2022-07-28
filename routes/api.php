@@ -32,7 +32,7 @@ Route::middleware('CheckToken')->group(function () {
   Route::get('getOlts/{olt}', [OltController::class, 'publicShow'])->middleware('can:view_onus');
   Route::apiResource('permissions', PermissionController::class)->middleware('can:edit_permissions');
   Route::apiResource('olts', OltController::class)->middleware('can:edit_olts');
-  Route::get('toggleOlt/{id}', [OltController::class, 'toggleOlt'])->middleware('can:edit_olts');
+  Route::get('toggleOlt/{olt}', [OltController::class, 'toggleOlt'])->middleware('can:edit_olts');
   Route::post('exec/{olt}/{cmd}', [ActionController::class, 'router'])->middleware('log');
 
   //Log Routes

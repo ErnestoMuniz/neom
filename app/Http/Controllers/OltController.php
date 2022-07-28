@@ -38,12 +38,11 @@ class OltController extends Controller
   public function toggleOlt(Olt $olt)
   {
     try {
-      $olt = Olt::find($olt->id);
       $olt->enabled = !$olt->enabled;
       $olt->save();
       return response()->json(['status' => '200', 'message' => 'Olt updated']);
     } catch (\Throwable $th) {
-      return response()->json(['status' => '500', 'message' => 'Error on olt update ' . $olt], 500);
+      return response()->json(['status' => '500', 'message' => 'Error on olt update ' . $th], 500);
     }
   }
 
@@ -67,11 +66,13 @@ class OltController extends Controller
         'password' => $request->password,
         'unm' => $request->unm,
         'model' => $request->model,
-        'port' => $request->port
+        'port' => $request->port,
+        'snmp' => $request->snmp,
+        'community' => $request->community
       ]);
       return response()->json(['status' => '200', 'message' => 'Olt created']);
     } catch (\Throwable $th) {
-      return response()->json(['status' => '500', 'message' => 'Error on olt creation ' .$th], 500);
+      return response()->json(['status' => '500', 'message' => 'Error on olt creation '], 500);
     }
   }
 
@@ -124,6 +125,8 @@ class OltController extends Controller
       $olt->unm = $request->unm;
       $olt->model = $request->model;
       $olt->port = $request->port;
+      $olt->snmp = $request->snmp;
+      $olt->community = $request->community;
       $olt->save();
       return response()->json(['status' => '200', 'message' => 'Olt updated']);
     } catch (\Throwable $th) {
