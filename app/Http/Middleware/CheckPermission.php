@@ -17,12 +17,17 @@ class CheckPermission
    */
   public function handle(Request $request, Closure $next, string $permission)
   {
-    $user = Token::getToken($request->header('Token'))->user;
-    if ($user != null) {
-      if (in_array($permission, $user->role->permissions->pluck('name')->toArray())) {
+    if (!Token::internal($request)) {
         return $next($request);
-      }
+    } else {
+        $user = Token::getToken($request->header('Token'))->user;
+        if ($user != null) {
+          if (in_array($permission, $user->role->permissions->pluck('name')->toArray())) {
+            return $next($request);
+          }
+        } else {
+            return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
+        }
     }
-    return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
   }
 }

@@ -16,6 +16,10 @@ class Token extends Model
     'user_id'
   ];
 
+  public static function internal(Request $req) {
+    return count(explode('-', $req->header('Token'))) > 1;
+  }
+
   public static function getToken(string $target)
   {
     $tokens = Token::where('user_id', explode('-', $target)[0])->orderBy('id', 'DESC')->get();
