@@ -26,7 +26,7 @@ class OltController extends Controller
   public function publicIndex(Request $request)
   {
     $user = Token::getToken($request->header('Token'))->user;
-    return Olt::where('enable', true)->orderBy('name')->find($user->role->olts->pluck('id')->toArray());
+    return Olt::where('enabled', true)->orderBy('name')->find($user->role->olts->pluck('id')->toArray());
   }
 
   /**
