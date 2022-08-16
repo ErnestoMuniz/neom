@@ -31,7 +31,7 @@ class Token extends Model
   }
 
   public static function checkPermission(Request $request, string $permission) {
-    return in_array($permission, Token::getToken($request->header('Token'))->user->role->permissions->pluck('name')->toArray());
+    return !Token::internal($request) || in_array($permission, Token::getToken($request->header('Token'))->user->role->permissions->pluck('name')->toArray());
   }
 
   public function user()
