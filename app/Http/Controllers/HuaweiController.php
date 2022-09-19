@@ -31,6 +31,15 @@ class HuaweiController extends Controller
     }
   }
 
+  public static function position($req)
+  {
+    if (Token::checkPermission($req, 'view_onus')) {
+      return response(127);
+    } else {
+      return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
+    }
+  }
+
   public static function pending($req, $olt)
   {
     if (Token::checkPermission($req, 'view_onus')) {

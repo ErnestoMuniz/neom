@@ -38,6 +38,16 @@ class NokiaController extends Controller
     }
   }
 
+  public static function position($req, $olt)
+  {
+    if (Token::checkPermission($req, 'view_onus')) {
+      $output = shell_exec("python python/nokia/isam_position.py '$olt->ip' '$olt->username' '$olt->password' '1/1/$req->pon'");
+      return response($output);
+    } else {
+      return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
+    }
+  }
+
   public static function onu($req, $olt)
   {
     if (Token::checkPermission($req, 'view_onus')) {
