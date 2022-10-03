@@ -159,20 +159,37 @@ class NokiaController extends Controller
   {
     if (Token::checkPermission($req, 'view_onus')) {
       $output = shell_exec("python python/nokia/isam_onu_status.py '$olt->ip' '$olt->username' '$olt->password' '$req->onu'");
-      $arr = explode("\n", $output);
-      array_shift($arr);
-      array_shift($arr);
-      unset($arr[count($arr) - 1]);
-      unset($arr[count($arr) - 1]);
-      $xml = new SimpleXMLElement(implode("\n", $arr));
-      $json = json_decode(json_encode($xml), true)['hierarchy']['hierarchy']['hierarchy']['hierarchy']['hierarchy']['instance'];
+      $arr = explode(" ", $output);
       $res = [
-        'pos' => $json['res-id'][1],
-        'sn' => $json['info'][0],
-        'status' => $json['info'][2],
-        'signal' => $json['info'][3],
-        'desc' => $json['info'][5],
+        'pos' =>  $arr[1],
+        'sn' => $arr[2],
+        'status' => $arr[3],
+        'signal' => $arr[5],
+        'desc' => $arr[7],
       ];
+      return response()->json($res);
+    } else {
+      return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
+    }
+  }
+
+  public static function onuStatusMany($req, $olt)
+  {
+    if (Token::checkPermission($req, 'view_onus')) {
+      $output = shell_exec("python python/nokia/isam_onu_status_many.py '$olt->ip' '$olt->username' '$olt->password' '$req->onus'");
+      $arr = explode("\n", $output);
+      array_pop($arr);
+      $res = [];
+      foreach ($arr as $onu) {
+        $onu = explode(" ", $onu);
+        array_push($res, [
+            'pos' =>  $onu[1],
+            'sn' => $onu[2],
+            'status' => $onu[3],
+            'signal' => $onu[5],
+            'desc' => $onu[7],
+        ]);
+      }
       return response()->json($res);
     } else {
       return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);

@@ -145,4 +145,27 @@ class FiberhomeController extends Controller
             return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
         }
     }
+
+    public static function onuStatusMany($req, $olt)
+    {
+        if (Token::checkPermission($req, 'view_onus')) {
+            $output = shell_exec("python python/fiberhome/fh_onu_status_many.py '$olt->ip' '$olt->username' '$olt->password' '$req->onus'");
+            $arr = explode("\n", $output);
+            array_pop($arr);
+            $res = [];
+            foreach ($arr as $onu) {
+                $onu = explode(" ", $onu);
+                array_push($res, [
+                    'pos' => $onu[0],
+                    'sn' => $onu[2],
+                    'status' => $onu[3],
+                    'signal' => str_replace("\n", '', $onu[4]),
+                    'desc' => $onu[1],
+                ]);
+            }
+            return response()->json($res);
+        } else {
+            return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
+        }
+    }
 }
