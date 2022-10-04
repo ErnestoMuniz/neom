@@ -173,7 +173,7 @@ class NokiaController extends Controller
       $res = [
         'pos' =>  $arr[1],
         'sn' => $arr[2],
-        'status' => $arr[3],
+        'status' => $arr[4],
         'signal' => $arr[5],
         'desc' => $arr[7],
       ];
@@ -195,7 +195,7 @@ class NokiaController extends Controller
         array_push($res, [
             'pos' =>  $onu[1],
             'sn' => $onu[2],
-            'status' => $onu[3],
+            'status' => $onu[4],
             'signal' => $onu[5],
             'desc' => $onu[7],
         ]);
