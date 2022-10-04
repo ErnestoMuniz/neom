@@ -74,6 +74,16 @@ class NokiaController extends Controller
     }
   }
 
+  public static function ssidPass($req, $olt)
+  {
+    if (Token::checkPermission($req, 'add_onu')) {
+      $output = shell_exec("python python/nokia/isam_ssid_pass.py '$olt->ip' '$req->pos' '$req->ssid2' '$req->password2' '$req->ssid5' '$req->password5'");
+      echo $output;
+    } else {
+      return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
+    }
+  }
+
   public static function pending($req, $olt)
   {
     if (Token::checkPermission($req, 'view_onus')) {
