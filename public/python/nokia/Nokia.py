@@ -134,7 +134,7 @@ class Nokia():
         print(tn.read_until(b") :").decode('ascii'))
         tn.write(f"ENT-VLANEGPORT::ONTL2UNI-1-1-{slot}-{pon}-{ontid}-14-1:::0,{vlan}:PORTTRANSMODE=SINGLETAGGED;\r".encode('ascii'))
         print(tn.read_until(b") :").decode('ascii'))
-        tn.write(f"ENT-HGUTR069-SPARAM::HGUTR069SPARAM-1-1-{slot}-{pon}-{ontid}-1::::PARAMNAME=InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.X_CT-COM_WANGponLinkConfig.VLANIDMark,PARAMVALUE=VLAN;\r".encode('ascii'))
+        tn.write(f"ENT-HGUTR069-SPARAM::HGUTR069SPARAM-1-1-{slot}-{pon}-{ontid}-1::::PARAMNAME=InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.X_CT-COM_WANGponLinkConfig.VLANIDMark,PARAMVALUE={vlan};\r".encode('ascii'))
         print(tn.read_until(b") :").decode('ascii'))
         tn.write(f'ENT-HGUTR069-SPARAM::HGUTR069SPARAM-1-1-{slot}-{pon}-{ontid}-2::::PARAMNAME=InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1.Username,PARAMVALUE={usuario};\r'.encode('ascii'))
         print(tn.read_until(b") :").decode('ascii'))
