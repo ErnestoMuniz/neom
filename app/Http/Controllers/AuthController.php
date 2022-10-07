@@ -23,13 +23,16 @@ class AuthController extends Controller
     }
     try {
       $token = Str::random(32);
+      $role = Role::find($user->role_id);
+      if (!in_array("multiple_sessions", $role->permissions->pluck('name')->toArray())) {
+        DB::table('tokens')->where('user_id', $user->id)->delete();
+      }
       Token::create([
         'token' => Hash::make($token),
         'user_id' => $user->id
       ]);
-      $role = Role::find($user->role_id)->name;
       $user = User::find($user->id);
-      return response()->json(['name' => $user->name, 'email' => $user->email, 'id' => $user->id, 'role' => $role, 'permissions' => $user->role->permissions->pluck('name'), 'token' => $token], 200);
+      return response()->json(['name' => $user->name, 'email' => $user->email, 'id' => $user->id, 'role' => $role->name, 'permissions' => $user->role->permissions->pluck('name'), 'token' => $token], 200);
     } catch (\Throwable $th) {
       return response()->json(['status' => '500', 'message' => 'Error while creating token' . $th], 500);
     }
