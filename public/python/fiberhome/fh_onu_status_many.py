@@ -28,20 +28,23 @@ for onu in onus:
         tn.write(
             f"show onu-authinfo phy-id {onu}\n".encode('ascii'))
         res = tn.read_until(b"#").decode('ascii').split('\r\n')
-        pos = res[1].split(' ')[1]
-        type = res[2].split()[2]
-        sn = res[3].split()[2]
-        tn.write(
-            f"show onu_state slot {pos.split('-')[0]} pon {pos.split('-')[1]} onu {pos.split('-')[2]}\n".encode('ascii'))
-        status = tn.read_until(b"#").decode('ascii').split('\r\n')[
-            1].split()[8].replace('.', '')
-        tn.write(
-            f"show onu opticalpower-info phy-id {onu}\n".encode('ascii'))
-        signal = '-40.00'
-        try:
-            signal = tn.read_until(b"#").decode('ascii').split('\r\n')[5].split()[3]
-        except:
-            pass
-        print(f"{pos} {type} {sn} {status} {signal}")
+        if res[1] == '[Error -506]: Onu is not authcated. ':
+            print("- - - - -")
+        else:
+            pos = res[1].split(' ')[1]
+            type = res[2].split()[2]
+            sn = res[3].split()[2]
+            tn.write(
+                f"show onu_state slot {pos.split('-')[0]} pon {pos.split('-')[1]} onu {pos.split('-')[2]}\n".encode('ascii'))
+            status = tn.read_until(b"#").decode('ascii').split('\r\n')[
+                1].split()[8].replace('.', '')
+            tn.write(
+                f"show onu opticalpower-info phy-id {onu}\n".encode('ascii'))
+            signal = '-40.00'
+            try:
+                signal = tn.read_until(b"#").decode('ascii').split('\r\n')[5].split()[3]
+            except:
+                pass
+            print(f"{pos} {type} {sn} {status} {signal}")
     else:
         print("- - - - -")
