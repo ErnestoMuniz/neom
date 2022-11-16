@@ -141,6 +141,45 @@ class Nokia():
         tn.write(f'ENT-HGUTR069-SPARAM::HGUTR069SPARAM-1-1-{slot}-{pon}-{ontid}-3::::PARAMNAME=InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1.Password,PARAMVALUE={senha};\r'.encode('ascii'))
         print(tn.read_until(b") :").decode('ascii'))
 
+        #-- TL1 --
+    def Add_ONT_Router_TL1_v2(self, slot, pon, ontid, descricao01, descricao02, serial_com, vlan, usuario, senha):
+
+        ## -- login --
+        tn = telnetlib.Telnet(host=self.host, port=self.port)
+
+        serial_com = serial_com.replace(':', '')
+
+        tn.read_until(b"<")
+        tn.write(f"\r".encode('ascii'))
+        tn.read_until(b":")
+        tn.write(f"T\r".encode('ascii'))
+        tn.read_until(b": ")
+        tn.write(b"SUPERUSER\r")
+        tn.read_until(b": ")
+        tn.write(b"ANS#150\r")
+
+        tn.read_until(b"<")
+        tn.write(f'ENT-ONT::ONT-1-1-{slot}-{pon}-{ontid}::::DESC1="{descricao01}",DESC2="{descricao02}",SERNUM={serial_com},SWVERPLND=AUTO,OPTICSHIST=ENABLE,PLNDCFGFILE1=AUTO,DLCFGFILE1=AUTO,PLNDCFGFILE2=AUTO,DLCFGFILE2=AUTO,VOIPALLOWED=VEIP;ED-ONT::ONT-1-1-{slot}-{pon}-{ontid}:::::IS;\r'.encode('ascii'))
+        print(tn.read_until(b") :").decode('ascii'))
+        tn.write(f"ENT-ONTCARD::ONTCARD-1-1-{slot}-{pon}-{ontid}-14:::VEIP,1,0::IS;\r".encode('ascii'))
+        print(tn.read_until(b") :").decode('ascii'))
+        tn.write(f"ENT-LOGPORT::ONTL2UNI-1-1-{slot}-{pon}-{ontid}-14-1:::;\r".encode('ascii'))
+        print(tn.read_until(b") :").decode('ascii'))
+        tn.write(f"ED-ONTVEIP::ONTVEIP-1-1-{slot}-{pon}-{ontid}-14-1:::::IS;\r".encode('ascii'))
+        print(tn.read_until(b") :").decode('ascii'))
+        tn.write(f"SET-QOS-USQUEUE::ONTL2UNIQ-1-1-{slot}-{pon}-{ontid}-14-1-0::::USBWPROFNAME=HSI_1G_UP;\r".encode('ascii'))
+        print(tn.read_until(b") :").decode('ascii'))
+        tn.write(f"SET-VLANPORT::ONTL2UNI-1-1-{slot}-{pon}-{ontid}-14-1:::MAXNUCMACADR=4,CMITMAXNUMMACADDR=1;\r".encode('ascii'))
+        print(tn.read_until(b") :").decode('ascii'))
+        tn.write(f"ENT-VLANEGPORT::ONTL2UNI-1-1-{slot}-{pon}-{ontid}-14-1:::0,{vlan}:PORTTRANSMODE=SINGLETAGGED;\r".encode('ascii'))
+        print(tn.read_until(b") :").decode('ascii'))
+        tn.write(f"ENT-HGUTR069-SPARAM::HGUTR069SPARAM-1-1-{slot}-{pon}-{ontid}-1::::PARAMNAME=InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.X_CT-COM_WANGponLinkConfig.VLANIDMark,PARAMVALUE={vlan};\r".encode('ascii'))
+        print(tn.read_until(b") :").decode('ascii'))
+        tn.write(f'ENT-HGUTR069-SPARAM::HGUTR069SPARAM-1-1-{slot}-{pon}-{ontid}-2::::PARAMNAME=InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1.Username,PARAMVALUE={usuario};\r'.encode('ascii'))
+        print(tn.read_until(b") :").decode('ascii'))
+        tn.write(f'ENT-HGUTR069-SPARAM::HGUTR069SPARAM-1-1-{slot}-{pon}-{ontid}-3::::PARAMNAME=InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1.Password,PARAMVALUE={senha};\r'.encode('ascii'))
+        print(tn.read_until(b") :").decode('ascii'))
+
     def Add_ONT_Bridge_TL1(self, slot, pon, ontid, descricao01, descricao02, vlan):
 
         ## -- login --
