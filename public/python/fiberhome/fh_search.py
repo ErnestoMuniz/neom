@@ -22,4 +22,7 @@ tn.read_until(b"#")
 tn.write(
     f"show onu-authinfo phy-id {sys.argv[4]}\n".encode('ascii'))
 res = tn.read_until(b"#").decode('ascii').split('\r\n')[1].split(' ')[1].replace('-', '/')
-print(res)
+if res == '/506]:':
+    print('not found')
+else:
+    print(res)

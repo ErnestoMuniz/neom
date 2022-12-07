@@ -69,7 +69,11 @@ class FiberhomeController extends Controller
     {
         if (Token::checkPermission($req, 'view_onus')) {
             $output = shell_exec("python python/fiberhome/fh_search.py '$olt->ip' '$olt->username' '$olt->password' '$req->onu'");
-            echo $output;
+            if ($output == "not found\n") {
+                return response()->json(['status' => 404, 'message' => 'ONU not found'], 404);
+            } else {
+                echo $output;
+            }
         } else {
             return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
         }
