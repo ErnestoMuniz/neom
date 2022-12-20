@@ -115,6 +115,7 @@ class OltController extends Controller
   {
     try {
       $olt = Olt::find($olt->id);
+      $olt->name = $request->name;
       $olt->ip = $request->ip;
       $olt->vendor = $request->vendor;
       $olt->slots = $request->slots;
