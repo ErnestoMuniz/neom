@@ -28,12 +28,9 @@ class ActionController extends Controller
       case 'Datacom':
         return DatacomController::$cmd($req, $olt);
         break;
+      case 'ZTE':
+        return ZteController::$cmd($req, $olt);
+        break;
     }
-  }
-
-  public function pon(Request $req, Olt $olt)
-  {
-    $output = $this->bash("python python/$olt->vendor/pon.py '$olt->ip' '$olt->username' '$olt->password' ");
-    return response($output);
   }
 }

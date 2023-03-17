@@ -19,6 +19,7 @@ class Olt extends Model
     'username',
     'password',
     'unm',
+    'superpass',
     'model',
     'port',
     'snmp',
