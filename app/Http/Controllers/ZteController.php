@@ -12,7 +12,7 @@ class ZteController extends Controller
   public static function pon($req, $olt)
   {
     if (Token::checkPermission($req, 'view_onus')) {
-      $output = shell_exec("python python/zte/zte_count.py '$olt->ip' '$olt->username' '$olt->password' '$olt->superpass' '$req->pon'");
+      $output = shell_exec("python python/zte/zte_count.py '$olt->ip' '$olt->username' '$olt->password' '$olt->superpass' '$req->pon'\"");
       $arr = explode("\n", $output);
       array_pop($arr);
       $res = [];
@@ -43,7 +43,7 @@ class ZteController extends Controller
   public static function onu($req, $olt)
   {
     if (Token::checkPermission($req, 'view_onus')) {
-      $output = shell_exec("python python/zte/zte_search.py '$olt->ip' '$olt->username' '$olt->password' '$olt->superpass' '$req->onu'");
+      $output = shell_exec("python python/zte/zte_search.py '$olt->ip' '$olt->username' '$olt->password' '$olt->superpass' '$req->onu'\"");
       return response($output);
     } else {
       return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
@@ -73,7 +73,7 @@ class ZteController extends Controller
   public static function pending($req, $olt)
   {
     if (Token::checkPermission($req, 'view_onus')) {
-      $output = shell_exec("python python/zte/zte_pending.py '$olt->ip' '$olt->username' '$olt->password' '$olt->superpass'");
+      $output = shell_exec("python python/zte/zte_pending.py '$olt->ip' '$olt->username' '$olt->password' '$olt->superpass'\"");
       $arr = explode("\n", $output);
       array_pop($arr);
       $res = [];
@@ -93,7 +93,7 @@ class ZteController extends Controller
   public static function remove($req, $olt)
   {
     if (Token::checkPermission($req, 'remove_onu')) {
-      $output = shell_exec("python python/zte/zte_remove.py '$olt->ip' '$olt->username' '$olt->password' '$olt->superpass' '$req->pos'");
+      $output = shell_exec("python python/zte/zte_remove.py '$olt->ip' '$olt->username' '$olt->password' '$olt->superpass' '$req->pos'\"");
       echo $output;
     } else {
       return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
@@ -113,7 +113,7 @@ class ZteController extends Controller
   public static function cpu($req, $olt)
   {
     if (Token::checkPermission($req, 'edit_olts')) {
-      $output = shell_exec("python python/zte/zte_cpu.py '$olt->ip' '$olt->username' '$olt->password' '$olt->superpass'");
+      $output = shell_exec("python python/zte/zte_cpu.py '$olt->ip' '$olt->username' '$olt->password' '$olt->superpass'\"");
       $arr = explode("\n", $output);
       array_pop($arr);
       $olt->cpu = $arr[0];
@@ -127,7 +127,7 @@ class ZteController extends Controller
   public static function firmware($req, $olt)
   {
     if (Token::checkPermission($req, 'edit_olts')) {
-      $output = shell_exec("python python/zte/zte_firmware.py '$olt->ip' '$olt->username' '$olt->password' '$olt->superpass'");
+      $output = shell_exec("python python/zte/zte_firmware.py '$olt->ip' '$olt->username' '$olt->password' '$olt->superpass'\"");
       $arr = explode("\n", $output);
       array_pop($arr);
       $olt->firmware = $arr[0];
@@ -141,12 +141,12 @@ class ZteController extends Controller
   public static function onuStatus($req, $olt)
   {
     if (Token::checkPermission($req, 'view_onus')) {
-      $output = shell_exec("python python/zte/zte_onu_status.py '$olt->ip' '$olt->username' '$olt->password' '$olt->superpass' '$req->onu'");
+      $output = shell_exec("python python/zte/zte_onu_status.py '$olt->ip' '$olt->username' '$olt->password' '$olt->superpass' '$req->onu'\"");
       $arr = explode(" ", str_replace("\n", '', $output));
       $res = [
         'pos' =>  $arr[0],
         'sn' => $arr[1],
-        'status' => $arr[2],
+        'status' => $arr[2] == 'working' ? 'Active' : 'Inactive',
         'signal' => $arr[3],
       ];
       return response()->json($res);
@@ -158,7 +158,7 @@ class ZteController extends Controller
   public static function onuStatusMany($req, $olt)
   {
     if (Token::checkPermission($req, 'view_onus')) {
-      $output = shell_exec("python python/zte/zte_onu_status_many.py '$olt->ip' '$olt->username' '$olt->password' '$olt->superpass' '$req->onus'");
+      $output = shell_exec("python python/zte/zte_onu_status_many.py '$olt->ip' '$olt->username' '$olt->password' '$olt->superpass' '$req->onus'\"");
       $arr = explode("\n", $output);
       array_pop($arr);
       $res = [];
@@ -167,7 +167,7 @@ class ZteController extends Controller
         array_push($res, [
             'pos' =>  $onu[0],
             'sn' => $onu[1],
-            'status' => $onu[2],
+            'status' => $onu[2] == 'working' ? 'Active' : 'Inactive',
             'signal' => $onu[3],
         ]);
       }
