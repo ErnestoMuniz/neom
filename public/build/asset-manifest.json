@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/build/static/css/main.84f18fa6.css",
-    "main.js": "/build/static/js/main.8835c33b.js",
+    "main.css": "/build/static/css/main.8362f682.css",
+    "main.js": "/build/static/js/main.3fee4552.js",
     "static/media/AN5516-04.png": "/build/static/media/AN5516-04.de701800fa8db2a39577.png",
     "static/media/MA5600T.png": "/build/static/media/MA5600T.786e0f6b3af12eee4bf0.png",
     "static/media/MA5800.png": "/build/static/media/MA5800.e178544745bfb6134ce6.png",
@@ -29,11 +29,12 @@
     "static/media/AN6001-G16.png": "/build/static/media/AN6001-G16.290cbe73bd441267ed01.png",
     "static/media/bg-login.svg": "/build/static/media/bg-login.1cbedcbff2d3300731596d570447c14b.svg",
     "index.html": "/build/index.html",
-    "main.84f18fa6.css.map": "/build/static/css/main.84f18fa6.css.map",
-    "main.8835c33b.js.map": "/build/static/js/main.8835c33b.js.map"
+    "static/media/index.cjs": "/build/static/media/index.1958de0a250480972d40.cjs",
+    "main.8362f682.css.map": "/build/static/css/main.8362f682.css.map",
+    "main.3fee4552.js.map": "/build/static/js/main.3fee4552.js.map"
   },
   "entrypoints": [
-    "static/css/main.84f18fa6.css",
-    "static/js/main.8835c33b.js"
+    "static/css/main.8362f682.css",
+    "static/js/main.3fee4552.js"
   ]
 }
