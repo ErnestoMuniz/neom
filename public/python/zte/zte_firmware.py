@@ -15,7 +15,6 @@ if password:
     tn.write(password.encode('ascii') + b"\n")
 buff = tn.expect([b">", b"#"])
 if buff[0] == 0:
-    tn.read_until(b">")
     tn.write(b"enable\n")
     tn.read_until(b"Password:")
     tn.write(f"{superpass}\n".encode('ascii'))

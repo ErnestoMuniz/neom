@@ -16,7 +16,6 @@ if password:
     tn.write(password.encode('ascii') + b"\n")
 buff = tn.expect([b">", b"#"])
 if buff[0] == 0:
-    tn.read_until(b">")
     tn.write(b"enable\n")
     tn.read_until(b"Password:")
     tn.write(f"{superpass}\n".encode('ascii'))
@@ -30,7 +29,7 @@ tmp.pop()
 
 onus = []
 for onu in tmp:
-    if onu[0] == '1':
+    if onu.find('SN') >= 0:
         onus.append(onu.split())
 tn.write(f"show pon power olt-rx gpon_olt-1/{pos}\n".encode('ascii'))
 
