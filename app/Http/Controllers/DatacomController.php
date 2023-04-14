@@ -57,7 +57,7 @@ class DatacomController extends Controller
 
   public static function onu($req, $olt)
   {
-    if (Token::checkPermission($req, 'edit_olts')) {
+    if (Token::checkPermission($req, 'view_onus')) {
       $output = shell_exec("python python/datacom/datacom_search.py '$olt->ip:$olt->port' '$olt->username' '$olt->password' '$req->onu'");
       $pon = explode(' ', $output)[0];
       $pos = explode(' ', $output)[5];
