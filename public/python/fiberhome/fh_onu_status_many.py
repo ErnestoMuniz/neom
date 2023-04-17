@@ -28,7 +28,7 @@ for onu in onus:
         tn.write(
             f"show onu-authinfo phy-id {onu}\n".encode('ascii'))
         res = tn.read_until(b"#").decode('ascii').split('\r\n')
-        if res[1] == '[Error -506]: Onu is not authcated. ':
+        if res[2] == 'Command executes failed.':
             print("- - - - -")
         else:
             pos = res[1].split(' ')[1]
