@@ -69,6 +69,7 @@ class OltController extends Controller
         'port' => $request->port,
         'snmp' => $request->snmp,
         'community' => $request->community,
+        'superuser' => $request->superuser,
         'superpass' => $request->superpass
       ]);
       return response()->json(['status' => '200', 'message' => 'Olt created']);
@@ -129,6 +130,7 @@ class OltController extends Controller
       $olt->port = $request->port;
       $olt->snmp = $request->snmp;
       $olt->community = $request->community;
+      $olt->superuser = $request->superuser;
       $olt->superpass = $request->superpass;
       $olt->save();
       return response()->json(['status' => '200', 'message' => 'Olt updated']);

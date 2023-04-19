@@ -103,7 +103,7 @@ class Nokia():
         tn.read_until(b"$")
 
     #-- TL1 --
-    def Add_ONT_Router_TL1(self, slot, pon, ontid, descricao01, descricao02, serial_com, vlan, usuario, senha):
+    def Add_ONT_Router_TL1(self, slot, pon, ontid, descricao01, descricao02, serial_com, vlan, usuario, senha, superuser, superpass):
 
         ## -- login --
         tn = telnetlib.Telnet(host=self.host, port=self.port)
@@ -115,9 +115,9 @@ class Nokia():
         tn.read_until(b":")
         tn.write(f"T\r".encode('ascii'))
         tn.read_until(b": ")
-        tn.write(b"SUPERUSER\r")
+        tn.write(f"{superuser}\r".encode('ascii'))
         tn.read_until(b": ")
-        tn.write(b"ANS#150\r")
+        tn.write(f"{superpass}\r".encode('ascii'))
 
         tn.read_until(b"<")
         tn.write(f'ENT-ONT::ONT-1-1-{slot}-{pon}-{ontid}::::DESC1="{descricao01}",DESC2="{descricao02}",SERNUM={serial_com},SWVERPLND=AUTO,OPTICSHIST=ENABLE,PLNDCFGFILE1=AUTO,DLCFGFILE1=AUTO,VOIPALLOWED=VEIP;ED-ONT::ONT-1-1-{slot}-{pon}-{ontid}:::::IS;\r'.encode('ascii'))
@@ -142,7 +142,7 @@ class Nokia():
         print(tn.read_until(b") :").decode('ascii'))
 
         #-- TL1 --
-    def Add_ONT_Router_TL1_v2(self, slot, pon, ontid, descricao01, descricao02, serial_com, vlan, usuario, senha):
+    def Add_ONT_Router_TL1_v2(self, slot, pon, ontid, descricao01, descricao02, serial_com, vlan, usuario, senha, superuser, superpass):
 
         ## -- login --
         tn = telnetlib.Telnet(host=self.host, port=self.port)
@@ -154,9 +154,9 @@ class Nokia():
         tn.read_until(b":")
         tn.write(f"T\r".encode('ascii'))
         tn.read_until(b": ")
-        tn.write(b"SUPERUSER\r")
+        tn.write(f"{superuser}\r".encode('ascii'))
         tn.read_until(b": ")
-        tn.write(b"ANS#150\r")
+        tn.write(f"{superpass}\r".encode('ascii'))
 
         tn.read_until(b"<")
         tn.write(f'ENT-ONT::ONT-1-1-{slot}-{pon}-{ontid}::::DESC1="{descricao01}",DESC2="{descricao02}",SERNUM={serial_com},SWVERPLND=AUTO,OPTICSHIST=ENABLE,PLNDCFGFILE1=AUTO,DLCFGFILE1=AUTO,PLNDCFGFILE2=AUTO,DLCFGFILE2=AUTO,VOIPALLOWED=VEIP;ED-ONT::ONT-1-1-{slot}-{pon}-{ontid}:::::IS;\r'.encode('ascii'))
