@@ -67,7 +67,7 @@ class NokiaController extends Controller
   public static function add($req, $olt)
   {
     if (Token::checkPermission($req, 'add_onu')) {
-      $output = shell_exec("python python/nokia/isam_add.py '$olt->ip' '$olt->username' '$olt->password' '$req->pos/$req->onuPos' '$req->desc' '$req->desc2' '$req->serial' '$req->vlan' '$req->username' '$req->password' '$req->type' '$olt->superuser' '$olt->superpass'");
+      $output = "python python/nokia/isam_add.py '$olt->ip' '$olt->username' '$olt->password' '$req->pos/$req->onuPos' '$req->desc' '$req->desc2' '$req->serial' '$req->vlan' '$req->username' '$req->password' '$req->type' '$olt->superuser' '$olt->superpass'";
       echo $output;
     } else {
       return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
