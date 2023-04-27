@@ -167,7 +167,7 @@ class ZteController extends Controller
         array_push($res, [
             'pos' =>  $onu[0],
             'sn' => $onu[1],
-            'status' => $onu[2] == 'working' ? 'Active' : 'Inactive',
+            'status' => $onu[2] != '-' ? ($onu[2] == 'working' ? 'Active' : 'Inactive') : $onu[2],
             'signal' => $onu[3],
         ]);
       }
