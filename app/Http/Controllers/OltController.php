@@ -15,7 +15,12 @@ class OltController extends Controller
    */
   public function index()
   {
-    return Olt::orderBy('name')->get();
+    return Olt::orderBy('name')->get()->makeVisible([
+        'username',
+        'password',
+        'superuser',
+        'superpass'
+    ]);
   }
 
   /**
@@ -86,7 +91,12 @@ class OltController extends Controller
    */
   public function show(Olt $olt)
   {
-    return Olt::find($olt->id);
+    return Olt::find($olt->id)->makeVisible([
+        'username',
+        'password',
+        'superuser',
+        'superpass'
+    ]);
   }
 
   /**

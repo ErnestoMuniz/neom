@@ -27,6 +27,13 @@ class Olt extends Model
     'community'
   ];
 
+  protected $hidden = [
+    'username',
+    'password',
+    'superuser',
+    'superpass'
+  ];
+
   public function roles()
   {
     return $this->belongsToMany(Role::class);
