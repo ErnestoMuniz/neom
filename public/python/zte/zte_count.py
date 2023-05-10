@@ -1,5 +1,6 @@
 import telnetlib
 import sys
+import struct
 
 HOST = sys.argv[1]
 user = sys.argv[2]
@@ -8,6 +9,8 @@ superpass = sys.argv[4]
 pos = sys.argv[5]
 
 tn = telnetlib.Telnet(HOST)
+
+tn.get_socket().send(struct.pack('!BBBHHBB', 255, 250, 31, 1200, 1200, 255, 240))
 
 tn.read_until(b"Username:")
 tn.write(user.encode('ascii') + b"\n")
@@ -38,6 +41,7 @@ del tmp[0:3]
 tmp.pop()
 signals = []
 for signal in tmp:
-    signals.append(signal.replace('no signal', '-40.00').replace('(dbm)', '').split()[1])
+    signals.append(signal.replace(
+        'no signal', '-40.00').replace('(dbm)', '').split()[1])
 for i in range(len(onus)):
     print(f"{onus[i][0].replace(':', '/')} {onus[i][4]} {signals[i]} {onus[i][3].split('(')[1].split(')')[0]}")
