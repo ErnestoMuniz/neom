@@ -33,7 +33,7 @@ class ZteController extends Controller
   public static function position($req, $olt)
   {
     if (Token::checkPermission($req, 'view_onus')) {
-      $output = shell_exec("python python/nokia/isam_position.py '$olt->ip' '$olt->username' '$olt->password' '1/1/$req->pon'");
+      $output = shell_exec("python python/zte/zte_position.py '$olt->ip' '$olt->username' '$olt->password' '$olt->superpass' '$req->pon'");
       return response($output);
     } else {
       return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
