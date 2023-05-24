@@ -25,4 +25,4 @@ tmp = tn.read_until(b"#").decode('ascii').splitlines()
 tmp.pop()
 del tmp[0:3]
 for onu in tmp:
-    print(' '.join(onu.split()).replace('gpon_olt-', ''))
+    print(' '.join(onu.split()).replace('gpon_olt-1/', ''))
