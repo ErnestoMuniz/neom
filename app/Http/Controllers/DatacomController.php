@@ -85,4 +85,27 @@ class DatacomController extends Controller
       return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
     }
   }
+
+  public static function onuStatusMany($req, $olt)
+  {
+    if (Token::checkPermission($req, 'view_onus')) {
+      $output = shell_exec("python python/datacom/datacom_onu_status_many.py '$olt->ip:$olt->port' '$olt->username' '$olt->password' '$req->onus'");
+      $lines = explode("\n", $output);
+      array_pop($lines);
+      $res = [];
+      foreach ($lines as $line) {
+        $arr = explode(" ", $line);
+        array_push($res, [
+            'pos' =>  $arr[0],
+            'sn' => $arr[2],
+            'status' => $arr[3] === 'Up' ? 'Active' : 'Inactive',
+            'signal' => $arr[4],
+            'desc' => $arr[1],
+        ]);
+      }
+      return response()->json($res);
+    } else {
+      return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
+    }
+  }
 }
