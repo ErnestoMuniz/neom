@@ -13,7 +13,7 @@ stdin, stdout, stderr = ssh.exec_command(
     "show interface gpon onu | nomore".format(sys.argv[4]))
 res = stdout.read().decode()
 for onu in ONUS:
-    if res.__contains__(onu):
+    if onu != '' and res.__contains__(onu):
         for line in res.split("\n"):
             if onu in line:
                 pos = line.split()[0]
@@ -21,6 +21,7 @@ for onu in ONUS:
                 stdin, stdout, stderr = ssh.exec_command(
                     f"show interface gpon {pos} onu {id} | nomore")
                 lines = stdout.read().decode().split('\n')
+                print(line)
                 type = lines[8].split()[3]
                 sn = lines[3].split()[3]
                 status = lines[10].split()[3]
