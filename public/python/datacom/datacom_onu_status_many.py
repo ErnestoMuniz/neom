@@ -10,7 +10,7 @@ ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 ssh.connect(hostname=HOST, port=PORT, username=USERNAME, password=PASSWORD)
 stdin, stdout, stderr = ssh.exec_command(
-    "show interface gpon onu | nomore".format(sys.argv[4]))
+    "show interface gpon onu | nomore")
 res = stdout.read().decode()
 for onu in ONUS:
     if onu != '' and res.__contains__(onu):
@@ -21,7 +21,6 @@ for onu in ONUS:
                 stdin, stdout, stderr = ssh.exec_command(
                     f"show interface gpon {pos} onu {id} | nomore")
                 lines = stdout.read().decode().split('\n')
-                print(line)
                 type = lines[8].split()[3]
                 sn = lines[3].split()[3]
                 status = lines[10].split()[3]

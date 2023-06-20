@@ -98,7 +98,7 @@ class DatacomController extends Controller
         array_push($res, [
             'pos' =>  $arr[0],
             'sn' => $arr[2],
-            'status' => $arr[3] === 'Up' ? 'Active' : 'Inactive',
+            'status' => $arr[3],
             'signal' => $arr[4],
             'desc' => $arr[1],
         ]);
