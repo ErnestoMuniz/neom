@@ -1,5 +1,7 @@
 import paramiko
 import sys
+import re
+
 HOST = sys.argv[1].split(':')[0]
 PORT = sys.argv[1].split(':')[1]
 USERNAME = sys.argv[2]
@@ -20,11 +22,11 @@ for onu in ONUS:
                 id = line.split()[1]
                 stdin, stdout, stderr = ssh.exec_command(
                     f"show interface gpon {pos} onu {id} | nomore")
-                lines = stdout.read().decode().split('\n')
-                type = lines[8].split()[3]
-                sn = lines[3].split()[3]
-                status = lines[10].split()[3]
-                signal = lines[30].split()[5]
+                lines = re.sub(' +', ' ', stdout.read().decode())
+                type = re.search('(?:Equipment ID : )(.*)', lines).group(1)
+                sn = re.search('(?:Serial Number : )(.*)', lines).group(1)
+                status = re.search('(?:Operational state : )(.*)', lines).group(1)
+                signal = re.search('(?:Rx Optical Power \[dBm\] : )(.*)', lines).group(1)
                 print(f"{pos}/{id} {type} {sn} {status} {signal}")
     else:
         print(f"- - - - -")
