@@ -21,22 +21,33 @@ tn.write(b"undo smart\n")
 tn.read_until(b"#")
 total: list[dict[str, str]] = []
 for sn in SNS:
-    tn.write(f"display ont info by-sn {sn} | no-more\n".encode("ascii"))
-    res = tn.read_until(b"#").decode("ascii")
-    result = {
-        "desc": res.split("Description             : ")[1].split("\r\n")[0],
-        "pos": res.split("F/S/P                   : ")[1].split("\r\n")[0],
-        "signal": res.split("Description             : ")[1].split("\r\n")[0],
-        "sn": sn,
-        "status": res.split("Description             : ")[1].split("\r\n")[0],
-    }
-    tn.write(
-        f"display ont info summary {result['pos']} | include {res.split('SN                      : ')[1].split(' (')[0]}\n".encode(
-            "ascii"
+    if sn != "":
+        tn.write(f"display ont info by-sn {sn} | no-more\n".encode("ascii"))
+        res = tn.read_until(b"#").decode("ascii")
+        result = {
+            "desc": res.split("Description             : ")[1].split("\r\n")[0],
+            "pos": res.split("F/S/P                   : ")[1].split("\r\n")[0],
+            "signal": res.split("Description             : ")[1].split("\r\n")[0],
+            "sn": sn,
+            "status": res.split("Description             : ")[1].split("\r\n")[0],
+        }
+        tn.write(
+            f"display ont info summary {result['pos']} | include {res.split('SN                      : ')[1].split(' (')[0]}\n".encode(
+                "ascii"
+            )
         )
-    )
-    res = tn.read_until(b"#").decode("ascii").split("\r\n")[4]
-    result["signal"] = res.split()[4].split("/")[0]
-    result["status"] = "active" if float(result["signal"]) > -40 else "inactive"
-    total.append(result)
+        res = tn.read_until(b"#").decode("ascii").split("\r\n")[4]
+        result["signal"] = res.split()[4].split("/")[0]
+        result["status"] = "active" if float(result["signal"]) > -40 else "inactive"
+        total.append(result)
+    else:
+        total.append(
+            {
+                "desc": "-",
+                "pos": "-",
+                "signal": "-",
+                "sn": "-",
+                "status": "-",
+            }
+        )
 print(total)
