@@ -33,6 +33,7 @@ tn.write(
     )
 )
 res = tn.read_until(b"#").decode("ascii").split("\r\n")[4]
-result["signal"] = res.split()[4].split("/")[0]
+res = res.split()[4].split("/")[0]
+result["signal"] = res if res != "-" else "-40"
 result["status"] = "active" if float(result["signal"]) > -40 else "inactive"
 print(result)
