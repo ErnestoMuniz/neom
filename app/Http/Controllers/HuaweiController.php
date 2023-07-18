@@ -155,4 +155,15 @@ class HuaweiController extends Controller
       return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
     }
   }
+
+  public static function onuStatusMany($req, $olt)
+  {
+    if (Token::checkPermission($req, 'view_onus')) {
+      $output = shell_exec("python python/huawei/huawei_onu_status_many.py '$olt->ip:$olt->port' '$olt->username' '$olt->password' '$req->onu'");
+      $res = str_replace("'", '"', $output);
+      return response($res);
+    } else {
+      return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
+    }
+  }
 }
