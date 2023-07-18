@@ -19,7 +19,7 @@ tn.write(b"enable\n")
 tn.read_until(b"#")
 tn.write(b"undo smart\n")
 tn.read_until(b"#")
-total: list[dict[str, str]] = []
+total = []
 for sn in SNS:
     if sn != "":
         tn.write(f"display ont info by-sn {sn} | no-more\n".encode("ascii"))
