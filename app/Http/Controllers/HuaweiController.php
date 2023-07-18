@@ -159,7 +159,7 @@ class HuaweiController extends Controller
   public static function onuStatusMany($req, $olt)
   {
     if (Token::checkPermission($req, 'view_onus')) {
-      $output = shell_exec("python python/huawei/huawei_onu_status_many.py '$olt->ip:$olt->port' '$olt->username' '$olt->password' '$req->onu'");
+      $output = shell_exec("python python/huawei/huawei_onu_status_many.py '$olt->ip:$olt->port' '$olt->username' '$olt->password' '$req->onus'");
       $res = str_replace("'", '"', $output);
       return response($res);
     } else {
