@@ -32,12 +32,12 @@ tn.write(
     f"interface gpon_olt-1/{pos.split('/')[0]}/{pos.split('/')[1]}\n".encode('ascii'))
 tmp += tn.read_until(b"#").decode('ascii')
 tn.write(
-    f"onu {pos.split('/')[3]} type {model.split(':')[0]} sn {serial}\n".encode('ascii'))
+    f"onu {pos.split('/')[2]} type {model.split(':')[0]} sn {serial}\n".encode('ascii'))
 tmp += tn.read_until(b"#").decode('ascii')
 tn.write(b"exit\n")
 tmp += tn.read_until(b"#").decode('ascii')
 tn.write(
-    f"interface gpon_onu-1/{pos.split('/')[0]}/{pos.split('/')[1]}:{pos.split('/')[3]}\n".encode('ascii'))
+    f"interface gpon_onu-1/{pos.split('/')[0]}/{pos.split('/')[1]}:{pos.split('/')[2]}\n".encode('ascii'))
 tmp += tn.read_until(b"#").decode('ascii')
 tn.write(
     f"name {desc}\n".encode('ascii'))
@@ -49,7 +49,7 @@ tmp += tn.read_until(b"#").decode('ascii')
 tn.write(b"exit\n")
 tmp += tn.read_until(b"#").decode('ascii')
 tn.write(
-    f"interface vport-1/{pos.split('/')[0]}/{pos.split('/')[1]}.{pos.split('/')[3]}:1\n".encode('ascii'))
+    f"interface vport-1/{pos.split('/')[0]}/{pos.split('/')[1]}.{pos.split('/')[2]}:1\n".encode('ascii'))
 tmp += tn.read_until(b"#").decode('ascii')
 tn.write(
     f"service-port 1 user-vlan {vlan} vlan {vlan}\n".encode('ascii'))
@@ -57,7 +57,7 @@ tmp += tn.read_until(b"#").decode('ascii')
 tn.write(b"exit\n")
 tmp += tn.read_until(b"#").decode('ascii')
 tn.write(
-    f"pon-onu-mng gpon_onu-1/{pos.split('/')[0]}/{pos.split('/')[1]}:{pos.split('/')[3]}\n".encode('ascii'))
+    f"pon-onu-mng gpon_onu-1/{pos.split('/')[0]}/{pos.split('/')[1]}:{pos.split('/')[2]}\n".encode('ascii'))
 tmp += tn.read_until(b"#").decode('ascii')
 tn.write(
     f"service 1 gemport 1 vlan {vlan}\n".encode('ascii'))
