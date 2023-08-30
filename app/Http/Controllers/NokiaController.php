@@ -174,7 +174,7 @@ class NokiaController extends Controller
         'pos' =>  $arr[1],
         'sn' => $arr[2],
         'status' => $arr[4],
-        'signal' => $arr[5],
+        'signal' => str_replace("\n", '', $arr[10]),
         'desc' => $arr[7],
       ];
       return response()->json($res);
