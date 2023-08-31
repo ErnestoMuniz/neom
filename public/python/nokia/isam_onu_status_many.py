@@ -1,3 +1,5 @@
+import re
+import struct
 import telnetlib
 import sys
 
@@ -7,6 +9,7 @@ password = sys.argv[3]
 onus = sys.argv[4].split(',')
 
 tn = telnetlib.Telnet(HOST)
+tn.get_socket().send(struct.pack('!BBBHHBB', 255, 250, 31, 1200, 1200, 255, 240))
 
 tn.read_until(b"login: ")
 tn.write(user.encode('ascii') + b"\n")
@@ -29,12 +32,13 @@ for onu in onus:
                 f"show equipment ont status pon {pon} ont {pos} | match exact:1/1\n".encode('ascii'))
             res = tn.read_until(b"#").decode('ascii').split('\r\n')
             res.pop(0)
-            res.pop(0)
             res.pop()
+            restxt = res[0].split()
+            restxt = '|'.join(restxt[0:7]) + '|' + ' '.join(restxt[7:-1])
             tn.write(f"show equipment ont optics {res[0].split()[1]} | match exact:1/1\n".encode('ascii'))
             res2 = tn.read_until(b"#").decode('ascii').split('\r\n')
-            print(' '.join('\n'.join(res).split()) + ' ' + res2[1].split()[1])
+            print(f'{restxt}|{res2[1].split()[1]}')
         except:
-            print("- - - - - - - - -")
+            print("-|-|-|-|-|-|-|-|-")
     else:
-        print("- - - - - - - - -")
+        print("-|-|-|-|-|-|-|-|-")

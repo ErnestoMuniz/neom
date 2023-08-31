@@ -169,13 +169,13 @@ class NokiaController extends Controller
   {
     if (Token::checkPermission($req, 'view_onus')) {
       $output = shell_exec("python python/nokia/isam_onu_status.py '$olt->ip' '$olt->username' '$olt->password' '$req->onu'");
-      $arr = explode(" ", $output);
+      $arr = explode("|", $output);
       $res = [
         'pos' =>  $arr[1],
         'sn' => $arr[2],
         'status' => $arr[4],
-        'signal' => str_replace("\n", '', $arr[10]),
-        'desc' => $arr[7],
+        'signal' => str_replace("\n", "", $arr[8]),
+        'desc' => str_replace("\"", "", $arr[7]),
       ];
       return response()->json($res);
     } else {
@@ -191,13 +191,13 @@ class NokiaController extends Controller
       array_pop($arr);
       $res = [];
       foreach ($arr as $onu) {
-        $onu = explode(" ", $onu);
+        $onu = explode("|", $onu);
         array_push($res, [
             'pos' =>  $onu[1],
             'sn' => $onu[2],
             'status' => $onu[4],
-            'signal' => str_replace("\n", '', $onu[10]),
-            'desc' => $onu[7],
+            'signal' => str_replace("\n", "", $onu[8]),
+            'desc' => str_replace("\"", "", $onu[7]),
         ]);
       }
       return response()->json($res);
