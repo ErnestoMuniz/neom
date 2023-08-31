@@ -196,7 +196,7 @@ class NokiaController extends Controller
             'pos' =>  $onu[1],
             'sn' => $onu[2],
             'status' => $onu[4],
-            'signal' => $onu[5],
+            'signal' => str_replace("\n", '', $onu[10]),
             'desc' => $onu[7],
         ]);
       }

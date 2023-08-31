@@ -31,7 +31,9 @@ for onu in onus:
             res.pop(0)
             res.pop(0)
             res.pop()
-            print(' '.join('\n'.join(res).split()))
+            tn.write(f"show equipment ont optics {res[0].split()[1]} | match exact:1/1\n".encode('ascii'))
+            res2 = tn.read_until(b"#").decode('ascii').split('\r\n')
+            print(' '.join('\n'.join(res).split()) + ' ' + res2[1].split()[1])
         except:
             print("- - - - - - - - -")
     else:
