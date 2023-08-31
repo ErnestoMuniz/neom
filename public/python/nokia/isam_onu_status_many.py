@@ -37,7 +37,7 @@ for onu in onus:
             restxt = '|'.join(restxt[0:7]) + '|' + ' '.join(restxt[7:-1])
             tn.write(f"show equipment ont optics {res[0].split()[1]} | match exact:1/1\n".encode('ascii'))
             res2 = tn.read_until(b"#").decode('ascii').split('\r\n')
-            print(f'{restxt}|{res2[1].split()[1]}')
+            print(f'{restxt}|{"-40.00" if res2[1].split()[1] == "unknown" else res2[1].split()[1]}')
         except:
             print("-|-|-|-|-|-|-|-|-")
     else:
