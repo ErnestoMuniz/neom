@@ -149,8 +149,12 @@ class HuaweiController extends Controller
   {
     if (Token::checkPermission($req, 'view_onus')) {
       $output = shell_exec("python python/huawei/huawei_onu_status.py '$olt->ip:$olt->port' '$olt->username' '$olt->password' '$req->onu'");
-      $res = str_replace("'", '"', $output);
-      return response($res);
+      if (!str_contains($output, 'Not Found')) {
+        $res = str_replace("'", '"', $output);
+        return response($res);
+      } else {
+        return response()->json(['status' => 404, 'message' => 'ONU not found'], 404);
+      }
     } else {
       return response()->json(['status' => 401, 'message' => 'You have no permission to perform this action'], 401);
     }
