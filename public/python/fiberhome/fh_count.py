@@ -1,11 +1,13 @@
 import telnetlib
 import sys
+import struct
 
 HOST = sys.argv[1]
 user = sys.argv[2]
 password = sys.argv[3]
 
 tn = telnetlib.Telnet(HOST)
+tn.get_socket().send(struct.pack('!BBBHHBB', 255, 250, 31, 1200, 1200, 255, 240))
 
 tn.read_until(b"Login: ")
 tn.write(user.encode('ascii') + b"\n")
