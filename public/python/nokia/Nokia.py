@@ -20,7 +20,7 @@ class Nokia():
         tn.write(self.password.encode('ascii') + b"\n")
 
         # PASSO I
-        tn.write(f"configure equipment ont interface 1/1/{slot}/{pon}/{ontid} desc1 \"{descricao01}\" desc2 \"{descricao02}\" sernum {serial_com}: sw-ver-pland auto sw-dnload-version auto pland-cfgfile1 auto dnload-cfgfile1 auto\n".encode('ascii'))
+        tn.write(f"configure equipment ont interface 1/1/{slot}/{pon}/{ontid} desc1 \"{descricao01}\" desc2 \"{descricao02}\" sernum {serial_com}: sw-ver-pland auto sw-dnload-version auto pland-cfgfile1 auto dnload-cfgfile1 auto pland-cfgfile2 auto dnload-cfgfile2 auto\n".encode('ascii'))
         print(tn.read_until(b"$").decode('ascii'))
         tn.write(f"configure equipment ont interface 1/1/{slot}/{pon}/{ontid} admin-state up\n".encode('ascii'))
         print(tn.read_until(b"$").decode('ascii'))
