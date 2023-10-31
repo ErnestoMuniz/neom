@@ -34,7 +34,7 @@ onus = []
 for onu in tmp:
     if onu.find('SN') >= 0:
         onus.append(onu.split())
-tn.write(f"show pon power olt-rx gpon_olt-1/{pos}\n".encode('ascii'))
+tn.write(f"show pon power onu-rx gpon_olt-1/{pos}\n".encode('ascii'))
 
 tmp = tn.read_until(b"#").decode('ascii').splitlines()
 del tmp[0:3]
