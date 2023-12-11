@@ -1,0 +1,11 @@
+version: "3.5"
+services:
+  laravel-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: neom-app
+    volumes:
+      - .:/var/www
+    ports:
+      - 8060:80
