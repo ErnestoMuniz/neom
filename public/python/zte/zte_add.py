@@ -66,10 +66,10 @@ if model.split(':')[1] != 'Router':
     tn.write(
         f"vlan port eth_0/1 mode tag vlan {vlan}\n".encode('ascii'))
     tmp += tn.read_until(b"#").decode('ascii')
-else:
-    tn.write(
-        f"wan-ip 1 ipv4 mode pppoe username {userpppoe} password {passpppoe} vlan-profile {vlan} host 1\n".encode('ascii'))
-    tmp += tn.read_until(b"#").decode('ascii')
+# else:
+#     tn.write(
+#         f"wan-ip 1 ipv4 mode pppoe username {userpppoe} password {passpppoe} vlan-profile {vlan} host 1\n".encode('ascii'))
+#     tmp += tn.read_until(b"#").decode('ascii')
 tn.write(b"end\n")
 tmp += tn.read_until(b"#").decode('ascii')
 tn.write(b"write\n")
