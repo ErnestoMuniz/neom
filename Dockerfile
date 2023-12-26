@@ -33,6 +33,7 @@ RUN apt-get install -y \
     python3-pip
     
 RUN pip install --break-system-packages paramiko
+RUN pip install --break-system-packages easysnmp
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
 # Install project dependencies
