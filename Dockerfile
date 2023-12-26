@@ -8,7 +8,9 @@ RUN apt-get update && \
     zip \
     python3 \
     python3-pip \
-    net-snmp-config
+    snmpd \
+    snmp \
+    libsnmp-dev
 
 # Enable mod_rewrite
 RUN a2enmod rewrite
