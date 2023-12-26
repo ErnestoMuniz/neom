@@ -7,7 +7,8 @@ RUN apt-get update && \
     libzip-dev \
     zip \
     python3 \
-    python3-pip
+    python3-pip \
+    net-snmp-config
 
 # Enable mod_rewrite
 RUN a2enmod rewrite
