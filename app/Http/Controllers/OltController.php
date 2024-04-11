@@ -16,10 +16,10 @@ class OltController extends Controller
   public function index()
   {
     return Olt::orderBy('name')->get()->makeVisible([
-        'username',
-        'password',
-        'superuser',
-        'superpass'
+      'username',
+      'password',
+      'superuser',
+      'superpass'
     ]);
   }
 
@@ -30,8 +30,12 @@ class OltController extends Controller
    */
   public function publicIndex(Request $request)
   {
-    $user = Token::getToken($request->header('Token'))->user;
-    return Olt::where('enabled', true)->orderBy('name')->find($user->role->olts->pluck('id')->toArray());
+    if (Token::internal($request)) {
+      $user = Token::getToken($request->header('Token'))->user;
+      return Olt::where('enabled', true)->orderBy('name')->find($user->role->olts->pluck('id')->toArray());
+    } else if (env('EXTERNAL_AUTH') != "") {
+      return Olt::where('enabled', true)->orderBy('name')->get()->toArray();
+    }
   }
 
   /**
@@ -92,10 +96,10 @@ class OltController extends Controller
   public function show(Olt $olt)
   {
     return Olt::find($olt->id)->makeVisible([
-        'username',
-        'password',
-        'superuser',
-        'superpass'
+      'username',
+      'password',
+      'superuser',
+      'superpass'
     ]);
   }
 

@@ -24,7 +24,7 @@ class CheckToken
             }
         } else if (env('EXTERNAL_AUTH') != "") {
             $response = Http::post(env('EXTERNAL_AUTH'), [
-                'token' => $request->header('Token')
+                'token' => str_replace('ext ', '', $request->header('Token'))
             ]);
             if ($response->status() == 200) {
                 return $next($request);

@@ -17,7 +17,7 @@ class Token extends Model
   ];
 
   public static function internal(Request $req) {
-    return count(explode('-', $req->header('Token'))) > 1;
+    return substr_count($req->header('Token'), 'ext') < 1;
   }
 
   public static function getToken(string $target)
