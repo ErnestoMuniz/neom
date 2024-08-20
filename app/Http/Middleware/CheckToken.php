@@ -30,13 +30,13 @@ class CheckToken
                 $response = Http::withHeaders([
                     env("EXTERNAL_AUTH_HEADER", "Authorization") => str_replace(
                         "ext ",
-                        str_replace("\s", " ", env("EXTERNAL_AUTH_HEADER_PREFIX")),
+                        str_replace("{SPACE}", " ", env("EXTERNAL_AUTH_HEADER_PREFIX")),
                         $request->header("Token")
                     ),
                 ])->get(env("EXTERNAL_AUTH_ENDPOINT"), [
                     "token" => str_replace(
                         "ext ",
-                        str_replace("\s", " ", env("EXTERNAL_AUTH_HEADER_PREFIX")),
+                        str_replace("{SPACE}", " ", env("EXTERNAL_AUTH_HEADER_PREFIX")),
                         $request->header(env("EXTERNAL_AUTH_HEADER", "Authorization"))
                     ),
                 ]);
@@ -44,13 +44,13 @@ class CheckToken
                 $response = Http::withHeaders([
                     env("EXTERNAL_AUTH_HEADER", "Authorization") => str_replace(
                         "ext ",
-                        str_replace("\s", " ", env("EXTERNAL_AUTH_HEADER_PREFIX")),
+                        str_replace("{SPACE}", " ", env("EXTERNAL_AUTH_HEADER_PREFIX")),
                         $request->header("Token")
                     ),
                 ])->post(env("EXTERNAL_AUTH_ENDPOINT"), [
                     "token" => str_replace(
                         "ext ",
-                        str_replace("\s", " ", env("EXTERNAL_AUTH_HEADER_PREFIX")),
+                        str_replace("{SPACE}", " ", env("EXTERNAL_AUTH_HEADER_PREFIX")),
                         $request->header(env("EXTERNAL_AUTH_HEADER", "Authorization"))
                     ),
                 ]);
