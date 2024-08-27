@@ -33,7 +33,7 @@ class OltController extends Controller
     if (Token::internal($request)) {
       $user = Token::getToken($request->header('Token'))->user;
       return Olt::where('enabled', true)->orderBy('name')->find($user->role->olts->pluck('id')->toArray());
-    } else if (env('EXTERNAL_AUTH') != "") {
+    } else if (env('EXTERNAL_AUTH_ENDPOINT') != "") {
       return Olt::where('enabled', true)->orderBy('name')->get()->toArray();
     }
   }
