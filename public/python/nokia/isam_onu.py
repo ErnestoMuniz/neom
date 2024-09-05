@@ -18,3 +18,5 @@ if password:
     tn.write(password.encode('ascii') + b"\r")
 
 print(tn.read_until(b"<").decode('ascii'))
+tn.write(b"logout")
+tn.close()

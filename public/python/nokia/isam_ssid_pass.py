@@ -47,3 +47,6 @@ if password5 != '':
     tn.write(
         f'ent-HGUTR069-SPARAM::HGUTR069SPARAM-{pos}-11::::PARAMNAME=InternetGatewayDevice.LANDevice.1.WLANConfiguration.5.PreSharedKey.1.PreSharedKey,PARAMVALUE={password5};\r'.encode('ascii'))
     print(tn.read_until(b") :").decode('ascii'))
+
+tn.write(b"logout")
+tn.close()

@@ -18,3 +18,5 @@ tn.read_until(b"#")
 tn.write(b"show pon unprovision-onu xml\n")
 
 print(tn.read_until(b"#").decode('ascii').replace('[1D/', '').replace('[1D\\', '').replace('[1D|', '').replace('[1D-', '').replace('[1D', '').replace('←', '').replace('', '').replace('-', ''))
+tn.write(b"logout")
+tn.close()

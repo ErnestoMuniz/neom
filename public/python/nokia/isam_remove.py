@@ -21,3 +21,5 @@ tn.read_until(b"#")
 tn.write(f"configure equipment ont no interface {pos}\n".encode('ascii'))
 
 print(tn.read_until(b"#").decode('ascii'))
+tn.write(b"logout")
+tn.close()

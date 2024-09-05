@@ -19,3 +19,5 @@ tn.read_until(b"#")
 tn.write(f"admin equipment ont interface {pos} reboot with-active-image\n".encode('ascii'))
 
 print(tn.read_until(b"$").decode('ascii'))
+tn.write(b"logout")
+tn.close()

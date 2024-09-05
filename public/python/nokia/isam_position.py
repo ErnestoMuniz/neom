@@ -18,6 +18,8 @@ tn.read_until(b"#")
 tn.write(
     "show pon ber-stats {} | match exact:1/1\n".format(sys.argv[4]).encode('ascii'))
 onus = tn.read_until(b"environment#").decode('ascii').split('\r\n')
+tn.write(b"logout")
+tn.close()
 del onus[0]
 del onus[-1]
 positions = []

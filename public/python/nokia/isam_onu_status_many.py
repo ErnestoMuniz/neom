@@ -42,3 +42,6 @@ for onu in onus:
             print("-|-|-|-|-|-|-|-|-")
     else:
         print("-|-|-|-|-|-|-|-|-")
+
+tn.write(b"logout")
+tn.close()

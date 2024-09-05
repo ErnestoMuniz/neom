@@ -18,3 +18,5 @@ tn.read_until(b"#")
 tn.write("show equipment ont index sn:{} xml\n".format(sys.argv[4]).encode('ascii'))
 
 print(tn.read_until(b"#").decode('ascii'))
+tn.write(b"logout")
+tn.close()

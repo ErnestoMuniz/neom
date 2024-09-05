@@ -18,3 +18,6 @@ tn.read_until(b"#")
 tn.write(b"show system memory-usage xml\n")
 
 print(tn.read_until(b"#").decode('ascii'))
+
+tn.write(b"logout")
+tn.close()

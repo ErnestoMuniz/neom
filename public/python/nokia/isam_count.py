@@ -18,3 +18,6 @@ tn.read_until(b"#")
 tn.write("show equipment ont status pon {} xml\n".format(sys.argv[4]).encode('ascii'))
 
 print(tn.read_until(b"environment#").decode('ascii'))
+
+tn.write(b"logout")
+tn.close()
