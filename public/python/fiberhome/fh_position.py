@@ -4,6 +4,7 @@ import sys
 HOST = sys.argv[1]
 user = sys.argv[2]
 password = sys.argv[3]
+pon = sys.argv[4].replace("/", "-")
 
 tn = telnetlib.Telnet(HOST)
 
@@ -20,7 +21,7 @@ tn.read_until(b"#")
 tn.write(b"cd onu\n")
 tn.read_until(b"#")
 tn.write(
-    f"show authorization slot {sys.argv[4].split('/')[0]} pon {sys.argv[4].split('/')[1]}\n".encode('ascii'))
+    f"show authorization slot {pon.split('-')[0]} pon {sys.argv[4].split('-')[1]}\n".encode('ascii'))
 res = ''
 for i in range(5):
     res += tn.read_until(b'stop--', timeout=0.1).decode('ascii')
