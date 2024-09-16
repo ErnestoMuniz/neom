@@ -1,4 +1,4 @@
-FROM php:8.2-apache-buster
+FROM php:8.2-apache-bullseye
 
 # Install dependencies
 RUN apt-get update && \
@@ -35,8 +35,8 @@ RUN apt-get install -y \
     python3 \
     python3-pip
     
-RUN pip install --break-system-packages paramiko
-RUN pip install --break-system-packages easysnmp
+RUN pip install paramiko
+RUN pip install easysnmp
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
 # Install project dependencies
