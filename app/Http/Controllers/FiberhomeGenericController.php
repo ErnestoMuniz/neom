@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Token;
 use Illuminate\Http\Request;
 
-class FiberhomeController extends Controller
+class FiberhomeGenericController extends Controller
 {
     public static function pon($req, $olt)
     {
